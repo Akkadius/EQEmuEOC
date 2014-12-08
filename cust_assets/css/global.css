@@ -1,0 +1,16 @@
+/* Custom Element Settings File */
+
+.jquery-notific8-container { z-index: 1100000 !important; }
+.jquery-notific8-container.top { top: 50px !important; }
+.jquery-notific8-notification{ padding: 15px !important; }
+.jquery-notific8-notification{ max-height: 500px !important; height:auto !important; }
+
+/* Set background to white for content that floods over */
+body { background-color: #FFFFFF !important; }
+
+/* Modal Adjustments */
+.modal { position: absolute; } 
+.modal-scrollable{ overflow: auto !important; }  
+
+/* Item Tooltip */
+.item_view tr, .item_view td{ padding:1px !important; }

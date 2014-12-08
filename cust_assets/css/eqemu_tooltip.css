@@ -1,0 +1,58 @@
+/* // Load on Demand Tooltip */
+
+.itemtooltip{
+	border: 1px solid #5e5e5e;
+	background: #313131;
+	border-radius: 5px;
+	padding: 8px 8px 8px 8px;
+	z-index:9999;
+	
+	background: rgba(0, 0, 0, 0.9);
+	background-color:#000;
+	background: rgba(0, 0, 0, .9);
+	border: 2px solid black;
+	font-family:'Calibri', 'Arial';
+	font-size:12px;
+	color: #99aa00;
+}
+
+.itemtooltip b{ 
+	color:#00FF00;
+}
+
+.itemtooltip h4 { 
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 15px;
+	text-decoration:  none; 
+	color: 		    #ffffff;
+	color: #a335ee!important;
+}
+
+.itemtooltip a { 
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	font-size: 11px;
+	text-decoration:  none; 
+	color: 		    #0099cc;
+}
+
+.itemtooltip table { 
+	text-decoration:  none; 
+	color: 		    #ffffff;
+	padding: 0;
+	margin: 0;
+	border: none;
+	font-family:'Calibri', 'Arial';
+	font-size:12px;
+	border-collapse: collapse;
+}
+
+.itemtooltip tbody td { 
+	padding: 1px 10px 1px 0px;
+	margin: 0;
+	border: none;
+}
+
+.eq-link-icon {border:0;height:16px;margin-right:3px;vertical-align:bottom;width:16px}
+.eq.itemicon.tooltip-icon {background:#333;border:1px solid #a9a9a9;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;box-shadow:0 0 3px #000;height:32px;padding:3px;left:-44px;top:0;width:32px}
