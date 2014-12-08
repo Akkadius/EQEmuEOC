@@ -1,0 +1,9 @@
+P -1024.6646, -106.3077, -8.3782,  0, 0, 240,  3,  a_shrewd_dragorn_(signet_68+)
+P -2295.3130, -639.0663, 46.3566,  240, 0, 0,  3,  Dragorn_Quickblade_(63-67)
+P -1521.5587, -643.0801, 44.8723,  0, 0, 240,  3,  Girplan_Pathmaker_(68+)
+P -2130.5962, 223.7958, 98.0388,  0, 0, 240,  3,  Discordling_Hollower_(68+)
+P -2749.2498, 540.7045, 93.3266,  240, 0, 0,  3,  Discordling_Collector_(63-67)
+P -2297.0000, -640.0000, 46.0000,  0, 0, 0,  2,  Dragorn_Quickblade_lvl_65-_67_instanced
+P -2752.0000, 540.0000, 93.0000,  0, 0, 0,  2,  Named_Discordling_lvl_65-67_instanced
+P -2133.5161, 227.5710, 98.1550,  240, 0, 0,  3,  Named_-_Discordling_Hollower_-_PH_/_Warrior
+P -1519.4230, -645.0760, 44.9440,  240, 0, 0,  3,  Named_Pathmaker_-_PH/Mover

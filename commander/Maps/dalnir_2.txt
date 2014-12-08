@@ -1,0 +1,17 @@
+P 196.9732, 218.2277, -181.4919,  240, 0, 0,  2,  Sarnak_Hide_(Groundspawn)
+P -300.0000, 50.0000, 0.0000,  0, 0, 0,  2,  Progression
+P 731.1360, -97.1830, 0.0020,  240, 0, 0,  2,  1_Way_Crypt_Entrance_to_Sublevel_2
+P -95.0000, 6.0000, 0.0030,  240, 0, 0,  2,  To_The_Warsliks_Woods
+P 451.7236, -161.8025, 0.0020,  240, 0, 0,  2,  A_Journal_Entry_(Groundspawn)
+P 414.5617, 6.9124, -196.9042,  240, 0, 0,  2,  Ramp_To_Sublevel_3
+P -54.0513, 17.0309, -181.6180,  240, 0, 0,  2,  Lost_Scroll_(Groundspawn)_Enchanter_Epic_1.0
+P 337.4526, -120.7924, -181.9354,  240, 0, 0,  2,  A_Journal_Entry_(Groundspawn)
+P 748.6304, -3.6808, -96.2103,  240, 0, 0,  2,  Floor_trap_to_Sublevel_4
+P 734.8867, -294.0582, -83.9667,  240, 0, 0,  2,  To_The_Warsliks_Woods
+P -30.6805, 229.5394, -181.9354,  240, 0, 0,  2,  Forge
+P -300.0000, 250.0000, 0.0000,  0, 240, 0,  2,  4._Ramp_To_Sublevel_3
+P -300.0000, 150.0000, 0.0000,  0, 240, 240,  2,  2._Crypt_Entrance_to_Sublevel_2
+P -300.0000, 100.0000, 0.0000,  0, 0, 0,  2,  1._Main_Level
+P 77.4226, 320.3235, -181.9354,  240, 0, 0,  2,  To_The_Warsliks_Woods
+P 546.1126, -10.2247, -195.9042,  240, 0, 0,  2,  1_Way_Tunnel
+P -300.0000, 200.0000, 0.0000,  240, 127, 0,  2,  3._Floor_Trap_to_Sublevel_4

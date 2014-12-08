@@ -1,0 +1,16 @@
+P -155.0000, 1848.0000, 110.0000,  0, 240, 0,  1,  Zone_out
+P 80.0000, 339.0000, 247.0000,  0, 0, 0,  1,  Yellow_Dirtdigger_bodybreaker
+P 3001.0000, -97.0000, 215.0000,  0, 0, 0,  1,  Sugita_the_Vicarious
+P 3553.0000, 324.0000, 253.0000,  0, 0, 0,  1,  Toshiharu
+P 3338.0000, -3171.0000, 291.0000,  0, 0, 0,  1,  Yar'Lir_the_Living_Storm
+P 2837.0000, -3134.0000, 309.0000,  0, 0, 0,  1,  Iron_Forged_Protector_(see_inv)
+P 2720.0000, -3214.0000, 286.0000,  0, 0, 0,  1,  Muligiwa_the_Toxic_(see_inv)
+P 2970.0000, -3216.0000, 286.0000,  0, 0, 0,  1,  Mudforged_Protector_(see_inv)
+P 2973.0000, -3091.0000, 286.0000,  0, 0, 0,  1,  ShadowSplitter_(see_Inv)
+P -1015.0000, -70.0000, 35.0000,  0, 0, 0,  1,  Stormchaser
+P -219.0000, -1282.0000, -17.0000,  0, 0, 0,  1,  Stormchaser
+P -1965.0000, -2137.0000, -56.0000,  0, 0, 0,  1,  Yoshiaga
+P -1778.0000, -2438.0000, -56.0000,  0, 0, 0,  1,  Messenger_Drakes_and_Lore_Warden_(see_invis)
+P -2396.0000, 701.0000, 173.0000,  0, 0, 0,  1,  Fumi_the_Valiant
+P -2395.0000, 143.0000, 173.0000,  0, 0, 0,  1,  Mihoko_the_Rector
+P -2259.0000, 483.0000, 123.0000,  0, 0, 0,  1,  Kodama_the_Voltaic

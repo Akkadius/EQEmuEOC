@@ -1,0 +1,11 @@
+P -1416.9890, 225.5400, 1.1510,  0, 0, 240,  1,  Warren_of_the_Conscripts
+P -478.6890, 1266.4240, 41.4820,  0, 0, 240,  1,  Recluse_Canyon
+P -744.1860, -208.4100, 352.0280,  0, 0, 240,  1,  The_Living_Bridges
+P -1160.0000, 70.0000, 255.0000,  0, 0, 0,  3,  Queen_Sendai's_Shrine
+P -541.3700, 543.2800, 54.9000,  0, 0, 0,  3,  The_Reanimation_Chamber
+P -482.4300, 418.8700, 47.4600,  0, 0, 0,  3,  The_East_Obelisk
+P 0.0000, 5.0000, -16.9000,  0, 0, 0,  3,  StoneRoot_Falls_Zone
+P -471.1970, -261.3870, 163.0830,  0, 0, 0,  2,  Instanced_Zone
+P -1017.7270, -787.2540, 329.4010,  0, 0, 0,  2,  Instanced_Zone
+P -12.3460, 253.9100, -126.3080,  0, 0, 0,  3,  Stoneroot_Falls_Zone
+P -1210.1470, 396.6530, -11.9710,  0, 0, 0,  2,  Deeper_down_the_downward_spiral

@@ -1,0 +1,11 @@
+P -191.7785, -702.3586, 13.4972,  0, 0, 255,  2,  Ball_of_Cosgrove
+P -2.4657, -596.7319, 17.4972,  0, 0, 0,  2,  Brell_Serilis
+P -34.7080, -443.9302, 17.4972,  255, 0, 0,  2,  Sanctus_Persant_(Quests)
+P -12.1928, -666.2678, 17.4973,  255, 0, 0,  2,  Resnel_(Quests)
+P 11.3901, -666.0966, 17.4973,  255, 0, 0,  2,  Gotonur_(Quests)
+P -124.4365, -591.4689, 17.4975,  255, 0, 0,  2,  Chamberlain_Thoridian_(Quests)
+P 31.6657, -448.8391, 17.4972,  255, 0, 0,  2,  Master_Alchemist_Vakros_(Quests)
+P -0.2608, 1.0988, -27.4398,  0, 255, 0,  3,  Brell's_Rest
+P 207.0591, -705.4384, 16.4079,  0, 0, 255,  2,  Purest_Water
+P 0.0558, -802.3022, 21.5597,  0, 0, 255,  2,  Combined_Essences
+P 1.0000, -347.0000, 18.0000,  0, 255, 0,  3,  Kernagir_the_Shining_City

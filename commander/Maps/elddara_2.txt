@@ -1,0 +1,2 @@
+P 43.9360, -65.9930, 282.0560,  0, 0, 0,  2,  Brazlin_the_High_Priest_of_Ro
+P -0.5440, -82.8630, 282.0560,  240, 0, 0,  2,  Guardian_of_the_High_Priest_(When_triggered)

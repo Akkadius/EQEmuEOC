@@ -1,0 +1,53 @@
+.anim_entrance{
+	visibility: hidden;
+}
+.gps_ring {
+	border: 3px solid #85bf25;
+	-webkit-border-radius: 30px !important; 
+	height: 5px;
+	width: 5px;
+	position: absolute;
+	-webkit-animation: pulsate 1s ease-out;
+	-webkit-animation-iteration-count: infinite; 
+	opacity: 0.0;
+	background-color: ;
+	color: #85bf25 !important;
+	
+	top:10px;
+	left:-10px;
+} 
+.heading-pointer{
+	position: absolute;
+	top:3px;
+	left:-12px;
+}
+.pulse-dot {
+	position: absolute;
+	width: 4px;
+	height: 4px;
+	background-color: #85bf25;
+	border-radius: 50% !important;
+	-moz-border-radius: 50% !important;
+	-webkit-border-radius: 50% !important;
+	border: 1px solid #85bf25; 
+	top:10px;
+	left:-10px;
+}
+@-webkit-keyframes pulsate {
+	0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
+	50% {opacity: 1.0;}
+	100% {-webkit-transform: scale(2, 2); opacity: 0.0;}
+}
+.text_shadow{ text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000; }
+.entity_name{ font-size:10px }
+.race_image{ 
+	webkit-border-radius: 100px !important;
+	-moz-border-radius: 100px !important;
+	border-radius: 100px !important;
+	height:25px;
+	width:auto;
+}
+.character_icon{
+	width:10px !important;
+	height:auto;
+}

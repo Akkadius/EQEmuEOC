@@ -1,0 +1,4 @@
+P -89.0000, 1040.0000, 27.0000,  0, 0, 240,  3,  hostage
+P 94.0000, -505.0000, 7.0000,  255, 0, 255,  3,  To_Oasis_of_Marr
+P -504.0000, 110.0000, 0.0000,  0, 0, 240,  3,  Flowkeeper_Structure_Attendant_(miniboss)
+P 456.7120, 324.0720, 43.5010,  0, 0, 0,  2,  Prince_Jerranad
