@@ -1,0 +1,38 @@
+td{ font-size:15px; width:15px;}
+td input, select{  }  
+th,td{ }
+table{ table-layout: fixed; border-collapse:separate; }
+div.npctable {  
+	width: 1400px;
+	overflow-x:scroll;  
+	margin-left:28em; 
+	overflow-y:visible;
+	padding-bottom:1px;
+}
+.headcol1 {
+	position:absolute; 
+	width:15em !important; 
+	left:0;
+	top:auto;
+	border-right: 0px none black; 
+	border-top-width:3px; /*only relevant for first row*/
+	vertical-align:bottom;
+}
+.headcol2 {
+	position:absolute; 
+	width:10em !important;  
+	left:150px !important;
+	top:auto;
+	border-right: 0px none black; 
+	border-top-width:3px; /*only relevant for first row*/
+	vertical-align:bottom;
+}
+.headcol3 {
+	position:absolute; 
+	width:10em !important; 
+	left:280px !important;
+	top:auto;
+	border-right: 0px none black; 
+	border-top-width:3px; /*only relevant for first row*/
+	vertical-align:bottom;
+}
