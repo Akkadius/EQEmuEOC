@@ -6,6 +6,86 @@
 	if(isset($_GET['zone'])){
 		echo Draw2DMap($_GET['zone'], 1);  
 	}
+	else if(isset($_GET['ace_test'])){
+		echo '<!DOCTYPE html>
+			<html lang="en">
+			<head>
+				<title>ACE in Action</title>
+				<style type="text/css" media="screen">
+					#editor {
+						position: absolute;
+						top: 0;
+						right: 0;
+						bottom: 0;
+						left: 0;
+					}
+				</style>
+			</head>
+			<body>
+
+			<div id="editor">function foo(items) {
+				var x = "All this is syntax highlighted";
+				return x;
+				}
+			</div>';
+
+		if(isset($_GET['lua'])){
+			echo '
+			<script src="modules/commander/ace/build/src/ace.js" type="text/javascript" charset="utf-8"></script>
+			<script>
+				var editor = ace.edit("editor");
+				editor.setTheme("ace/theme/terminal");
+				editor.getSession().setMode("ace/mode/lua");
+
+				var ace_file_to_load = "quests/global/test.lua";
+
+
+
+			</script>
+			</body>
+			</html>';
+		}
+		else {
+			echo '
+			<script src="modules/commander/ace/build/src/ace.js" type="text/javascript" charset="utf-8"></script>
+			<script src="modules/commander/ace/build/src/ext-language_tools.js"></script>
+			<script>
+				var editor = ace.edit("editor");
+				ace.require("ace/ext/language_tools");
+
+
+				editor.setTheme("ace/theme/terminal");
+				editor.getSession().setMode("ace/mode/perl");
+				editor.setOptions({
+					enableBasicAutocompletion: true,
+					enableSnippets: true,
+					enableLiveAutocompletion: true
+				});
+				editor.commands.on("afterExec", function(e){
+					 if (e.command.name == "insertstring"&&/^[\w.]$/.test(e.args)) {
+						 editor.execCommand("startAutocomplete")
+					 }
+				})
+				var ace_file_to_load = "quests/global/global_npc.pl";
+			</script>
+			</body>
+			</html>';
+
+
+		}
+
+		$FJS .= "<script type='text/javascript'>
+			$(document).bind('keydown', function(e) {
+				  if(e.ctrlKey && (e.which == 83)) {
+					e.preventDefault();
+					socket.send(JSON.stringify({id: 'quest_save_script', method: 'World.SaveFileContents', params: ['' + ace_file_to_load + '', '' + editor.getSession().getValue() + '']}));
+					// alert('Saved');
+					$.notific8('Saved!', { heading: 'Commander', theme: 'ruby', life: 500 });
+					return false;
+				  }
+				});
+		</script>";
+	}
 	else{
 		/* Main */
 		echo '<center>';

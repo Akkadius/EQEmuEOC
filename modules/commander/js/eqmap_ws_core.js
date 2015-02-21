@@ -1,7 +1,7 @@
 /* Websocket Core */
 
-var WS_IP = "192.168.60.102";
-var WS_PORT = 9081;
+var WS_IP = "64.90.82.156";
+var WS_PORT = 52685;
 var WS_TOKEN = 'c5b80ec8-4174-4c4c-d332-dbf3c3a551fc';
 var socket = new WebSocket('ws://' + WS_IP + ':' + WS_PORT, 'eqemu');
 
@@ -104,7 +104,10 @@ socket.onopen = function () {
     socket.send(JSON.stringify(obj));
     SideBarMenu("zone_action");
     BuildSideBarMenuOptions();
-    // socket.send(JSON.stringify({id: 'quest_get_script', method: 'World.GetFileContents', params: ['patch_6.2.conf']}));
+    if(ace_file_to_load){
+        socket.send(JSON.stringify({id: 'quest_get_script', method: 'World.GetFileContents', params: ['' + ace_file_to_load + '']}));
+    }
+    // socket.send(JSON.stringify({id: 'quest_get_script', method: 'World.GetFileContents', params: ['quests/global/global_player.pl']}));
 }
 
 /* Log Errors */
@@ -133,7 +136,11 @@ socket.onmessage = function (e) {
         /* Tests */
         if (json.id == 'quest_get_script') {
             // console.log(json);
-            // $('.page-content').html('<textarea style="width:250%;height:800px">' + json.result.quest_text + '</textarea>');
+
+            // json.result.quest_text = json.result.quest_text.replace("\\n", "<br />");
+
+           // $('#editor').text(json.result.quest_text);
+            editor.getSession().setValue(json.result.quest_text);
         }
 
         /* Event Handlers: Server -> Web Client */

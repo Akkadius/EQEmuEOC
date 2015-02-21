@@ -121,24 +121,24 @@ function OnPositionUpdate(json){
             json.y = json.result.y;
             json.z = json.result.z;
             json.h = json.result.h;
-        ent_class = json.result.class_id;
-        ent_race = json.result.race_id;
-        if(json.type == 'NPC'){
-            // console.log(json.result.aggro_range);
-            aggro_radius = json.result.aggro_range;
-            // aggro_radius = 12;
-            // top:' + (aggro_radius * 1.2) + '%;left:-' + (aggro_radius * .10) + '%;
-            aggro_bubble = '<i class="fa fa-circle-thin" style="position:absolute;top:0%;left:-' + (aggro_radius * 7) + '%;font-size:' + round(aggro_radius * 2.4, 0) + 'px;color:red !important;opacity:.3"></i>';
+            ent_class = json.result.class_id;
+            ent_race = json.result.race_id;
+            if(json.type == 'NPC'){
+                // console.log(json.result.aggro_range);
+                aggro_radius = json.result.aggro_range;
+                // aggro_radius = 12;
+                // top:' + (aggro_radius * 1.2) + '%;left:-' + (aggro_radius * .10) + '%;
+                aggro_bubble = '<i class="fa fa-circle-thin" style="position:absolute;top:0%;left:-' + (aggro_radius * 7) + '%;font-size:' + round(aggro_radius * 2.4, 0) + 'px;color:red !important;opacity:.3"></i>';
+            }
         }
+        if(json.type == 'Door'){  btn_class = 'green'; }
+        if(json.type == 'Object'){  btn_class = 'yellow'; }
+        /* Store Entity List Cache */
+        entity_list_cache[entity_list_index] = [json.entity, json.name, json.type, ent_class, ent_race];
+        entity_list_index++;
     }
-    if(json.type == 'Door'){  btn_class = 'green'; }
-    if(json.type == 'Object'){  btn_class = 'yellow'; }
-    /* Store Entity List Cache */
-    entity_list_cache[entity_list_index] = [json.entity, json.name, json.type, ent_class, ent_race];
-    entity_list_index++;
-}
-else {
-    json.entity = json.params[0];
+    else {
+        json.entity = json.params[0];
         json.name = json.params[1];
         json.x = json.params[2];
         json.y = json.params[3];
