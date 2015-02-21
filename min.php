@@ -19,6 +19,7 @@
 	if($_GET['Mod'] == "PEQEditor"){
 		echo '<style>html, body { height:100%; } </style>'; 
 		if($_GET['Rev'] == "421"){ echo '<iframe src="modules/PEQEditor421/index.php" width="100%" style="position:absolute;max-height:100%; height:100% !important; width:98%;" scrolling="auto" id="peqframe"></iframe>'; }
+		if($_GET['Rev'] == "460"){ echo '<iframe src="modules/PEQEditor460/index.php" width="100%" style="position:absolute;max-height:100%; height:100% !important; width:98%;" scrolling="auto" id="peqframe"></iframe>'; }
 		else{ echo '<iframe src="modules/PEQEditor/index.php" width="100%" style="max-height:100%; height:100%; width:100%;" scrolling="auto" id="peqframe"></iframe>'; }
 		$FJS .= '<script type="text/javascript">
 			setInterval(DOPEQURLUPDATE, 1000);

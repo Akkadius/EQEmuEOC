@@ -49,6 +49,7 @@
 			.form-group div,
 			.form div,
 			blockquote,
+			.modal,
 			.table td{ 
 				background-color: #333333 !important; 
 				color: gray !important;
@@ -90,7 +91,7 @@
 		<div class="page-logo">
 			<a href="index.php">
 				<img src="cust_assets/eqemu.png" alt="logo" class="logo-default" style="height: 50px;width:auto;margin: 8px 0 0 0;"/>
-				<img src="cust_assets/eoc-fd.png" alt="logo" class="logo-default" style="height: 30px;width:auto;position:absolute;top:20px;left:60px"/>
+				<img src="cust_assets/eoc-fd.png" alt="logo" class="logo-default" style="height: 25px;width:auto;position:absolute;top:-5px;left:120px"/>
 			</a>
 			<?php
 				// if($Minified != 1){ echo ' <div class="menu-toggler sidebar-toggler"> </div>'; }

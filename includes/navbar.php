@@ -25,13 +25,14 @@
 									<li class="divider" style="height: 1px; padding:0px !important"> </li>
 									<li> <a href="index.php?M=ItemEditor"> <i class="fa fa-angle-right"></i> <i class="icon-pencil"></i> Item Search & Editor </a> </li>
 									<li> <a href="index.php?M=SpellEditor"> <i class="fa fa-angle-right"></i> <i class="icon-pencil"></i> Spell Search & Editor (In Dev - Functional)</a> </li>
-									<li> <a href="index.php?M=NPC"> <i class="fa fa-angle-right"></i> <i class="icon-pencil"></i> NPC Editor </a> </li>
+									<li> <a href="index.php?M=NPC2"> <i class="fa fa-angle-right"></i> <i class="icon-pencil"></i> NPC Editor </a> </li>
 									<li> <a href="index.php?M=ZT"> <i class="fa fa-angle-right"></i>  <i class="fa fa-cloud-upload"></i> Zone Copy/Import </a> </li>
 									<li> <a href="index.php?M=dbstr"> <i class="fa fa-angle-right"></i> <i class="fa fa-list"></i> dbstr_us.txt Editor </a> </li>
 									<li> <a href="index.php?M=TaskEditor"> <i class="fa fa-angle-right"></i> <i class="fa fa-list"></i> Task Editor </a> </li>
 									<li> <a href="min.php?Mod=RaceViewer&RaceView=1&GenRaceFile=1"> <i class="fa fa-angle-right"></i> <i class="fa fa-file-text"></i> _chr.txt File Generator </a> </li>
 									<li> <a href="index.php?M=QueryServ"> <i class="fa fa-angle-right"></i> <i class="fa fa-pencil-square"></i> Logging (QueryServ) (In Dev - Not functional)</a> </li>
 									<li class="divider" style="height: 1px; padding:0px !important"> </li>
+									<li> <a href="min.php?Mod=PEQEditor&Rev=460"> <i class="fa fa-angle-right"></i> PEQ Editor Rev 460 <br> <img src="cust_assets/images/PEQ_Logo.png" style="height:50px;width:auto"> </a> </li>
 									<li> <a href="min.php?Mod=PEQEditor&Rev=421"> <i class="fa fa-angle-right"></i> PEQ Editor Rev 421 <br> <img src="cust_assets/images/PEQ_Logo.png" style="height:50px;width:auto"> </a> </li>
 								</ul>
 								<ul class="col-md-4 mega-menu-submenu">
@@ -74,7 +75,7 @@
 			echo '<li class="dropdown dropdown-user" >
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 				<span class="username" style="height:30px;padding-top:5px">
-					<i class="fa fa-cog" style="font-size:20px;text-shadow: 0px 0px 20px #FCFF9B;color: #ffffff;"></i> <b style="color:#fff">Options</b></span>
+					<i class="fa fa-cog" style="font-size:20px;text-shadow: 0px 0px 2px #FCFF9B;color: #ffffff;"></i> <b style="color:#fff">Options</b></span>
 				<i class="fa fa-angle-down"></i>
 				</a>
 				
@@ -89,7 +90,7 @@
 			/* Database Connections */
 			echo '<li class="dropdown dropdown-user" >
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-					<span class="username" style="height:30px;padding-top:5px"> <i class="fa fa-database" style="font-size:20px;text-shadow: 0px 0px 20px #FCFF9B;color: #ffffff;"></i> <b style="color:#fff">' . $dbhost . '</b></span>
+					<span class="username" style="height:30px;padding-top:5px"> <i class="fa fa-database" style="font-size:20px;text-shadow: 0px 0px 2px #FCFF9B;color: #ffffff;"></i> <b style="color:#fff">' . $dbhost . '</b></span>
 					<i class="fa fa-angle-down"></i>
 					</a>
 					<ul class="dropdown-menu">';

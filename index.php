@@ -14,6 +14,7 @@
 	if($Mod == "TaskEditor"){ include('modules/TaskEditor/TaskEditor.php'); } 
 	if($Mod == "Character"){ include('modules/Character/Character.php'); }
 	if($Mod == "NPC"){ include('modules/NPC/NPC.php'); }
+	if($Mod == "NPC2"){ include('modules/NPC/NPC2.php'); }
 	if($Mod == "ServerManager"){ include('modules/ServerManager/ServerManager.php'); }
 	if($Mod == "QueryServ"){ include('modules/QueryServ/QueryServ.php'); }
 	if($Mod == "SpellEditor"){ include('modules/SpellEditor/SpellEditor.php'); } 

@@ -23,7 +23,7 @@
 	function Modal($Title, $Content, $Buttons){ 
 		return '<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-			<h4 class="modal-title">' . $Title . '</h4>
+			<h3 class="modal-title">' . $Title . '</h3>
 		</div>
 		<div class="modal-body">
 			<div class="row">
