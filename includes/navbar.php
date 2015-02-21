@@ -33,7 +33,6 @@
 									<li> <a href="index.php?M=QueryServ"> <i class="fa fa-angle-right"></i> <i class="fa fa-pencil-square"></i> Logging (QueryServ) (In Dev - Not functional)</a> </li>
 									<li class="divider" style="height: 1px; padding:0px !important"> </li>
 									<li> <a href="min.php?Mod=PEQEditor&Rev=460"> <i class="fa fa-angle-right"></i> PEQ Editor Rev 460 <br> <img src="cust_assets/images/PEQ_Logo.png" style="height:50px;width:auto"> </a> </li>
-									<li> <a href="min.php?Mod=PEQEditor&Rev=421"> <i class="fa fa-angle-right"></i> PEQ Editor Rev 421 <br> <img src="cust_assets/images/PEQ_Logo.png" style="height:50px;width:auto"> </a> </li>
 								</ul>
 								<ul class="col-md-4 mega-menu-submenu">
 									<li> <h3>Viewers</h3> </li> 
@@ -87,43 +86,50 @@
 					<li>  <a href="javascript:;" onclick="ToggleUIStyle(2)"> <i class="fa fa-css3"></i> Dark </a> </li>
 				</ul>
 			</li>';
-			/* Database Connections */
-			echo '<li class="dropdown dropdown-user" >
+
+
+
+            if(file_exists("../login.php")) {
+                /* Database Connections */
+                echo '<li class="dropdown dropdown-user" >
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 					<span class="username" style="height:30px;padding-top:5px"> <i class="fa fa-database" style="font-size:20px;text-shadow: 0px 0px 2px #FCFF9B;color: #ffffff;"></i> <b style="color:#fff">' . $dbhost . '</b></span>
 					<i class="fa fa-angle-down"></i>
 					</a>
 					<ul class="dropdown-menu">';
-					
-					foreach ($_COOKIE as $key => $val){
-						if(preg_match('/dbconn/i', $key)){
-							$conn = explode(",", $val);
-							/*
-								IP
-								DB_Name
-								DB_User
-								DB_Pass
-							*/
-							# print $key . ' ' . $val . '<br>';
-							echo '
+
+                foreach ($_COOKIE as $key => $val) {
+                    if (preg_match('/dbconn/i', $key)) {
+                        $conn = explode(",", $val);
+                        /*
+                            IP
+                            DB_Name
+                            DB_User
+                            DB_Pass
+                        */
+                        # print $key . ' ' . $val . '<br>';
+                        echo '
 								<li>
 									<a href="javascript:;" onclick="DoDBSwitch(\'' . $key . '\')"> <i class="fa fa-database"></i>' . $conn[0] . ' - ' . $conn[1] . '</a> 
-								</li>'; 
-						}
-					}
-					
-			echo '
-			<li class="divider" style="height: 1px; padding:0px !important"> </li> 
-			<li>
-				<a href="javascript:;" onclick="DoDBSwitch(\'Local_EOC\')"> <i class="fa fa-database"></i>Local EoC Test</a> 
-			</li>
-			<li class="divider" style="height: 1px; padding:0px !important"> </li>	
-					<li>
-							<a href="login.php">
-							<i class="fa fa-database"></i> Connection page </a>
-						</li>
-					</ul>
-				</li>';
+								</li>';
+                    }
+                }
+
+                echo '
+                <li class="divider" style="height: 1px; padding:0px !important"> </li>
+                <li>
+                    <a href="javascript:;" onclick="DoDBSwitch(\'Local_EOC\')"> <i class="fa fa-database"></i>Local EoC Test</a>
+                </li>
+                <li class="divider" style="height: 1px; padding:0px !important"> </li>
+                        <li>
+                                <a href="login.php">
+                                <i class="fa fa-database"></i> Connection page </a>
+                            </li>
+                        </ul>
+                    </li>';
+                /* END Database */
+
+            }
 			/* Menu Options */
 			/*
 			echo '<li class="dropdown dropdown-user" >

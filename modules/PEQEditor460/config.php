@@ -76,43 +76,39 @@ $quest_path = "/home/eqemu/quests";
 /* EoC Added Code ~ Akkadius */
 
 // Start the session for this page
-session_start(); 
+session_start();
 
 $IsAuthenticated=FALSE;
 // If authenticated as an admin, allow alternate DB credentials/settings
-if (isset($_SESSION['SESS_MEMBER_ID']) && (trim($_SESSION['SESS_MEMBER_ID']) != ''))
-{
-	// Used to check if authenticated
-	$IsAuthenticated=TRUE;
-	
-	$dbhost="69.168.254.244";
-	$db="eoc";
-	$dbuser="eocdev";
-	$dbpass="E0cd3v3l0pm3nt!";
+if (isset($_SESSION['SESS_MEMBER_ID']) && (trim($_SESSION['SESS_MEMBER_ID']) != '')) {
+    // Used to check if authenticated
+    $IsAuthenticated=TRUE;
 
 }
+
+require_once('../../includes/config.php');
 
 /* Manual DB Login */
-if($_SESSION['dblogin']){
-	$dbhost=$_SESSION['dbip'];
-	$db=$_SESSION['dbname'];
-	$dbuser=$_SESSION['dbuser'];
-	$dbpass=$_SESSION['dbpass'];
-	// Used to check if authenticated
-	$IsAuthenticated=TRUE;
+if ($_SESSION['dblogin']) {
+    $dbhost = $_SESSION['dbip'];
+    $db = $_SESSION['dbname'];
+    $dbuser = $_SESSION['dbuser'];
+    $dbpass = $_SESSION['dbpass'];
+    // Used to check if authenticated
+    $IsAuthenticated = TRUE;
 }
-else if($_COOKIE['dblogin'] == 1){
-	$dbhost=$_COOKIE['dbip'];
-	$db=$_COOKIE['dbname'];
-	$dbuser=$_COOKIE['dbuser'];
-	$dbpass=$_COOKIE['dbpass'];
-	$_SESSION['dblogin'] = 1;
-	$_SESSION['dbip'] = $_COOKIE['dbip'];
-	$_SESSION['dbname'] = $_COOKIE['dbname'];
-	$_SESSION['dbuser'] = $_COOKIE['dbuser'];
-	$_SESSION['dbpass'] = $_COOKIE['dbpass'];
-	// Used to check if authenticated
-	$IsAuthenticated=TRUE;
+else if ($_COOKIE['dblogin'] == 1) {
+    $dbhost = $_COOKIE['dbip'];
+    $db = $_COOKIE['dbname'];
+    $dbuser = $_COOKIE['dbuser'];
+    $dbpass = $_COOKIE['dbpass'];
+    $_SESSION['dblogin'] = 1;
+    $_SESSION['dbip'] = $_COOKIE['dbip'];
+    $_SESSION['dbname'] = $_COOKIE['dbname'];
+    $_SESSION['dbuser'] = $_COOKIE['dbuser'];
+    $_SESSION['dbpass'] = $_COOKIE['dbpass'];
+    // Used to check if authenticated
+    $IsAuthenticated = TRUE;
 }
 
 $_SESSION['guest'] = 0;
