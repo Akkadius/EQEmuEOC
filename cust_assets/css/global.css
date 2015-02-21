@@ -14,3 +14,9 @@ body { background-color: #FFFFFF !important; }
 
 /* Item Tooltip */
 .item_view tr, .item_view td{ padding:1px !important; }
+
+/* Navbar */
+
+.navbar{
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.3), 0 8px 8px rgba(0, 0, 0, 0.3) !important;
+}
