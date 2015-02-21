@@ -1,2 +1,139 @@
 php_value post_max_size 20M
 php_value upload_max_filesize 30M
+
+# PHP MAX SESSION LIFETIME
+
+php_value session.gc_maxlifetime 604800
+php_value session.gc_probability 1
+php_value session.gc_divisor 1000
+php_value session.cookie_lifetime 604800
+php_value session.cache_expire 604800
+
+# compress text, html, javascript, css, xml:
+AddOutputFilterByType DEFLATE text/plain
+AddOutputFilterByType DEFLATE text/html
+AddOutputFilterByType DEFLATE text/xml
+AddOutputFilterByType DEFLATE text/css
+AddOutputFilterByType DEFLATE application/xml
+AddOutputFilterByType DEFLATE application/xhtml+xml
+AddOutputFilterByType DEFLATE application/rss+xml
+AddOutputFilterByType DEFLATE application/javascript
+AddOutputFilterByType DEFLATE application/x-javascript
+
+# Or, compress certain file types by extension:
+<files *.wav>
+    SetOutputFilter DEFLATE
+</files>
+
+ExpiresActive On
+ExpiresDefault A259200
+
+# Set up caching on media files for 1 month
+<FilesMatch "\.(woff|ico|gif|jpg|jpeg|png|flv|pdf|swf|mov|mp3|wmv|ppt)$">
+  ExpiresDefault A2419200
+  Header append Cache-Control "public"
+</FilesMatch>
+
+# 1 Year Caching
+<FilesMatch "\.(xml|txt|html|js|css)$">
+  ExpiresDefault A31557600
+  Header append Cache-Control "private, must-revalidate"
+</FilesMatch>
+
+# 1 Year Caching
+<FilesMatch "(img)$">
+  ExpiresDefault A31557600
+  Header append Cache-Control "private, must-revalidate"
+</FilesMatch>
+
+# PHP Image Handler - GM
+<FilesMatch "^(img)\.php$">
+  ExpiresDefault A31557600
+  Header append Cache-Control "private, must-revalidate, cache, store"
+  Header set Pragma "cache"
+</FilesMatch>
+
+# Minify Plugin - GM
+<FilesMatch "^(js|css)\.php$">
+  ExpiresDefault A31557600
+  Header append Cache-Control "private, must-revalidate, cache, store"
+  Header set Pragma "cache"
+</FilesMatch>
+
+# Force no caching for dynamic files
+<FilesMatch "\.(php|cgi|pl|htm)$">
+  ExpiresDefault A0
+  Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+  Header set Pragma "no-cache"
+</FilesMatch>
+
+<FilesMatch "^(img)\.php$">
+  ExpiresDefault A31557600
+  Header set Cache-Control "private, must-revalidate, cache, store"
+  Header set Pragma "cache"
+</FilesMatch>
+
+Options -Indexes
+
+<IfModule mod_expires.c>
+    ExpiresActive on
+
+    # Perhaps better to whitelist expires rules? Perhaps.
+    ExpiresDefault      "access plus 1 month"
+
+    # cache.appcache needs re-requests
+    # in FF 3.6 (thx Remy ~Introducing HTML5)
+    ExpiresByType text/cache-manifest "access plus 0 seconds"
+
+    # Your document html
+    ExpiresByType text/html "access plus 0 seconds"
+
+    # Data
+    ExpiresByType text/xml "access plus 0 seconds"
+    ExpiresByType application/xml "access plus 0 seconds"
+    ExpiresByType application/json "access plus 0 seconds"
+
+    # RSS feed
+    ExpiresByType application/rss+xml "access plus 1 hour"
+
+    # Favicon (cannot be renamed)
+    ExpiresByType image/x-icon "access plus 1 week"
+
+    # Media: images, video, audio
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType video/ogg "access plus 1 month"
+    ExpiresByType audio/ogg "access plus 1 month"
+    ExpiresByType video/mp4 "access plus 1 month"
+    ExpiresByType video/webm "access plus 1 month"
+
+    # HTC files  (css3pie)
+    ExpiresByType text/x-component "access plus 1 month"
+
+    # Webfonts
+    ExpiresByType font/truetype "access plus 1 month"
+    ExpiresByType font/opentype "access plus 1 month"
+    ExpiresByType application/x-font-woff   "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType application/vnd.ms-fontobject "access plus 1 month"
+
+    # CSS and JavaScript
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType text/javascript "access plus 1 year"
+
+    RewriteEngine On
+    RewriteCond %{SCRIPT_FILENAME} !-d
+    RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+    php_value post_max_size 500M
+    php_value upload_max_filesize 500M
+
+    ErrorDocument 404 /index.php?ES=404
+
+    <IfModule mod_headers.c>
+        Header append Cache-Control "public"
+    </IfModule>
+</IfModule>
