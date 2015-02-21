@@ -26,9 +26,9 @@
 			.DTFC_LeftBodyWrapper{ padding-top:2px;  }
 			.DTFC_LeftBodyLiner{ overflow-x: hidden !important;  }
 			table td{ }
-			#npc_head_table input, .DTFC_Cloned input {
+			#npc_head_table input, #npc_head_table select, #npc_head_table option, .DTFC_Cloned input {
 				padding: 0px !important;
-				height:20px;
+				height:20px !important;
 			}
 			table.dataTable thead th, table.dataTable thead td {
 				border-bottom: 0px solid #111 !important;
@@ -37,6 +37,9 @@
 				-webkit-box-shadow: 3px 1px 4px rgba(0,0,0,0.065);
 				-moz-box-shadow: 3px 1px 4px rgba(0,0,0,0.065);
 				box-shadow: 3px 1px 4px rgba(0,0,0,0.065);
+			}
+			html, body {
+				overflow: hidden;
 			}
 		</style>';
 

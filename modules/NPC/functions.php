@@ -96,12 +96,13 @@
 		);
 		return $field_desc[$field][0];
 	}
-	function GetZoneListSelect(){
+	function GetZoneListSelect($zone_name){
 		$sql = "SELECT `long_name`, `zoneidnumber`, `short_name` FROM `zone` ORDER BY `zoneidnumber`";
 		$result = mysql_query($sql);
 		$ret .= '<select class="form-control" id="zoneselect" title="Select the Zone you wish to list NPCs For">';
-		while($row = mysql_fetch_array($result)){ 
-			$ret .= '<option value="'. $row['short_name'] . '">' . $row['short_name'] . ' - ' .  $row['long_name'] . ' - (' .  $row['zoneidnumber'] .  ': ' . $row['short_name'] . ')' . '</option>';
+		while($row = mysql_fetch_array($result)){
+			if($zone_name == $row['short_name']){ $sel = "selected"; } else { $sel = ""; }
+			$ret .= '<option value="'. $row['short_name'] . '" ' . $sel . '>' . $row['short_name'] . ' - ' .  $row['long_name'] . ' - (' .  $row['zoneidnumber'] .  ': ' . $row['short_name'] . ')' . '</option>';
 		}
 		$ret .= '</select>';
 		return $ret;
@@ -139,7 +140,7 @@
 	} 
 	function NPCTableEnd(){ $return .= '</tbody></table>'; return $return; }  
 	
-	$npcfields = array(
+	$npc_fields = array(
 		"level" => "Level",
 		"race" => "Race<br>",
 		"class" => "Class",
@@ -365,14 +366,16 @@
 	
 	$yes_no = array(0 => "No", 1 => "Yes");
 	
-	function GetFieldSelect($field_name, $value, $npc_id){
+	function GetFieldSelect($field_name, $value, $npc_id, $from_npc_grid_tool = 0){
 		global $EditOptions, $yes_no, $trap_types, $adventure_templates, $bodytypes, $genders, $dbclasses;
-		$ret .= "<select class='form-control' title='" . ProcessFieldTitle($field_name) . "'  value='" . $value . "' id='" . $npc_id . "^" . $field_name . "' class='" . $field_name . "' onchange='UpdateSingleNPCEdit(" . $npc_id . ", \"" . $field_name . "\", this.value)'>";
+		$found_select = 0;
+		$ret .= "<select class='form-control' title='" . ProcessFieldTitle($field_name) . "'  value='" . $value . "' id='" . $npc_id . "^" . $field_name . "' class='" . $field_name . "' onchange='update_npc_field(" . $npc_id . ", \"" . $field_name . "\", this.value)'>";
 		if($field_name == "prim_melee_type" || $field_name == "sec_melee_type"){
 			foreach ($EditOptions['extradmgskill'] as $key => $val){
 				if($key == $value){ $sel = "selected"; } else { $sel = ""; }
 				$ret .= '<option value="'. $key . '" ' . $sel . '>'. $key . ': ' . $val . '</option>';
 			}
+			$found_select = 1;
 		}
 		else if($field_name == "adventure_template_id"){
 			$ret .= '<option value="0">0: None</option>';
@@ -380,6 +383,7 @@
 				if($key == $value){ $sel = "selected"; } else { $sel = ""; }
 				$ret .= '<option value="'. $key . '" ' . $sel . '>'. $key . ': ' . $val . '</option>';
 			}
+			$found_select = 1;
 		}
 		else if($field_name == "class"){
 			$ret .= '<option value="0">0: None</option>';
@@ -387,6 +391,7 @@
 				if($key == $value){ $sel = "selected"; } else { $sel = ""; }
 				$ret .= '<option value="'. $key . '" ' . $sel . '>'. $key . ': ' . $val . '</option>';
 			}
+			$found_select = 1;
 		}
 		else if($field_name == "gender"){
 			$ret .= '<option value="0">0: None</option>';
@@ -394,6 +399,7 @@
 				if($key == $value){ $sel = "selected"; } else { $sel = ""; }
 				$ret .= '<option value="'. $key . '" ' . $sel . '>'. $key . ': ' . $val . '</option>';
 			}
+			$found_select = 1;
 		}
 		else if($field_name == "bodytype"){
 			$ret .= '<option value="0">0: None</option>';
@@ -401,12 +407,14 @@
 				if($key == $value){ $sel = "selected"; } else { $sel = ""; }
 				$ret .= '<option value="'. $key . '" ' . $sel . '>'. $key . ': ' . $val . '</option>';
 			}
+			$found_select = 1;
 		}
 		else if($field_name == "size"){
 			for($i=1;$i<=255;$i++){
 				if($i == $value){ $sel = "selected"; } else { $sel = ""; } 
 				$ret .= '<option value="'. $i . '" ' . $sel . '>'. $i . '</option>';
 			}
+			$found_select = 1;
 		}
 		else if($field_name == "emoteid"){
 			$query = "SELECT * FROM `npc_emotes`";
@@ -416,6 +424,7 @@
 				if($row['emoteid'] == $value){ $sel = "selected"; } else { $sel = ""; } 
 				$ret .= '<option value="'. $row['emoteid'] . '" ' . $sel . '>'. $row['emoteid'] . ': ' . $row['text'] . '</option>';
 			}
+			$found_select = 1;
 		}
 		else if($field_name == "armortint_id"){
 			$query = "SELECT * FROM `npc_types_tint` order by `id`";
@@ -425,6 +434,7 @@
 				if($row['id'] == $value){ $sel = "selected"; } else { $sel = ""; } 
 				$ret .= '<option value="'. $row['id'] . '" ' . $sel . '>'. $row['id'] . ': ' . $row['tint_set_name'] . '</option>';
 			}
+			$found_select = 1;
 		}
 		else if($field_name == "npc_spells_id"){
 			$query = "SELECT * FROM `npc_spells` order by `id`";
@@ -434,6 +444,7 @@
 				if($row['id'] == $value){ $sel = "selected"; } else { $sel = ""; } 
 				$ret .= '<option value="'. $row['id'] . '" ' . $sel . '>'. $row['id'] . ': ' . $row['name'] . '</option>';
 			}
+			$found_select = 1;
 		}
 		else if($field_name == "npc_faction_id"){
 			$query = "SELECT * FROM `npc_faction` order by `id`";
@@ -443,6 +454,7 @@
 				if($row['id'] == $value){ $sel = "selected"; } else { $sel = ""; } 
 				$ret .= '<option value="'. $row['id'] . '" ' . $sel . '>'. $row['id'] . ': ' . $row['name'] . '</option>';
 			}
+			$found_select = 1;
 		}
 		else if($field_name == "trap_template"){
 			$query = "SELECT
@@ -463,6 +475,7 @@
 				if($row['id'] == $value){ $sel = "selected"; } else { $sel = ""; } 
 				$ret .= '<option value="'. $row['id'] . '" ' . $sel . '>'. $row['id'] . ': ' . $trap_types[$row['type']] . ' Spell: ' . $row['name'] . '</option>';
 			}
+			$found_select = 1;
 		} 
 		else if($field_name == "alt_currency_id"){
 			$query = "SELECT
@@ -480,6 +493,7 @@
 				if($row['id'] == $value){ $sel = "selected"; } else { $sel = ""; } 
 				$ret .= '<option value="'. $row['id'] . '" ' . $sel . '>'. $row['id'] . ': ' . $row['Name'] . '</option>';
 			}
+			$found_select = 1;
 		}
 		else if($field_name == "npc_aggro"
 			|| $field_name == "qglobal"
@@ -491,9 +505,13 @@
 			|| $field_name == "see_hide"
 		){
 			for($i=0;$i<=1;$i++){
-				if($i == $value){ $sel = "selected"; } else { $sel = ""; } 
+				if($i == $value){ $sel = "selected"; } else { $sel = ""; }
 				$ret .= '<option value="'. $i . '" ' . $sel . '>'. $i . ': ' . $yes_no[$i] . '</option>';
 			}
+			$found_select = 1;
+		}
+		if($found_select == 0 && $from_npc_grid_tool){
+			return "";
 		}
 		$ret .= '</select>';
 		return $ret;
