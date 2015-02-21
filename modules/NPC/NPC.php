@@ -36,13 +36,13 @@
 		$result = mysql_query($query);
 		while($row = mysql_fetch_array($result)){ 
 			if($row['Field'] == "hp"){ $Field = "Hit Points"; }
-			else if($npcfields[$row['Field']]){ $Field = $npcfields[$row['Field']]; }
+			else if($npc_fields[$row['Field']]){ $Field = $npc_fields[$row['Field']]; }
 			else{ $Field = $row['Field']; }
 			array_push ($NPCCols, $Field); 
 			array_push ($NPCACols, $row['Field']);
 		}
 		
-		$NPCFields = array();
+		$npc_fields = array();
 		$query = "SELECT * FROM `npc_types` WHERE `id` = " . $_GET['SingleNPCEdit'] . "";
 		$result = mysql_query($query);	
 		$Content .= '<center>';
@@ -53,7 +53,7 @@
 				if(is_numeric($key)){
 					/* Races */
 					if($NPCACols[($n - 1)] == "race"){
-						$NPCFields["Visual Texture"][$NPCACols[($n - 1)]][0] = $NPCCols[($n - 1)];
+						$npc_fields["Visual Texture"][$NPCACols[($n - 1)]][0] = $NPCCols[($n - 1)];
 						$Field = "" .
 						'<img src="includes/img.php?type=race&id=' . $val . '" id="RaceIMG" style="width:200px;height:280px;"><br>' . "
 						<select value='" . $val . "' id='" . $row['id'] . "^" . $NPCACols[($n - 1)] . "' class='" . $NPCACols[($n - 1)] . "' onchange='RaceChange(" . $_GET['SingleNPCEdit'] . ", this.value)'>";
@@ -62,21 +62,21 @@
 							else{ $Field .= '<option value="'. $key . '">'. $key . ': '. $val2 . ' </option>'; }
 						}						
 						$Field .= '</select>';
-						$NPCFields["Visual Texture"][$NPCACols[($n - 1)]][1] = $Field;
+						$npc_fields["Visual Texture"][$NPCACols[($n - 1)]][1] = $Field;
 					}
 					else if($NPCACols[($n - 1)] == "d_meele_texture1" || $NPCACols[($n - 1)] == "d_meele_texture2"){
-						$NPCFields["Visual Texture"][$NPCACols[($n - 1)]][0] = $NPCCols[($n - 1)];
-						$NPCFields["Visual Texture"][$NPCACols[($n - 1)]][1] =  '<a href="javascript:;" onclick="OpenWindow(\'min.php?Mod=IE&prevITfile=1&Field=' . $NPCACols[($n - 1)] . '&NPC=' . $row['id'] . '\', \'_blank\', 900, 900)"> <img src="../images/weapons/'. $val . '.jpg" id="'.  $NPCACols[($n - 1)] . '" style="width:200px;height:280px;"></a><br>';
-						$NPCFields["Visual Texture"][$NPCACols[($n - 1)]][1] .=  "<input type='number' value='" . $val . "' id='" . $row['id'] . "^" . $NPCACols[($n - 1)] . "' class='" . $NPCACols[($n - 1)] . "' onchange='UpdateSingleNPCEdit(" . $row['id'] . ", \"" . $NPCACols[($n - 1)] . "\", this.value)'>";
+						$npc_fields["Visual Texture"][$NPCACols[($n - 1)]][0] = $NPCCols[($n - 1)];
+						$npc_fields["Visual Texture"][$NPCACols[($n - 1)]][1] =  '<a href="javascript:;" onclick="OpenWindow(\'min.php?Mod=IE&prevITfile=1&Field=' . $NPCACols[($n - 1)] . '&NPC=' . $row['id'] . '\', \'_blank\', 900, 900)"> <img src="../images/weapons/'. $val . '.jpg" id="'.  $NPCACols[($n - 1)] . '" style="width:200px;height:280px;"></a><br>';
+						$npc_fields["Visual Texture"][$NPCACols[($n - 1)]][1] .=  "<input type='number' value='" . $val . "' id='" . $row['id'] . "^" . $NPCACols[($n - 1)] . "' class='" . $NPCACols[($n - 1)] . "' onchange='update_npc_field(" . $row['id'] . ", \"" . $NPCACols[($n - 1)] . "\", this.value)'>";
 					}
 					else if($npcfieldscat[$NPCACols[($n - 1)]][0]){
 						#echo $npcfieldscat[$NPCACols[($n - 1)]] . '<br>';
-						$NPCFields[$npcfieldscat[$NPCACols[($n - 1)]]][$NPCACols[($n - 1)]][0] = $NPCCols[($n - 1)];
-						$NPCFields[$npcfieldscat[$NPCACols[($n - 1)]]][$NPCACols[($n - 1)]][1] =  "<input type='text' value='" . $val . "' id='" . $row['id'] . "^" . $NPCACols[($n - 1)] . "' class='" . $NPCACols[($n - 1)] . "' onchange='UpdateSingleNPCEdit(" . $row['id'] . ", \"" . $NPCACols[($n - 1)] . "\", this.value)'>";
+						$npc_fields[$npcfieldscat[$NPCACols[($n - 1)]]][$NPCACols[($n - 1)]][0] = $NPCCols[($n - 1)];
+						$npc_fields[$npcfieldscat[$NPCACols[($n - 1)]]][$NPCACols[($n - 1)]][1] =  "<input type='text' value='" . $val . "' id='" . $row['id'] . "^" . $NPCACols[($n - 1)] . "' class='" . $NPCACols[($n - 1)] . "' onchange='update_npc_field(" . $row['id'] . ", \"" . $NPCACols[($n - 1)] . "\", this.value)'>";
 					}
 					else{
-						$NPCFields['End'][$NPCACols[($n - 1)]][0] = $NPCCols[($n - 1)];
-						$NPCFields['End'][$NPCACols[($n - 1)]][1] =  "<input type='text' value='" . $val . "' id='" . $row['id'] . "^" . $NPCACols[($n - 1)] . "' class='" . $NPCACols[($n - 1)] . "' onchange='UpdateSingleNPCEdit(" . $row['id'] . ", \"" . $NPCACols[($n - 1)] . "\", this.value)'>";
+						$npc_fields['End'][$NPCACols[($n - 1)]][0] = $NPCCols[($n - 1)];
+						$npc_fields['End'][$NPCACols[($n - 1)]][1] =  "<input type='text' value='" . $val . "' id='" . $row['id'] . "^" . $NPCACols[($n - 1)] . "' class='" . $NPCACols[($n - 1)] . "' onchange='update_npc_field(" . $row['id'] . ", \"" . $NPCACols[($n - 1)] . "\", this.value)'>";
 					}
 					$n++;
 				}
@@ -88,7 +88,7 @@
 			$Content .= '<br><h2 class="page-title">' . $Orderval . '</h2>';
 			$Content .= '<table class="table" style="width:500px">';
 			$n = 0;
-			foreach ($NPCFields[$Orderval] as $key => $val){
+			foreach ($npc_fields[$Orderval] as $key => $val){
 				if($n == 0){ $Content .= '<tr>'; }
 				$Content .= '<td style="text-align:center;"><h2 style="display:inline;color:black;font-weight:bold">' . $val[0] . '</h2><br>' . $val[1] . '</td>';
 				if($n == 4){ $Content .= '</tr>'; $n = 0; }

@@ -16,7 +16,7 @@
 	$FJS .= '<script type="text/javascript" src="cust_assets/js/lazy-load.js"></script>';
 	$FJS .= '
 		<script type="text/javascript">
-			function getRandomInt (min, max) {
+			function GetRandomInt (min, max) {
 				return Math.floor(Math.random() * (max - min + 1)) + min;
 			} 
 		</script>
@@ -89,7 +89,7 @@
 				$JSMagic2 = "";
 				foreach ($reversedfields as $val2){
 					$JSMagic .= 'document.getElementById(\'' . $val2 . '\').value=Math.floor(document.getElementById(\'' . $val2 . '\').value * document.getElementById(\'perc_' . $val . '\').value);';
-					$JSMagic2 .= 'document.getElementById(\'' . $val2 . '\').value=parseInt(getRandomInt(parseInt(document.getElementById(\'' . $val . 'min_val\').value), parseInt(document.getElementById(\'' . $val . 'max_val\').value)));';
+					$JSMagic2 .= 'document.getElementById(\'' . $val2 . '\').value=parseInt(GetRandomInt(parseInt(document.getElementById(\'' . $val . 'min_val\').value), parseInt(document.getElementById(\'' . $val . 'max_val\').value)));';
 				} 
 				$JSButtons[$val] = FormInput('<a href="javascript:;" class="btn green" onclick="' . $JSMagic . '"><i class="fa fa-times"></i> Multiply</a><br><small>Multiplies all below fields by percentage (1 = 100%)</small>', '<input type="text" value="1" id="perc_' . $val . '" size="2">');
 				
