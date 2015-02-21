@@ -14,5 +14,5 @@
 	if($_GET['M'] == "QueryServ"){ include('modules/QueryServ/js/ajax.php'); }    
 	if($_GET['M'] == "dbstr"){ include('modules/dbstr/js/ajax.php'); }   
 	if($_GET['M'] == "ZT"){ include('modules/Zone_Tools/ajax/ajax.php'); }   
-    /* Lol Test */
+
 ?>
