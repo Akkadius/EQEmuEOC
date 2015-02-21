@@ -11,6 +11,7 @@ modules/DBAuth/
 modules/PEQEditor421/
 modules/Character/
 modules/QueryServ/
+modules/ServerManager/
 
 # Local Assets
 
