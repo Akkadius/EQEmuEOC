@@ -1,0 +1,17 @@
+# Thumb DB Files
+
+*.db
+
+# PHP Storm Project
+
+.idea/
+
+includes/config.php
+modules/DBAuth/
+modules/PEQEditor421/
+modules/Character/
+modules/QueryServ/
+
+# Local Assets
+
+l/dbstr_us/
