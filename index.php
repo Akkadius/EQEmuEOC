@@ -6,9 +6,11 @@
 	require_once('includes/menu.php');
 	require_once('includes/content_start.php'); 
 	/* This is where the Content Scripts are included and parsed */
+
 	/* Index Variable */
 	if($_GET['M']){ $Mod = $_GET['M']; }
 	else if($_GET['Module']){ $Mod = $_GET['Module']; }
+
 	if($Mod == "Commander"){ include('modules/commander/commander.php'); } 
 	if($Mod == "ItemEditor"){ include('modules/ItemEditor/ItemEditor.php'); }
 	if($Mod == "TaskEditor"){ include('modules/TaskEditor/TaskEditor.php'); } 
