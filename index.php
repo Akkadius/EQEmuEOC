@@ -1,10 +1,12 @@
 <?php
+
 	require_once('includes/config.php');
 	require_once('includes/functions.php');
 	require_once('includes/header.php');
 	require_once('includes/navbar.php');
 	require_once('includes/menu.php');
-	require_once('includes/content_start.php'); 
+	require_once('includes/content_start.php');
+
 	/* This is where the Content Scripts are included and parsed */
 
 	/* Index Variable */
@@ -38,7 +40,9 @@
 		'; 
 		echo '<iframe src="http://wiki.eqemulator.org/p?EQEmu_Operations_Center_for_Development&frm=Main#tools" width="100%" style="position:absolute;max-height:100%; height:100% !important; width:98%;left:20px" scrolling="auto"></iframe>';
 	}
+
 	require_once('includes/content_end.php');
 	require_once('includes/quick_sidebar.php');  
 	require_once('includes/footer.php');
+
 ?>

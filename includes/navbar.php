@@ -95,7 +95,7 @@
                 /* Database Connections */
                 echo '<li class="dropdown dropdown-user" >
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-					<span class="username" style="height:30px;padding-top:5px"> <i class="fa fa-database" style="font-size:20px;text-shadow: 0px 0px 2px #FCFF9B;color: #ffffff;"></i> <b style="color:#fff">' . $dbhost . '</b></span>
+					<span class="username" style="height:30px;padding-top:5px"> <i class="fa fa-database" style="font-size:20px;text-shadow: 0px 0px 2px #FCFF9B;color: #ffffff;"></i> <b style="color:#fff">' . $dbhost_name . '</b></span>
 					<i class="fa fa-angle-down"></i>
 					</a>
 					<ul class="dropdown-menu">';

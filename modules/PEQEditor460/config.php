@@ -78,7 +78,7 @@ $quest_path = "/home/eqemu/quests";
 // Start the session for this page
 session_start();
 
-$IsAuthenticated=FALSE;
+$IsAuthenticated = FALSE;
 // If authenticated as an admin, allow alternate DB credentials/settings
 if (isset($_SESSION['SESS_MEMBER_ID']) && (trim($_SESSION['SESS_MEMBER_ID']) != '')) {
     // Used to check if authenticated
@@ -87,6 +87,15 @@ if (isset($_SESSION['SESS_MEMBER_ID']) && (trim($_SESSION['SESS_MEMBER_ID']) != 
 }
 
 require_once('../../includes/config.php');
+
+if($peq_local_auth){
+    $IsAuthenticated = TRUE;
+    $db = $dbname;
+    # $dbhost = "localhost";
+    # $db = "peq";
+    # $dbuser = "root";
+    # $dbpass = "eocdev";
+}
 
 /* Manual DB Login */
 if ($_SESSION['dblogin']) {
@@ -102,6 +111,7 @@ else if ($_COOKIE['dblogin'] == 1) {
     $db = $_COOKIE['dbname'];
     $dbuser = $_COOKIE['dbuser'];
     $dbpass = $_COOKIE['dbpass'];
+
     $_SESSION['dblogin'] = 1;
     $_SESSION['dbip'] = $_COOKIE['dbip'];
     $_SESSION['dbname'] = $_COOKIE['dbname'];
