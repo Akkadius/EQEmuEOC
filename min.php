@@ -17,8 +17,21 @@
 	if($_GET['Mod'] == "NPC"){ include('modules/NPC/NPC.php'); }
 	if($_GET['M'] == "TaskEditor"){ include('modules/TaskEditor/min.php'); }
 	if($_GET['Mod'] == "PEQEditor"){
-		echo '<style>html, body { height:100%; } </style>'; 
-		if($_GET['Rev'] == "460"){ echo '<iframe src="modules/PEQEditor460/index.php" width="100%" style="position:absolute;max-height:100%; height:100% !important; width:98%;" scrolling="auto" id="peqframe"></iframe>'; }
+		echo '
+		<style>
+		    html, body { height:100%; }
+		    .page-footer, page-footer-inner{ display: none;  }
+		    .page-content-wrapper .page-content {
+                margin-left: 0px;
+                margin-top: 0px;
+                min-height: 0px;
+                padding: 0px !important;
+            }
+            .page-container{
+                height: 100% !important;
+            }
+		 </style>';
+		if($_GET['Rev'] == "460"){ echo '<iframe src="modules/PEQEditor460/index.php" width="100%" style="position:absolute;max-height:100%; height:100% !important; width:100%;" scrolling="auto" id="peqframe"></iframe><br><br><br><br>'; }
 		else{ echo '<iframe src="modules/PEQEditor/index.php" width="100%" style="max-height:100%; height:100%; width:100%;" scrolling="auto" id="peqframe"></iframe>'; }
 		$FJS .= '<script type="text/javascript">
 			setInterval(DOPEQURLUPDATE, 1000);
