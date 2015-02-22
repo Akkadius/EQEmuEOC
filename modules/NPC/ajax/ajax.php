@@ -1,7 +1,6 @@
 <?php
 
-	include("modules/NPC/functions.php");
-
+	require_once("modules/NPC/functions.php");
 	require_once('includes/constants.php');
 	require_once('includes/functions.php');
 
@@ -40,6 +39,7 @@
 		mysql_query("DELETE FROM `npc_types` WHERE `id` = " . $_GET['delete_npc']);
 		mysql_query("DELETE FROM `spawnentry` WHERE `npcID` = " . $_GET['delete_npc']);
 	}
+
     /* Display NPC Data in the top right pane */
 	if($_GET['load_npc_top_pane_dash']){
 		if($_GET['load_npc_top_pane_dash'] <= 0){
@@ -66,21 +66,19 @@
 
 		/* Loot Table Entries */
 		echo '
+            <table>
+                <tr><td valign="top">
+                <table class="table table-condensed table-hover table-bordered loottable_entries ">
+                    <thead>
+                        <tr>
 
-		<table>
-			<tr><td valign="top">
-
-			<table class="table table-condensed table-hover table-bordered loottable_entries ">
-				<thead>
-					<tr>
-
-						<th>Loot Drop ID</th>
-						<th>Multiplier</th>
-						<th>Probability</th>
-						<th>Droplimit</th>
-						<th>Min Drop</th>
-					</tr>
-				</thead> ';
+                            <th>Loot Drop ID</th>
+                            <th>Multiplier</th>
+                            <th>Probability</th>
+                            <th>Droplimit</th>
+                            <th>Min Drop</th>
+                        </tr>
+                    </thead> ';
 
 				$result = mysql_query("SELECT * FROM `loottable_entries` WHERE `loottable_id` = " . $npc_types['loottable_id']);
 				while($row = mysql_fetch_array($result)){
@@ -116,17 +114,17 @@
 	if($_GET['show_lootdrop_entries']){
 		/* Loot Drop Entries */
 		echo '<table class="table table-condensed table-hover table-bordered lootdrop_entries">
-					<thead>
-						<tr>
-							<th>Item ID</th>
-							<th>Name</th>
-							<th>Equipped</th>
-							<th>% Chance</th>
-							<th>Min LVL</th>
-							<th>Max LVL</th>
-							<th>Multiplier</th>
-						</tr>
-					</thead>';
+                <thead>
+                    <tr>
+                        <th>Item ID</th>
+                        <th>Name</th>
+                        <th>Equipped</th>
+                        <th>% Chance</th>
+                        <th>Min LVL</th>
+                        <th>Max LVL</th>
+                        <th>Multiplier</th>
+                    </tr>
+                </thead>';
 		$result = mysql_query(
 			"SELECT
 				lootdrop_entries.*,
@@ -161,14 +159,14 @@
 		$result = mysql_query($query);
 		while($row = mysql_fetch_array($result)){
 			if($row['Field'] == "hp"){
-				$Field = "Hit Points";
+				$field = "Hit Points";
 			}
 			else if($npc_fields[$row['Field']]){
-				$Field = $npc_fields[$row['Field']];
+				$field = $npc_fields[$row['Field']];
 			}
 			else{ }
-			$Field = $row['Field'];
-			array_push ($npc_cols, $Field);
+			$field = $row['Field'];
+			array_push ($npc_cols, $field);
 			array_push ($npc_a_cols, $row['Field']);
 		}
 
@@ -254,160 +252,139 @@
 		if($result){ echo '<b>Field `'. $_GET['Field'] . '` Updated to Value \'' . $_GET['Value'] . '\' on NPC ID: \'' . $_GET['NPC'] . '\' </b>';} else{ echo 'Field update FAILED! ' . mysql_error(); }
 	}
 	/* 
-		Single NPC Edit Form 
+		Single NPC Edit Form
+	    Spawned from Modal
 	*/
 	if($_GET['SingleNPCEdit'] > 0){
-		echo '<style>
-			td{ width:50px; } 
-			input{ width:150px; } 
-		</style>';
-		$FJS .= '<script type="text/javascript">
-			$("select").each(function() { $(this).tooltip(); }); 
-			$(":text, select, input").each(function() {  $(this).css("height", "30px"); $(this).tooltip(); });
-			$(".page-content img").each(function() {  
-				$(this).css("border", "2px solid #666");
-			});
-		</script>';
-		
-		/* Get Col Defs */
+        /* Get Col Defs */
 		$npc_cols = array();
 		$npc_a_cols = array();
-		$query = "show columns from npc_types";
+		$query = "SHOW COLUMNS FROM `npc_types`";
 		$result = mysql_query($query);
-		while($row = mysql_fetch_array($result)){ 
-			if($row['Field'] == "hp"){ $Field = "Hit Points"; }
-			else if($npc_fields[$row['Field']]){ $Field = $npc_fields[$row['Field']]; }
-			else{ $Field = $row['Field']; }
-			array_push ($npc_cols, $Field);
+		while($row = mysql_fetch_array($result)){
+            if ($row['Field'] == "hp") {
+                $field = "Hit Points";
+            }
+            else if ($npc_fields[$row['Field']]) {
+                $field = $npc_fields[$row['Field']];
+            }
+            else {
+                $field = $row['Field'];
+            }
+			array_push ($npc_cols, $field);
 			array_push ($npc_a_cols, $row['Field']);
 		}
-		
-		
-		
-		$NPCFields = array();
+
+		$npc_fields = array();
 		$query = "SELECT * FROM `npc_types` WHERE `id` = " . $_GET['SingleNPCEdit'] . "";
 		$result = mysql_query($query);	
 		$Content .= '<center>';
 		while($row = mysql_fetch_array($result)){
 			$Content .= '<h2 class="page-title">' . $row['name'] . '</h2><hr>'; 
-			$n=1;
-			
-			/* Color Picker Default */
-			echo '<style>
-			#picker {
-				margin:0;
-				padding:0;
-				border:0;
-				width:70px;
-				height:20px;
-				border-right:20px solid rgb(' . $row['armortint_red'] . ', ' . $row['armortint_green'] . ', ' . $row['armortint_blue']  . ');
-				line-height:20px;
-			}</style>';
+			$n = 1;
 			
 			echo '<input type="hidden" id="npc_id" value="'. $row['id'] . '">';
-			
+
+            echo '<style>
+                #single_edit_table table tbody tr{ height:10px !important; }
+                #single_edit_table table tbody td{ padding: 1px !important; text-align:center;  }
+                #single_edit_table table tbody td input{
+                    text-align:center;
+                    font-size: 12px !important;
+                    height: 25px !important;
+                }
+                td{ width:50px; }
+                table input{ min-width:150px !important; }
+                #picker {
+                    margin:0;
+                    padding:0;
+                    border:0;
+                    width:70px;
+                    height:20px;
+                    border-right:20px solid rgb(' . $row['armortint_red'] . ', ' . $row['armortint_green'] . ', ' . $row['armortint_blue']  . ');
+                    line-height:20px;
+                }
+            </style>';
+
 			foreach ($row as $key => $val){
-			
 				if(is_numeric($key)){
 					/* Races */
 					if($npc_a_cols[($n - 1)] == "race"){
-						$NPCFields["Visual Texture"][$npc_a_cols[($n - 1)]][0] = $npc_cols[($n - 1)];
-						$Field = "" .
-						'<img src="includes/img.php?type=race&id=' . $val . '" id="RaceIMG" style="width:200px;height:280px;"><br><br>' . "
-						<select title='" . ProcessFieldTitle($npc_a_cols[($n - 1)]) . "' value='" . $val . "' id='" . $row['id'] . "^" . $npc_a_cols[($n - 1)] . "' class='" . $npc_a_cols[($n - 1)] . "' onchange='RaceChange(" . $_GET['SingleNPCEdit'] . ", this.value)'>";
-						foreach ($races as $key => $val2){
-							if($val == $key){ $Field .= '<option selected value="'. $key . '">'. $key . ': '. $val2 . ' </option>'; }
-							else{ $Field .= '<option value="'. $key . '">'. $key . ': '. $val2 . ' </option>'; }
-						}						
-						$Field .= '</select>';
-						$NPCFields["Visual Texture"][$npc_a_cols[($n - 1)]][1] = $Field;
+						$npc_fields["Visual Texture"][$npc_a_cols[($n - 1)]][0] = $npc_cols[($n - 1)];
+						$field = "" .
+						    '<img src="includes/img.php?type=race&id=' . $val . '" id="RaceIMG" style="width:auto;height:280px;" class="embossed"><br>' . "
+						    <select title='" . ProcessFieldTitle($npc_a_cols[($n - 1)]) . "' value='" . $val . "' id='" . $row['id'] . "^" . $npc_a_cols[($n - 1)] . "' class='" . $npc_a_cols[($n - 1)] . "' onchange='RaceChange(" . $_GET['SingleNPCEdit'] . ", this.value)'>";
+                        foreach ($races as $key => $val2) {
+                            if ($val == $key) {
+                                $field .= '<option selected value="' . $key . '">' . $key . ': ' . $val2 . ' </option>';
+                            }
+                            else {
+                                $field .= '<option value="' . $key . '">' . $key . ': ' . $val2 . ' </option>';
+                            }
+                        }
+						$field .= '</select>';
+						$npc_fields["Visual Texture"][$npc_a_cols[($n - 1)]][1] = $field;
 					}
 					else if($npc_a_cols[($n - 1)] == "d_melee_texture1" || $npc_a_cols[($n - 1)] == "d_melee_texture2"){
-						$NPCFields["Visual Texture"][$npc_a_cols[($n - 1)]][0] = $npc_cols[($n - 1)];
-						$NPCFields["Visual Texture"][$npc_a_cols[($n - 1)]][1] =  '<a href="javascript:;" onclick="OpenWindow(\'min.php?Mod=IE&prevITfile=1&Field=' . $npc_a_cols[($n - 1)] . '&NPC=' . $row['id'] . '\', \'_blank\', 900, 900)"> <img src="includes/img.php?type=weaponimage&id='. $val . '" id="'.  $npc_a_cols[($n - 1)] . '" style="width:200px;height:280px;"></a><br>';
-						$NPCFields["Visual Texture"][$npc_a_cols[($n - 1)]][1] .=  "<br><input type='number' title='" . ProcessFieldTitle($npc_a_cols[($n - 1)]) . "'  value='" . $val . "' id='" . $row['id'] . "^" . $npc_a_cols[($n - 1)] . "' class='" . $npc_a_cols[($n - 1)] . "' onchange='update_npc_field(" . $row['id'] . ", \"" . $npc_a_cols[($n - 1)] . "\", this.value)'>";
+						$npc_fields["Visual Texture"][$npc_a_cols[($n - 1)]][0] = $npc_cols[($n - 1)] . '<br>';
+						$npc_fields["Visual Texture"][$npc_a_cols[($n - 1)]][1] =
+                            '<a href="javascript:;" onclick="OpenWindow(\'min.php?Mod=IE&prevITfile=1&Field=' . $npc_a_cols[($n - 1)] . '&NPC=' . $row['id'] . '\', \'_blank\', 900, 900)">
+						        <img src="includes/img.php?type=weaponimage&id='. $val . '" id="'.  $npc_a_cols[($n - 1)] . '" style="width:auto;height:280px;" class="embossed">
+                        </a>
+                        <br>';
+						$npc_fields["Visual Texture"][$npc_a_cols[($n - 1)]][1] .=  "<br><input type='number' title='" . ProcessFieldTitle($npc_a_cols[($n - 1)]) . "'  value='" . $val . "' id='" . $row['id'] . "^" . $npc_a_cols[($n - 1)] . "' class='" . $npc_a_cols[($n - 1)] . "' onchange='update_npc_field(" . $row['id'] . ", \"" . $npc_a_cols[($n - 1)] . "\", this.value)'>";
 					}
 					else if($Custom_Select_Fields[$npc_a_cols[($n - 1)]]){
-						$NPCFields[$npcfieldscat[$npc_a_cols[($n - 1)]]][$npc_a_cols[($n - 1)]][0] = $npc_cols[($n - 1)];
-						$NPCFields[$npcfieldscat[$npc_a_cols[($n - 1)]]][$npc_a_cols[($n - 1)]][1] = GetFieldSelect($npc_a_cols[($n - 1)], $val, $row['id']);
+						$npc_fields[$npcfieldscat[$npc_a_cols[($n - 1)]]][$npc_a_cols[($n - 1)]][0] = $npc_cols[($n - 1)];
+						$npc_fields[$npcfieldscat[$npc_a_cols[($n - 1)]]][$npc_a_cols[($n - 1)]][1] = GetFieldSelect($npc_a_cols[($n - 1)], $val, $row['id']);
 					}
 					/* Generic catch all */
 					else if($npcfieldscat[$npc_a_cols[($n - 1)]][0]){
-						$NPCFields[$npcfieldscat[$npc_a_cols[($n - 1)]]][$npc_a_cols[($n - 1)]][0] = $npc_cols[($n - 1)];
-						$NPCFields[$npcfieldscat[$npc_a_cols[($n - 1)]]][$npc_a_cols[($n - 1)]][1] =  "<br><input type='text' value='" . $val . "' id='" . $row['id'] . "^" . $npc_a_cols[($n - 1)] . "' class='" . $npc_a_cols[($n - 1)] . "' onchange='update_npc_field(" . $row['id'] . ", \"" . $npc_a_cols[($n - 1)] . "\", this.value)' title='" . ProcessFieldTitle($npc_a_cols[($n - 1)]) . "'>";
+						$npc_fields[$npcfieldscat[$npc_a_cols[($n - 1)]]][$npc_a_cols[($n - 1)]][0] = $npc_cols[($n - 1)];
+						$npc_fields[$npcfieldscat[$npc_a_cols[($n - 1)]]][$npc_a_cols[($n - 1)]][1] =  "<br><input type='text' value='" . $val . "' id='" . $row['id'] . "^" . $npc_a_cols[($n - 1)] . "' class='" . $npc_a_cols[($n - 1)] . "' onchange='update_npc_field(" . $row['id'] . ", \"" . $npc_a_cols[($n - 1)] . "\", this.value)' title='" . ProcessFieldTitle($npc_a_cols[($n - 1)]) . "'>";
 					}
 					else{
-						$NPCFields['End'][$npc_a_cols[($n - 1)]][0] = $npc_cols[($n - 1)];
-						$NPCFields['End'][$npc_a_cols[($n - 1)]][1] =  "<input type='text' value='" . $val . "' id='" . $row['id'] . "^" . $npc_a_cols[($n - 1)] . "' class='" . $npc_a_cols[($n - 1)] . "' onchange='update_npc_field(" . $row['id'] . ", \"" . $npc_a_cols[($n - 1)] . "\", this.value)' >";
+						$npc_fields['End'][$npc_a_cols[($n - 1)]][0] = $npc_cols[($n - 1)];
+						$npc_fields['End'][$npc_a_cols[($n - 1)]][1] =  "<input type='text' value='" . $val . "' id='" . $row['id'] . "^" . $npc_a_cols[($n - 1)] . "' class='" . $npc_a_cols[($n - 1)] . "' onchange='update_npc_field(" . $row['id'] . ", \"" . $npc_a_cols[($n - 1)] . "\", this.value)' >";
 					}
 					$n++;
 				}
 			}
 		}
 
-        echo '<style>
-			#single_edit_table table tbody tr{ height:10px !important; }
-			#single_edit_table table tbody td{ padding: 1px !important; text-align:center;  }
-			#single_edit_table table tbody td input{ text-align:center; }
-		</style>';
 
-		$Order = array("General", "Visual Texture", "Combat", "Appearance", "Stats", "Misc.", "<hr>");
-		$Content .= '<form class="mainForm" id="mainForm">';
-		foreach ($Order as $Orderval) {
-			$Content .= '<br><h2 class="page-title">' . $Orderval . '</h2><div id="section_' . $Orderval . '"></div>';
-			$Content .= '<table class="table table-striped table-hover table-condensed flip-content dataTable table-bordered dataTable" style="width:800px" id="single_edit_table">';
-			$n = 0;
-			foreach ($NPCFields[$Orderval] as $key => $val) {
-				if ($n == 0) {
-					$Content .= '<tr>';
-				}
-				$Content .= '<td style="text-align:center;"><h6 style="color:black;font-weight:bold;display:inline">' . $val[0] . '</h6>' . $val[1] . '</td>';
-				if ($n == 4) {
-					$Content .= '</tr>';
+		$category_order = array("General", "Visual Texture", "Combat", "Appearance", "Stats", "Misc.", "<hr>");
+        $td_content = "";
+        $n = 0;
+		foreach ($category_order as $order_val) {
+			$Content .= '
+			    <h3>' . $order_val . '</h3>
+			    <div id="section_' . $order_val . '"></div>
+            ';
+			$Content .= '<table class="table table-striped table-hover table-condensed flip-content dataTable table-bordered dataTable" id="single_edit_table" style="width:auto !important">';
+			foreach ($npc_fields[$order_val] as $key => $val) {
+				$td_content .= '
+                    <td style="text-align:center;">
+                        <b>' . $val[0] . '</b>
+                        ' . $val[1] . '
+                    </td>';
+                $n++;
+                if ($n == 4) {
+                    $Content .= '<tr>' . $td_content . '</tr>';
+                    $td_content = "";
 					$n = 0;
 				}
-				$n++;
 			}
+            if($td_content != ""){
+                $Content .= '<tr>' . $td_content . '</tr>';
+                $td_content = "";
+                $n = 0;
+            }
+
 			$Content .= '</table>';
 		}
-		$Content .= '</form>';
 		$Content .= '</table>';
-		
-		$Content .= '<script type="text/javascript">
-			$(".modal-body input, .modal-body select").each(function() { 
-				$(this).addClass("form-control");
-				$(this).css("border", "1px solid #666");
-			});
-			$("select").each(function() { $(this).tooltip(); });
-			$(":text").each(function() { $(this).tooltip(); });
-			$( document ).ready(function() {
-				$("#section_Appearance").html("Armor Tint <div id=\"picker\" style=\"display:inline\"></div><br><br>"); 
-				$("#picker").colpick({ 
-					layout: "hex",
-					submit:0,
-					colorScheme: "dark",
-					onChange:function(hsb,hex,rgb,el,bySetColor) {
-						// console.log(rgb);
-						$(el).css("border-color","#"+hex);
-						$("#color_preview").css("background-color","#"+hex);
-						// Fill the text box just if the color was set using the picker, and not the colpickSetColor function.
-						if(!bySetColor) $(el).val("#"+hex); 
-						$(".armortint_red").val(rgb.r);
-						$(".armortint_green").val(rgb.g);
-						$(".armortint_blue").val(rgb.b);
-					},
-					onHide:function(e){
-						// console.log("hidden"); 
-						update_npc_field($("#npc_id").val(), "armortint_red", $(".armortint_red").val());
-						update_npc_field($("#npc_id").val(), "armortint_green", $(".armortint_green").val());
-						update_npc_field($("#npc_id").val(), "armortint_blue", $(".armortint_blue").val());
-					}
-				}).keyup(function(){
-					$(this).colpickSetColor(this.value);
-				});
-			});
-		</script>';
-		
+        echo '<script type="text/javascript" src="modules/NPC/ajax/single_npc_edit.js"></script>';
 		echo Modal('NPC Edit', $Content, '');  
 	}
 	/* Special Attacks Editor */
