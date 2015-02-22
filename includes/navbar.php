@@ -90,14 +90,17 @@
 			</li>';
 
 
-
+            /* Hosted Navbar Piece */
             if(file_exists("login.php")) {
                 /* Database Connections */
                 echo '<li class="dropdown dropdown-user" >
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-					<span class="username" style="height:30px;padding-top:5px"> <i class="fa fa-database" style="font-size:20px;text-shadow: 0px 0px 2px #FCFF9B;color: #ffffff;"></i> <b style="color:#fff">' . $dbhost_name . '</b></span>
-					<i class="fa fa-angle-down"></i>
-					</a>
+					    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+					        <span class="username" style="height:30px;padding-top:5px">
+					            <i class="fa fa-database" style="font-size:20px;text-shadow: 0px 0px 2px #FCFF9B;color: #ffffff;"></i>
+					            <b style="color:#fff">' . $dbhost_name . '</b>
+                            </span>
+                            <i class="fa fa-angle-down"></i>
+					    </a>
 					<ul class="dropdown-menu">';
 
                 foreach ($_COOKIE as $key => $val) {
@@ -118,11 +121,11 @@
                 }
 
                 echo '
-                <li class="divider" style="height: 1px; padding:0px !important"> </li>
-                <li>
-                    <a href="javascript:;" onclick="DoDBSwitch(\'Local_EOC\')"> <i class="fa fa-database"></i>Local EoC Test</a>
-                </li>
-                <li class="divider" style="height: 1px; padding:0px !important"> </li>
+                    <li class="divider" style="height: 1px; padding:0px !important"> </li>
+                    <li>
+                        <a href="javascript:;" onclick="DoDBSwitch(\'Local_EOC\')"> <i class="fa fa-database"></i>Local EoC Test</a>
+                    </li>
+                    <li class="divider" style="height: 1px; padding:0px !important"> </li>
                         <li>
                                 <a href="login.php">
                                 <i class="fa fa-database"></i> Connection page </a>
