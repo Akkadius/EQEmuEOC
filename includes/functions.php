@@ -48,10 +48,7 @@
 		if($desc != ''){ $a_desc = '<br><small>' . $desc . '</small>'; }
 		return '<div class="alert alert-warning alert-dismissable"><h4 style="display:inline;font-weight:bold">' . $data . '</h4>'. $a_desc . '</div>';
 	}
-	
-	
+
 	/* Global Scoped Functions */
-	
-	
 	
 ?>
