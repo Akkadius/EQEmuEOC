@@ -422,7 +422,7 @@
 			$ret .= '<option value="0">0: None</option>';
 			while($row = mysql_fetch_array($result)){ 
 				if($row['emoteid'] == $value){ $sel = "selected"; } else { $sel = ""; } 
-				$ret .= '<option value="'. $row['emoteid'] . '" ' . $sel . '>'. $row['emoteid'] . ': ' . $row['text'] . '</option>';
+				$ret .= '<option value="'. $row['emoteid'] . '" ' . $sel . '>'. $row['emoteid'] . ': ' . (strlen($row['text']) > 100 ? (substr($row['text'], 0, 100) . '...') : $row['text']) . '</option>';
 			}
 			$found_select = 1;
 		}

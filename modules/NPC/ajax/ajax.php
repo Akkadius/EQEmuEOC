@@ -29,11 +29,18 @@
 			</center>';
 		echo Modal('NPC Confirm Delete', $Content, '');
 	}
+
+    /* Get Field Translator on double click of cell */
+    if(isset($_GET['get_field_translator'])){
+        echo GetFieldSelect($_GET['field_name'], $_GET['value'], $_GET['npc_id'], 1);
+    }
+
 	/* Actual Delete */
 	if($_GET['delete_npc']){
 		mysql_query("DELETE FROM `npc_types` WHERE `id` = " . $_GET['delete_npc']);
 		mysql_query("DELETE FROM `spawnentry` WHERE `npcID` = " . $_GET['delete_npc']);
 	}
+    /* Display NPC Data in the top right pane */
 	if($_GET['load_npc_top_pane_dash']){
 		if($_GET['load_npc_top_pane_dash'] <= 0){
 			echo 'No loot data present';
@@ -105,9 +112,7 @@
 		$FJS .= '<script type="text/javascript" src="modules/NPC/ajax/npc_top_right_pane.js"></script>';
 		echo $FJS;
 	}
-	if(isset($_GET['get_field_translator'])){
-		echo GetFieldSelect($_GET['field_name'], $_GET['value'], $_GET['npc_id'], 1);
-	}
+
 	if($_GET['show_lootdrop_entries']){
 		/* Loot Drop Entries */
 		echo '<table class="table table-condensed table-hover table-bordered lootdrop_entries">
@@ -339,11 +344,18 @@
 				}
 			}
 		}
+
+        echo '<style>
+			#single_edit_table table tbody tr{ height:10px !important; }
+			#single_edit_table table tbody td{ padding: 1px !important; text-align:center;  }
+			#single_edit_table table tbody td input{ text-align:center; }
+		</style>';
+
 		$Order = array("General", "Visual Texture", "Combat", "Appearance", "Stats", "Misc.", "<hr>");
 		$Content .= '<form class="mainForm" id="mainForm">';
 		foreach ($Order as $Orderval) {
 			$Content .= '<br><h2 class="page-title">' . $Orderval . '</h2><div id="section_' . $Orderval . '"></div>';
-			$Content .= '<table class="table table-striped" style="width:800px">';
+			$Content .= '<table class="table table-striped table-hover table-condensed flip-content dataTable table-bordered dataTable" style="width:800px" id="single_edit_table">';
 			$n = 0;
 			foreach ($NPCFields[$Orderval] as $key => $val) {
 				if ($n == 0) {
@@ -363,7 +375,7 @@
 		
 		$Content .= '<script type="text/javascript">
 			$(".modal-body input, .modal-body select").each(function() { 
-				$(this).addClass("form-control input-circle");
+				$(this).addClass("form-control");
 				$(this).css("border", "1px solid #666");
 			});
 			$("select").each(function() { $(this).tooltip(); });

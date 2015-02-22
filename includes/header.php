@@ -1,3 +1,11 @@
+<?php
+/*
+ * Created by Akkadius: 8-8-2014
+ * Header file - Contains assets for CSS and some template structure
+ */
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <!--<![endif]-->
