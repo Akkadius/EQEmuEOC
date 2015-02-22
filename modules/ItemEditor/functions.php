@@ -17,11 +17,11 @@
 	}
 	
 	function ItemEditor($ItemID, $ViewMode){
-		global $_COOKIE, $_SESSION, $PageTitle, $ItemSection, $ItemEditorSections, $resists, $root_url, $Return, $ShowTitle, $icons_dir, $SpecIncludes, $ItemEditorSectionsDesc;
+		global $_COOKIE, $_SESSION, $page_title, $ItemSection, $ItemEditorSections, $resists, $root_url, $Return, $ShowTitle, $icons_dir, $SpecIncludes, $ItemEditorSectionsDesc;
 		require_once('./modules/ItemEditor/ajax/js.php');
 		require_once('modules/ItemEditor/constants_ie.php'); 
-		$PageTitle = "Item Edit";  
-		$Return .= $SpecIncludes. '<title>'.$PageTitle.'</title>';
+		$page_title = "Item Edit";
+		$Return .= $SpecIncludes. '<title>'.$page_title.'</title>';
 		// Editor Music Options
 		if($_SESSION['IEMusic'] == 1){	$Return .= "<div id='Music'><embed src=\"images/001130031538.wav\" hidden=\"true\" autostart=\"true\" loop=\"true\" type=\"application/x-mplayer2\"/></div>"; } else{ $Return .= "<div id='Music'></div>"; }
 		$result = mysql_query("SELECT * FROM items WHERE id = '" . $ItemID . "';");

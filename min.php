@@ -1,17 +1,22 @@
 <?php
+
 	$Minified = 1;
+
+    /* Dispatching Page for minimal requests */
+
 	require_once('includes/config.php');
 	require_once('includes/functions.php');
 	require_once('includes/header.php');
 	require_once('includes/navbar.php');
-	require_once('includes/menu.php');	
-	/* Dispatching Page for minimal requests */
-	require_once('includes/content_start.php'); 
+	require_once('includes/menu.php');
+
+	require_once('includes/content_start.php');
+
 	if($_GET['Mod'] != "RaceViewer" && isset($_GET['IconSearch']) && $_GET['prevITfile'] != 1){
 		require_once('./includes/functions.php');
 	}
 	echo '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />';
-	$PageTitle = "EOC";
+
 	if($_GET['Mod'] == "IE"){ require_once('modules/ItemEditor/min.php'); } 
 	if($_GET['Mod'] == "RaceViewer"){ include('modules/RaceViewer/min.php'); } 
 	if($_GET['Mod'] == "NPC"){ include('modules/NPC/NPC.php'); }
@@ -40,6 +45,7 @@
 			}
 		</script>';
 	}
+
 	require_once('includes/content_end.php');
 	require_once('includes/quick_sidebar.php'); 
 	require_once('includes/footer.php');
