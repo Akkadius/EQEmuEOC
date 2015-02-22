@@ -23,9 +23,9 @@
 								<ul class="col-md-4 mega-menu-submenu">
 									<li> <h3>Tools & Editors</h3> </li>
 									<li class="divider" style="height: 1px; padding:0px !important"> </li>
-									<li> <a href="index.php?M=ItemEditor"> <i class="fa fa-angle-right"></i> <i class="icon-pencil"></i> Item Search & Editor </a> </li>
-									<li> <a href="index.php?M=SpellEditor"> <i class="fa fa-angle-right"></i> <i class="icon-pencil"></i> Spell Search & Editor (In Dev - Functional)</a> </li>
-									<li> <a href="index.php?M=NPC2"> <i class="fa fa-angle-right"></i> <i class="icon-pencil"></i> NPC Editor </a> </li>
+									<li> <a href="index.php?M=ItemEditor"> <i class="fa fa-angle-right"></i> <i class="fa fa-pencil"></i> Item Search & Editor </a> </li>
+									<li> <a href="index.php?M=SpellEditor"> <i class="fa fa-angle-right"></i> <i class="fa fa-pencil"></i> Spell Search & Editor (In Dev - Functional)</a> </li>
+									<li> <a href="index.php?M=NPC2"> <i class="fa fa-angle-right"></i> <i class="fa fa-pencil"></i> NPC Editor </a> </li>
 									<li> <a href="index.php?M=ZT"> <i class="fa fa-angle-right"></i>  <i class="fa fa-cloud-upload"></i> Zone Copy/Import </a> </li>
 									<li> <a href="index.php?M=dbstr"> <i class="fa fa-angle-right"></i> <i class="fa fa-list"></i> dbstr_us.txt Editor </a> </li>
 									<li> <a href="index.php?M=TaskEditor"> <i class="fa fa-angle-right"></i> <i class="fa fa-list"></i> Task Editor </a> </li>
