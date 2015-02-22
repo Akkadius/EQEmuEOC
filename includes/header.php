@@ -51,11 +51,15 @@
 			.form div,
 			blockquote,
 			.modal,
+			.btn-default,
+			.mega-menu-content,
+			.mega-menu-dropdown,
 			.table td{ 
 				background-color: #333333 !important; 
 				// color: gray !important;
 				color: rgb(232, 228, 228) !important;
 			}
+			.btn-default{ padding:3px !important; }
 			.navbar{
 				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 6px 18px rgba(0, 0, 0, 0.2) !important;
 			}
