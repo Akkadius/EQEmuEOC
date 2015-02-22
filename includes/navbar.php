@@ -91,7 +91,7 @@
 
 
 
-            if(file_exists("../login.php")) {
+            if(file_exists("login.php")) {
                 /* Database Connections */
                 echo '<li class="dropdown dropdown-user" >
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
