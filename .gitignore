@@ -6,7 +6,7 @@
 
 .idea/
 
-includes/config.php
+*config.php
 modules/DBAuth/
 modules/PEQEditor421/
 modules/Character/
@@ -16,3 +16,4 @@ modules/ServerManager/
 # Local Assets
 
 l/dbstr_us/
+/includes/config.php
