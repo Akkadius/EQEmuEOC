@@ -77,7 +77,7 @@
 			<li class="dropdown dropdown-user" >
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 				<span class="username" style="height:30px;padding-top:5px">
-					<i class="fa fa-cog" style="font-size:20px;text-shadow: 0px 0px 2px #FCFF9B;color: #ffffff;"></i> <b style="color:#fff">Options</b></span>
+					<i class="fa fa-wrench animated-hover" ></i> <b style="color:#fff">Options</b></span>
 				<i class="fa fa-angle-down"></i>
 				</a>
 
