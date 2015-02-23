@@ -92,12 +92,24 @@ $( "#npc_head_table td" ).click(function() {
 
     if(data.match(/button/i)){ return; }
 
-    console.log(npc_id);
+    // console.log(npc_id);
 
+    /* Highlight row */
     if($('#top_right_pane').attr('npc_loaded') == npc_id){
         console.log('npc already loaded, returning...');
         return;
     }
+
+    $(".npc_data_table td").each(function() {
+        $(this).css("background", "");
+    });
+
+    $(".npc_data_table td").each(function() {
+        if($(this).attr("npc_id") == npc_id){
+            $(this).css("background", "yellow");
+        }
+    });
+
 
     $.ajax({
         url: "ajax.php?M=NPC&load_npc_top_pane_dash=" + npc_id,
