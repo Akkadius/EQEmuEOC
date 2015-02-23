@@ -282,7 +282,6 @@
 		$result = mysql_query($query);	
 		$Content .= '<center>';
 		while($row = mysql_fetch_array($result)){
-			$Content .= '<h2 class="page-title">' . $row['name'] . '</h2><hr>'; 
 			$n = 1;
 			
 			echo '<input type="hidden" id="npc_id" value="'. $row['id'] . '">';
@@ -315,7 +314,9 @@
 					if($field_name == "race"){
 						$npc_fields["Visual Texture"][$field_name][0] = $npc_cols[($n - 1)];
 						$field = "" .
-						    '<img src="includes/img.php?type=race&id=' . $val . '" id="RaceIMG" style="width:auto;height:280px;" class="soft-embossed"><br>' . "
+						    '<span class="image-wrap " style="width: auto; height: auto;">
+						        <img src="includes/img.php?type=race&id=' . $val . '" id="RaceIMG" style="width:auto;height:280px;" class="soft-embossed">
+						    </span>' . "
 						    <select title='" . ProcessFieldTitle($field_name) . "' value='" . $val . "' id='" . $row['id'] . "^" . $field_name . "' class='" . $field_name . "' onchange='RaceChange(" . $_GET['SingleNPCEdit'] . ", this.value)'>";
                         foreach ($races as $key => $val2) {
                             if ($val == $key) {
@@ -329,13 +330,15 @@
 						$npc_fields["Visual Texture"][$field_name][1] = $field;
 					}
 					else if($field_name == "d_melee_texture1" || $field_name == "d_melee_texture2"){
-						$npc_fields["Visual Texture"][$field_name][0] = $npc_cols[($n - 1)] . '<br>';
+						$npc_fields["Visual Texture"][$field_name][0] = $npc_cols[($n - 1)] . '';
 						$npc_fields["Visual Texture"][$field_name][1] =
                             '<a href="javascript:;" onclick="OpenWindow(\'min.php?Mod=IE&prevITfile=1&Field=' . $field_name . '&NPC=' . $row['id'] . '\', \'_blank\', 900, 900)">
-						        <img src="includes/img.php?type=weaponimage&id='. $val . '" id="'.  $field_name . '" class="cut-out">
+						        <span class="image-wrap " style="width: auto; height: auto;">
+						            <img src="includes/img.php?type=weaponimage&id='. $val . '" id="'.  $field_name . '" class="embossed">
+						        </span>
                             </a>
-                        <br>';
-						$npc_fields["Visual Texture"][$field_name][1] .=  "<br><input type='number' title='" . ProcessFieldTitle($field_name) . "'  value='" . $val . "' id='" . $row['id'] . "^" . $field_name . "' class='" . $field_name . "' onchange='update_npc_field(" . $row['id'] . ", \"" . $field_name . "\", this.value)'>";
+                        ';
+						$npc_fields["Visual Texture"][$field_name][1] .=  "<input type='number' title='" . ProcessFieldTitle($field_name) . "'  value='" . $val . "' id='" . $row['id'] . "^" . $field_name . "' class='" . $field_name . "' onchange='update_npc_field(" . $row['id'] . ", \"" . $field_name . "\", this.value)'>";
 					}
 					else if($Custom_Select_Fields[$field_name]){
 						$npc_fields[$field_category[$field_name]][$field_name][0] = $npc_cols[($n - 1)];
@@ -344,7 +347,7 @@
 					/* Generic catch all */
 					else if($field_category[$field_name][0]){
 						$npc_fields[$field_category[$field_name]][$field_name][0] = $npc_cols[($n - 1)];
-						$npc_fields[$field_category[$field_name]][$field_name][1] =  "<br><input type='text' value='" . $val . "' id='" . $row['id'] . "^" . $field_name . "' class='" . $field_name . "' onchange='update_npc_field(" . $row['id'] . ", \"" . $field_name . "\", this.value)' title='" . ProcessFieldTitle($field_name) . "'>";
+						$npc_fields[$field_category[$field_name]][$field_name][1] =  "<input type='text' value='" . $val . "' id='" . $row['id'] . "^" . $field_name . "' class='" . $field_name . "' onchange='update_npc_field(" . $row['id'] . ", \"" . $field_name . "\", this.value)' title='" . ProcessFieldTitle($field_name) . "'>";
 					}
 					else{
 						$npc_fields['End'][$field_name][0] = $npc_cols[($n - 1)];
@@ -355,23 +358,32 @@
 			}
 		}
 
-        $category_order = array("General", "Visual Texture", "Combat", "Appearance", "Stats", "Misc.", "<hr>");
+        $category_order = array("General", "Visual Texture", "Combat", "Appearance", "Statistics", "Misc.");
         $td_content = "";
         $n = 0;
+
+        $npc_fields["Appearance"]["tint"][0] = "Armor Tint";
+        $npc_fields["Appearance"]["tint"][1] = "<div id='armor_tint_selector'></div>";
+
 		foreach ($category_order as $order_val) {
-			$Content .= '
-			    <h3>' . $order_val . '</h3>
-			    <div id="section_' . $order_val . '"></div>
-            ';
-			$Content .= '<table class="table table-striped table-hover table-condensed flip-content dataTable table-bordered dataTable" class="single_edit_table" style="width:auto !important">';
+            if($order_val != '') {
+                $Content .= '
+                    <h2> <span class="label label-success">' . $order_val . '</span></h2>
+                ';
+            }
+			$Content .= '<table class="table-bordered table-striped table-condensed flip-content" class="single_edit_table">';
 			foreach ($npc_fields[$order_val] as $key => $val) {
-				$td_content .= '
-                    <td style="text-align:center;">
-                        <b>' . $val[0] . '</b>
-                        ' . $val[1] . '
-                    </td>';
+                #print $key . '<br>';
+                if($key == "d_melee_texture1" || $key == "d_melee_texture2" || $key == "race"){
+                    $td_content .= '
+                        <td style="text-align:center;vertical-align:top">' . $val[0] . '<br> ' . $val[1] . '  </td>';
+                }
+                else {
+                    $td_content .= '
+                        <td style="text-align:right;"><b>' . $val[0] . '</b>  </td><td> ' . $val[1] . '  </td>';
+                }
                 $n++;
-                if ($n == 4) {
+                if ($n == 3) {
                     $Content .= '<tr>' . $td_content . '</tr>';
                     $td_content = "";
 					$n = 0;

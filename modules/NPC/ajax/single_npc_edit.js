@@ -15,15 +15,7 @@ $(":text").each(function () {
 });
 
 $(document).ready(function () {
-    $("#section_Appearance").html(
-        "<table style=\"padding:5px\">" +
-            "<tr>" +
-                "<td style=\"padding:5px\">Armor Tint</td><td style=\"padding:5px\"></td>" +
-                "<td>" +
-                "<div id=\"picker\" style=\"display:inline\"></div>" +
-                "</td>" +
-            "</tr>" +
-        "</table>");
+    $("#armor_tint_selector").html("<div id=\"picker\" style=\"display:inline\"></div>");
     $("#picker").colpick({
         layout: "hex",
         submit: 0,
