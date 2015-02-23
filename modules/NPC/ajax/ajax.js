@@ -1,5 +1,5 @@
 function ShowZone() {
-	document.getElementById("shownpczone").innerHTML="<b style='color:red;font-size:30px'>LOADING, PLEASE WAIT...</b><hr><i class='fa fa-spinner fa-spin' style='font-size:80px'>";
+    $("#shownpczone").html("<b style='color:red;font-size:30px'>LOADING, PLEASE WAIT...</b><hr><i class='fa fa-spinner fa-spin' style='font-size:80px'>");
 	var zone_sn = $("#zoneselect").val();
 	var inst_version = $("#zinstid").val();
 	var NPC = $("#npcname").val();
@@ -14,7 +14,7 @@ function ShowZone() {
 }
 
 function ShowZoneFromURL(zone_sn, inst_version, name_filter, field_filter){
-	document.getElementById("shownpczone").innerHTML="<b style='color:red;font-size:30px'>LOADING, PLEASE WAIT...</b><hr><i class='fa fa-spinner fa-spin' style='font-size:80px'>";
+    $("#shownpczone").html("<b style='color:red;font-size:30px'>LOADING, PLEASE WAIT...</b><hr><i class='fa fa-spinner fa-spin' style='font-size:80px'>");
 	$.ajax({
 		url: "ajax.php?M=NPC&ShowZone=1&Zone=" + zone_sn + "&inst_version=" + inst_version + "&npc_filter=" + encodeURIComponent(name_filter),
 		context: document.body
@@ -128,6 +128,20 @@ function do_npc_edit(val){
 
 function do_npc_delete(val){
 	DoModal("ajax.php?M=NPC&npc_delete_confirm=" + val);
+}
+
+function do_npc_copy(val){
+	DoModal("ajax.php?M=NPC&npc_copy=" + val);
+}
+
+function do_npc_copy_confirm(val){
+    $("#npc_copy_result").html("<i class='fa fa-spinner fa-spin' style='font-size:20px'>");
+    $.ajax({
+        url: "ajax.php?M=NPC&do_npc_copy_confirm=" + val + "&copies_to_make=" + $("#copies_to_make").val() + "&starting_insert="+ $("#starting_insert").val(),
+        context: document.body
+    }).done(function(e) {
+        $('#npc_copy_result').html(e);
+    });
 }
 
 function do_npc_confirm(val){

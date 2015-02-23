@@ -4,7 +4,7 @@
 	require_once('includes/constants.php');
 	require_once('includes/functions.php');
 
-	/* Mass Edit Window */
+	/* Modal: Mass Edit Window */
 	if(isset($_GET['MassEdit'])){
 		$Content .= '<table class="table" style="width:300px">
 			<tr><td style="text-align:right;"></td><td>This very powerful tool will edit entire columns based on all of the NPC\'s shown in the parent window...
@@ -20,7 +20,7 @@
 		echo Modal('Mass Field Editor', $Content, '');
 	}
 
-	/* Confirm NPC Delete */
+	/* Modal: Confirm NPC Delete */
 	if($_GET['npc_delete_confirm']){
 		$Content .= '
 			<center>
@@ -28,6 +28,64 @@
 			</center>';
 		echo Modal('NPC Confirm Delete', $Content, '');
 	}
+
+    /* Confirm NPC Copy */
+    if($_GET['do_npc_copy_confirm']){
+        $copies_to_make = $_GET['copies_to_make'];
+        $starting_insert = $_GET['starting_insert'];
+        # echo var_dump($_GET);
+        echo 'Copied NPC to the following:<br>';
+        for($i = 0; $i < $copies_to_make; $i++){
+            echo DuplicateMySQLRecord("npc_types", "id", $_GET['do_npc_copy_confirm'], $starting_insert);
+            $starting_insert++;
+            echo '<br>';
+        }
+    }
+
+    /* Modal : Copy NPC Function */
+    if($_GET['npc_copy']){
+
+        /* Get Last ID Available before doing an Insert */
+        $query = "SELECT
+            t1.ID + 1 AS next_id
+            FROM npc_types t1
+            LEFT JOIN npc_types t2
+            ON t1.ID + 1 = t2.ID
+            WHERE t2.ID IS NULL
+            ORDER BY next_id DESC
+            LIMIT 1";
+        $result = mysql_query($query);
+        while($row = mysql_fetch_array($result)){
+            $last_insert = $row['next_id'];
+        }
+
+        $Content .= '
+			<center>
+			    <table class="table-bordered table-striped table-condensed flip-content" style="width:500px">
+			        <tr>
+			            <td style="text-align:right">NPC ID to be Copied</td>
+			            <td><input type="text" class="form-control" value="' . $_GET['npc_copy'] . '" disabled></td>
+                    </tr>
+            <tr>
+			            <td style="text-align:right">Starting Insert ID</td>
+			            <td><input type="text" class="form-control" value="' . $last_insert . '" id="starting_insert"></td>
+                    </tr>
+                    <tr>
+			            <td style="text-align:right">Number of NPC Copies to make</td>
+			            <td><input type="text" class="form-control" value="1" id="copies_to_make"></td>
+                    </tr>
+                    <tr>
+			            <td></td>
+			            <td><button type="button" class="btn btn-default btn-sm btn-xs" onclick="do_npc_copy_confirm(' . $_GET['npc_copy'] . ')" title="Copy NPC"><i class="fa fa-sign-in"></i> Copy NPC</button></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><div id="npc_copy_result"></div></td>
+                    </tr>
+                </table>
+			</center>';
+        echo Modal('Copy NPC', $Content, '');
+    }
 
     /* Get Field Translator on double click of cell */
     if(isset($_GET['get_field_translator'])){
@@ -175,7 +233,11 @@
 		/* NPC Name Filter */
 		$npc_filter = "";
 		if($_GET['npc_filter'] != ""){
-			$npc_filter = " AND npc_types.`name` LIKE '%" . mysql_real_escape_string($_GET['npc_filter']) . "%' ";
+			$npc_filter = " AND
+			    (npc_types.`name` LIKE '%" . mysql_real_escape_string($_GET['npc_filter']) . "%' OR
+			    npc_types.`id` = '" . mysql_real_escape_string($_GET['npc_filter']) . "'
+			    )
+			";
 		}
 
 		echo '<style>
@@ -187,25 +249,24 @@
 		/* Get NPC List */
         if($_GET['Zone'] > 0) {
             $query = "SELECT
-			npc_types.*
-			FROM
-			npc_types
-			Inner Join spawnentry ON npc_types.id = spawnentry.npcID
-			Inner Join spawn2 ON spawnentry.spawngroupID = spawn2.spawngroupID
-			WHERE spawn2.zone = '" . $_GET['Zone'] . "' AND spawn2.version = " . $_GET['inst_version'] . " " . $npc_filter . "
-			GROUP BY npc_types.id
-			ORDER BY npc_types.id";
+                npc_types.*
+                FROM
+                npc_types
+                Inner Join spawnentry ON npc_types.id = spawnentry.npcID
+                Inner Join spawn2 ON spawnentry.spawngroupID = spawn2.spawngroupID
+                WHERE spawn2.zone = '" . $_GET['Zone'] . "' AND spawn2.version = " . $_GET['inst_version'] . " " . $npc_filter . "
+                GROUP BY npc_types.id
+                ORDER BY npc_types.id";
         }
         else {
             $query = "SELECT
-			npc_types.*
-			FROM
-			npc_types
-			WHERE id > 0
-			" . $npc_filter . "
-			GROUP BY npc_types.id
-			ORDER BY npc_types.id
-			";
+                npc_types.*
+                FROM
+                npc_types
+                WHERE id > 0
+                " . $npc_filter . "
+                GROUP BY npc_types.id
+                ORDER BY npc_types.id";
         }
 		$result = mysql_query($query);
 
@@ -227,8 +288,9 @@
 		while($row = mysql_fetch_array($result)){
 			echo '<tr npc_row_id_' . $row['id'] . '="1">';
 			echo '<td>
-				<button type="button" class="btn btn-default btn-sm red btn-xs" onclick="do_npc_delete(' . $row['id'] . ')"><i class="fa fa-times"></i> </button>
-				<button type="button" class="btn btn-default btn-sm green btn-xs" onclick="do_npc_edit(' . $row['id'] . ')"><i class="fa fa-edit"></i> </button>
+				<button type="button" class="btn btn-default btn-sm red btn-xs" onclick="do_npc_delete(' . $row['id'] . ')" title="Delete NPC"><i class="fa fa-times"></i> </button>
+				<button type="button" class="btn btn-default btn-sm green btn-xs" onclick="do_npc_edit(' . $row['id'] . ')" title="Edit NPC"><i class="fa fa-edit"></i> </button>
+				<button type="button" class="btn btn-default btn-sm btn-xs" onclick="do_npc_copy(' . $row['id'] . ')" title="Copy NPC"><i class="fa fa-sign-in"></i> </button>
 			</td>';
 			foreach ($row as $key => $val){
 				if(is_numeric($key)){
@@ -385,7 +447,7 @@
                     <h2> <span class="label label-success">' . $order_val . '</span></h2>
                 ';
             }
-			$Content .= '<table class="table-bordered table-striped table-condensed flip-content" class="single_edit_table">';
+			$Content .= '<table class="table-bordered table-striped table-condensed flip-content single_edit_table">';
 			foreach ($npc_fields[$order_val] as $key => $val) {
                 #print $key . '<br>';
                 if($key == "d_melee_texture1" || $key == "d_melee_texture2" || $key == "race"){

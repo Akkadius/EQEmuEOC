@@ -67,7 +67,7 @@
 
 	echo '<div id="shownpczone"></div>';
 
-	if($_GET['zone']){
+	if(isset($_GET['zone'])){
 		$FJS .= '<script type="text/javascript">ShowZoneFromURL(\'' . $_GET['zone'] . '\', ' . $_GET['version'] . ', \'' . $_GET['npc_filter'] . '\', "")</script>';
 	}
 

@@ -50,5 +50,38 @@
 	}
 
 	/* Global Scoped Functions */
-	
+
+    function DuplicateMySQLRecord ($table, $id_field, $id_copied_from, $copied_to_id = 0) {
+        /* load the original record into an array */
+
+        $result = mysql_query("SELECT * FROM {$table} WHERE {$id_field} = {$id_copied_from}");
+        # echo mysql_error();
+        $original_record = mysql_fetch_assoc($result);
+        if ($copied_to_id == 0) {
+            /* insert the new record and get the new auto_increment id */
+            mysql_query("INSERT INTO {$table} (`{$id_field}`) VALUES (NULL)");
+            $new_id = mysql_insert_id();
+            # echo mysql_error();
+        }
+        else {
+            $new_id = $copied_to_id;
+            mysql_query("INSERT INTO {$table} (`{$id_field}`) VALUES (" . $copied_to_id . ")");
+        }
+
+        /* generate the query to update the new record with the previous values */
+        $query = "UPDATE {$table} SET ";
+        foreach ($original_record as $key => $value) {
+            if ($key != $id_field) {
+                $query .= '`' . $key . '` = "' . str_replace('"', '\"', $value) . '", ';
+            }
+        }
+        $query = substr($query, 0, strlen($query) - 2); // lop off the extra trailing comma
+        $query .= " WHERE {$id_field}={$new_id}";
+        mysql_query($query);
+
+        # echo mysql_error();
+
+        return $new_id;
+    }
+
 ?>
