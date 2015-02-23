@@ -207,7 +207,9 @@
 		$result = mysql_query(
 			"SELECT
 				lootdrop_entries.*,
-				items.`Name`
+				items.id,
+				items.`Name`,
+				items.icon
 				FROM
 				lootdrop_entries
 				INNER JOIN items ON lootdrop_entries.item_id = items.id
@@ -216,7 +218,10 @@
 			echo '
 				<tr loot_table="' . $row['loottable_id'] . '">
 					<td>' . $row['item_id'] . '</td>
-					<td>' . $row['Name'] . '</td>
+					<td style="text-align:left">
+                        <img class="lazy" data-original="cust_assets/icons/item_622.png" style="height:15px;width:auto" src="cust_assets/icons/item_' . $row['icon'] . '.png" style="display: inline;">
+					    <a href="javascript:;" ' . HoverTip("global.php?item_view=" . $row['id']) . '>' . $row['Name'] . '</a>
+                    </td>
 					<td>' . $row['equip_item'] . '</td>
 					<td>' . $row['chance'] . '</td>
 					<td>' . $row['minlevel'] . '</td>

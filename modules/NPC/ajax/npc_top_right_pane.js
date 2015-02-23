@@ -31,6 +31,7 @@ $(document).ready(function() {
             /* Update Data Table as well */
             $('#lootdrop_entries').html(e).fadeIn();
             $('#lootdrop_entries').attr('lootdrop_loaded', loot_drop);
+            HookHoverTips();
         });
 
     });

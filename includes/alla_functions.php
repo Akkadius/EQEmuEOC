@@ -1007,7 +1007,7 @@ function BuildItemStats($item, $show_name_icon, $TableClass='') {
 
 	// lore, nodrop, norent, magic
 	$html_string .= "<tr>";
-	$html_string .= "<td colspan='2' nowrap='1'><b class='btn btn-default green btn-xs' style='display:inline'>";
+	$html_string .= "<td colspan='2' nowrap='1'><b style='display:inline'>";
 	$v = "";
 	if($item["itemtype"] == 54)  { $html_string .= "$v AUGMENTATION"; $v = " "; }
 	if($item["magic"] == 1)      { $html_string .= "$v MAGIC ITEM";   $v = " "; }

@@ -94,3 +94,25 @@ function ToggleUIStyle(v){
 		location.reload();
 	});
 }
+
+function HookHoverTips(){
+    $( "[hovertip-url]" ).mouseover(function(e) {
+        url = $(this).attr("hovertip-url");
+        ajax_showTooltip(e, url, $(this), true, 0, 0);
+    });
+    $( "[hovertip-url]" ).mouseout(function(e) {
+        if($(this).attr("hovertip-hidemouseout") == 1){ ajax_hideTooltip(); }
+    });
+    /* Custom Hover Tips with Close Button */
+    $( "[hovertip-close-url]" ).mouseover(function(e) {
+        url = $(this).attr("hovertip-close-url");
+        ajax_showTooltip(e, url, $(this), true, 0, 0);
+        $( ".ajax_tooltip_content" ).bind( "mouseenter", function() { in_ajax_div = 1; $("body").css("overflow", "hidden"); });
+        $( ".ajax_tooltip_content" ).bind( "mouseleave", function() { in_ajax_div = 0; $("body").css("overflow", "visible"); });
+    });
+    $( "[hovertip-url]" ).mouseout(function(e) {
+        /* Unbind to events that we bound to, because we will get too many bindings after enough calls */
+        $( ".ajax_tooltip_content" ).unbind( "mouseenter");
+        $( ".ajax_tooltip_content" ).unbind( "mouseleave");
+    });
+}
