@@ -171,7 +171,7 @@
 						<td>
 							<select name="type" class="form-control">
 								<option value="0"' . ($c['type'] == 0 ? ' selected="1"' : '') . '>--- Select ---</option>';
-								foreach ($EditOptions['classes'] as $key => $val){ 
+								foreach ($edit_options['classes'] as $key => $val){
 									if($c['type'] == $key){ $sel = " selected"; } else { $sel = ""; }
 									echo '<option value="' . $key . '" ' . $sel . '>' . $val . '</option>';
 								}

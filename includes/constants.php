@@ -506,7 +506,7 @@
     );
 
 
-    $EditOptions = array(
+    $edit_options = array(
         "nodrop" => array(
             0 => "Yes",
             1 => "No",

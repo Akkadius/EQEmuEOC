@@ -367,11 +367,11 @@
 	$yes_no = array(0 => "No", 1 => "Yes");
 	
 	function GetFieldSelect($field_name, $value, $npc_id, $from_npc_grid_tool = 0){
-		global $EditOptions, $yes_no, $trap_types, $adventure_templates, $bodytypes, $genders, $dbclasses;
+		global $edit_options, $yes_no, $trap_types, $adventure_templates, $bodytypes, $genders, $dbclasses;
 		$found_select = 0;
 		$ret .= "<select class='form-control' title='" . ProcessFieldTitle($field_name) . "'  value='" . $value . "' id='" . $npc_id . "^" . $field_name . "' class='" . $field_name . "' onchange='update_npc_field(" . $npc_id . ", \"" . $field_name . "\", this.value)'>";
 		if($field_name == "prim_melee_type" || $field_name == "sec_melee_type"){
-			foreach ($EditOptions['extradmgskill'] as $key => $val){
+			foreach ($edit_options['extradmgskill'] as $key => $val){
 				if($key == $value){ $sel = "selected"; } else { $sel = ""; }
 				$ret .= '<option value="'. $key . '" ' . $sel . '>'. $key . ': ' . $val . '</option>';
 			}

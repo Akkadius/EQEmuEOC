@@ -989,11 +989,11 @@ $EditOptions = array(
 );
 
 function ItemInputFromArray($Field, $Type, $FieldData, $InputTitle){ 
-	global $EditOptions; global $ITD;
+	global $edit_options; global $ITD;
 	$OutPut = "";
 	if($Type == "MS"){
 		$OutPut .= '<select name="' . $Field . '" '. $InputTitle . '  style="width:125px;">';
-		foreach ($EditOptions[$Field] as $key => $value){
+		foreach ($edit_options[$Field] as $key => $value){
 			if($FieldData == $key){
 				$OutPut .= '<option selected value="'. $key . '">'. $key . ': '. $value . ' </option>';
 			}
@@ -1005,7 +1005,7 @@ function ItemInputFromArray($Field, $Type, $FieldData, $InputTitle){
 	}
 	if($Type == "MS3"){
 		$OutPut .= '<select name="' . $Field . '" '. $InputTitle . '  style="width:125px;">';
-		foreach ($EditOptions[$Field] as $key => $value){
+		foreach ($edit_options[$Field] as $key => $value){
 			if($FieldData == $key){
 				$OutPut .= '<option selected value="'. $key . '">'. $key . ': '. $value . ' </option>';
 			}
@@ -1017,7 +1017,7 @@ function ItemInputFromArray($Field, $Type, $FieldData, $InputTitle){
 	}
 	if($Type == "MS2"){
 		$OutPut .= '<select name="' . $Field . '" '. $InputTitle . '>';
-		foreach ($EditOptions[$Field] as $key => $value){
+		foreach ($edit_options[$Field] as $key => $value){
 			if($FieldData == $key){
 				$OutPut .= '<option selected value="'. $key . '">'. $key . ': '. $value . ' </option>';
 			}
@@ -1029,7 +1029,7 @@ function ItemInputFromArray($Field, $Type, $FieldData, $InputTitle){
 	}
 	else if($Type == "range"){
 		$OutPut .= '<select name="' . $Field . '" '. $InputTitle . '>';
-		for($i=$EditOptions[$Field][0]; $i <= $EditOptions[$Field][1]; $i++){
+		for($i=$edit_options[$Field][0]; $i <= $edit_options[$Field][1]; $i++){
 			if($FieldData == $i){
 				$OutPut .= '<option selected value="'. $i . '"> '. $i . ' </option>';
 			}
@@ -1041,7 +1041,7 @@ function ItemInputFromArray($Field, $Type, $FieldData, $InputTitle){
 	}
 	else if($Type == "range2"){
 		$OutPut .= '<select name="' . $Field . '" '. $InputTitle . '>';
-		for($i=$EditOptions[$Field][0]; $i <= $EditOptions[$Field][1]; $i++){
+		for($i=$edit_options[$Field][0]; $i <= $edit_options[$Field][1]; $i++){
 			if($FieldData == $i){
 				$OutPut .= '<option selected value="'. $i . '"> '. $i . ' </option>';
 			}
@@ -1066,7 +1066,7 @@ function ItemInputFromArray($Field, $Type, $FieldData, $InputTitle){
 	}
 	else if($Type == "augslottype"){
 		$OutPut .= '<select name="' . $Field . '" '. $InputTitle . ' style="width:150px;">';
-		foreach ($EditOptions["augslottype"] as $key => $value){
+		foreach ($edit_options["augslottype"] as $key => $value){
 			if($FieldData == $key){
 				$OutPut .= '<option selected value="'. $key . '">'. $key . ': '. $value . ' </option>';
 			}

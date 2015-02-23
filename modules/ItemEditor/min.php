@@ -125,8 +125,8 @@
 		require_once('includes/alla_functions.php');
 		require_once('modules/ItemEditor/constants_ie.php');
 		$PageTitle = "Preview Item"; echo $SpecIncludes. '<title>'.$PageTitle.'</title>';
-		$QueryResult = mysql_query("SELECT * FROM items WHERE id = ". $PreviewID . ";");
-		while($row = mysql_fetch_array($QueryResult)){	
+		$query_result = mysql_query("SELECT * FROM items WHERE id = ". $PreviewID . ";");
+		while($row = mysql_fetch_array($query_result)){
 			echo '<center><div class="alert alert-block alert-warning fade in" style="width:500px">';
 			echo BuildItemStats($row, 1, 'item_view');
 			echo '</div>';
@@ -149,82 +149,68 @@
 	}
 	/* Preview Icon */
 	if(isset($_GET['previcon'])){
-		echo '<style>
-				.image {   position: relative;  width: 100%; /* for IE 6 */ }
-				h2 {   position: absolute;  top: 0px;   left: 15px;  width: 100%;   font-size:11px; }
-			</style>';
-		if(count($_GET) == 2){
-			echo "<embed src=\"images/chest_op.wav\" hidden=\"true\" autostart=\"true\" loop=\"false\" />";
-			$PageTitle = "Icon Preview & Selection"; echo $SpecIncludes. '<title>'.$PageTitle.'</title>';
-			echo '<center><table class="itemedit"><tr><td class="itemtd"><center>';
-			echo '<h3>Narrow Search Criteria...</h3> <hr>'; 
-			echo '<table><tr><td>Item Type: </td><td><select name="IconSearch" onchange="GetIconResult(this.value, 1);"><option value="x" >Select...</option>';
-			foreach ($EditOptions['itemtype'] as $key => $value){
-				echo '<option value="'. $key . '">'. $key . ': '. $value . ' </option>';
-			} 
-			echo '</select>';
-			echo '<tr><td>Item Slot</td><td><select name="IconSearch" onchange="GetIconResult(this.value, 2);"><option value="x" >Select...</option>';
-			$n = 0;
-			while ($ItemSlots[$n]){
-				echo '<option value="'. $ItemSlots[$n][1] . '">'. $ItemSlots[$n][1] . ': '. $ItemSlots[$n][0] . ' </option>';
-				$n++;
-			}
-			echo '</select></td></tr>';
-			echo '</td></tr></table>';
-			echo '<hr>';
-			echo '<div id="IconResult">';
-		}
-		if($_GET['IconSearch']){
-			echo '<style>
-				.image { 
-				   position: relative; 
-				   width: 100%; /* for IE 6 */
-				}
-				h2 { 
-				   position: absolute; 
-				   top: 0px; 
-				   left: 15px; 
-				   width: 100%; 
-				   font-size:11px;
-				}
-			</style>';
-			if($_GET['Type'] == 1){
-				$QueryResult = mysql_query('SELECT items.id, replace(items.idfile, "IT", "") AS WeaponList, items.icon FROM items WHERE itemtype = '. $_GET['IconSearch'] . '  GROUP BY `icon` ORDER BY `WeaponList` ASC;');
-				while($row = mysql_fetch_array($QueryResult)){
-					if(file_exists("cust_assets/icons/item_" . $row['icon'] . ".png")) { 
-						$img_url = "cust_assets/icons/item_" . $row['icon'] . ".png";
-						echo '<div class="image" style="display:inline">' .  
-						"<a href='javascript:;' title='' class='btn btn-default' onClick='FinishIcon(" . $row['icon'] . ")'><img src='" . $img_url . "' title='". $row['icon'] . "' width='35' height='35'/></a> "
-						. '<h2>' . $row['icon'] . '</h2></div>';
-					}
-				}
-			}
-			else if($_GET['Type'] == 2){
-				$QueryResult = mysql_query('SELECT items.id, slots AS WeaponList, items.icon FROM items WHERE slots = '. $_GET['IconSearch'] . '  AND augtype = 0 GROUP BY `icon` ORDER BY `WeaponList` ASC;');
-				while($row = mysql_fetch_array($QueryResult)){
-					if(file_exists("cust_assets/icons/item_" . $row['icon'] . ".png")) { 
-						$img_url = "cust_assets/icons/item_" . $row['icon'] . ".png";
-						echo '<div class="image" style="display:inline">' .  
-						"<a href='javascript:;' title='' class='btn btn-default' onClick='FinishIcon(" . $row['icon'] . ")'><img src='" . $img_url . "' title='". $row['icon'] . "' width='35' height='35'/></a> "
-						. '<h2>' . $row['icon'] . '</h2></div>';
-					}
-				}
-			}
-		}
-		else{
-			for($i=0; $i<6700; $i++){ 
-				if(file_exists("cust_assets/icons/item_" . $i . ".png")) { 
-					$img_url = "cust_assets/icons/item_" . $i . ".png";
-					echo '<div class="image" style="display:inline">' .  
-					"<a href='javascript:;' title='' class='btn btn-default' onClick='FinishIcon(" . $i . ")'><img class='lazy' data-original='" . $img_url . "' title='". $i . "' width='35' height='35'/></a> "
-					. '<h2>' . $i . '</h2></div>';
-				}
-			}
-		}
-		if(count($_GET) == 1){
-			echo '</div>';
-			echo '</tr></td></table>';
-		}
+        require_once('includes/constants.php');
+        echo '
+            <style>
+                .image {
+                   position: relative;
+                   width: 100%; /* for IE 6 */
+                }
+                .image_label {
+                    position: absolute;
+                    bottom: 0px;
+                    left: 0px;
+                    font-size: 10px !important;
+                    background-color:black;
+                    height: 12px !important;
+                    padding: 1px 2px 1px 2px !important;
+                }
+            </style>';
+
+        echo "<embed src=\"images/chest_op.wav\" hidden=\"true\" autostart=\"true\" loop=\"false\" />";
+
+        echo '<table class="table table-striped table-hover table-condensed flip-content dataTable table-bordered dataTable" style="width:400px">
+            <tr>
+                <td style="text-align:right">Item Type: </td>
+                <td>
+                    <select name="IconSearch" onchange="GetIconResult(this.value, 1)" class="form-control">
+                    <option value="x" >Select...</option>';
+                    foreach ($edit_options['itemtype'] as $key => $value){
+                        echo '<option value="'. $key . '">'. $key . ': '. $value . ' </option>';
+                    }
+        echo '</select>';
+        echo '</tr>';
+
+        echo '<tr>
+            <td style="text-align:right">Item Slot</td>
+            <td>
+                <select name="IconSearch" onchange="GetIconResult(this.value, 2)"  class="form-control">
+                <option value="x" >Select...</option>';
+                $n = 0;
+                while ($ItemSlots[$n]){
+                    echo '<option value="'. $ItemSlots[$n][1] . '">'. $ItemSlots[$n][1] . ': '. $ItemSlots[$n][0] . ' </option>';
+                    $n++;
+                }
+        echo '</select></td></tr>';
+        echo '</td></tr></table>';
+        echo '<hr>';
+        echo '<div id="IconResult">';
+
+        for ($i = 0; $i < 6700; $i++) {
+            $img_url = "cust_assets/icons/item_" . $i . ".png";
+            if (file_exists($img_url)) {
+                echo '
+                    <div class="image" style="display:inline">
+                        <a href="javascript:;" title="' . $i . '" onClick="FinishIcon(' . $i . ')">
+                            <span class="image-wrap">
+                                <img class="lazy" data-original="' . $img_url . '"  width="35" height="35" class="cut-out"/>
+                            </span>
+                        </a>
+                    </div>';
+            }
+        }
+
+        echo '</div>';
 	}
 	/* Preview Weapon Graphics */
 	if(isset($_GET['prevITfile'])){
@@ -255,8 +241,8 @@
 			echo '<div id="ITFileResult">';
 		}
 		if($_GET['WeaponType']){
-			$QueryResult = GetQueryResult('SELECT items.id, replace(items.idfile, "IT", "") AS WeaponList, items.icon FROM items WHERE itemtype = '. $_GET['WeaponType'] . '  GROUP BY `idfile` ORDER BY `WeaponList` ASC;');
-			while($row = mysql_fetch_array($QueryResult)){
+			$query_result = GetQueryResult('SELECT items.id, replace(items.idfile, "IT", "") AS WeaponList, items.icon FROM items WHERE itemtype = '. $_GET['WeaponType'] . '  GROUP BY `idfile` ORDER BY `WeaponList` ASC;');
+			while($row = mysql_fetch_array($query_result)){
 				if(file_exists($weapons_dir . "/" . $row['WeaponList'] . ".jpg")) {
 					echo '<div class="image" style="display:inline">' .
                             "<a href='javascript:;' class='btn btn-default' onClick='FinishIDFile(" . $row['WeaponList'] . ")'>
@@ -1065,8 +1051,8 @@
 		$Result = $Query . $Fields . ") VALUES (". $Values . ");"; 
 		if(mysql_query($Result)){
 			echo '<center><h1>Item Saved Successfully!</h1><br>';
-			$QueryResult = mysql_query("SELECT * FROM items WHERE id = ". $_POST['id'] . ";"); 
-			while($row = mysql_fetch_array($QueryResult)){
+			$query_result = mysql_query("SELECT * FROM items WHERE id = ". $_POST['id'] . ";");
+			while($row = mysql_fetch_array($query_result)){
 				echo '<div class="alert alert-block alert-warning fade in" style="width:500px">';
 				echo BuildItemStats($row, 1);
 				echo '</div>';

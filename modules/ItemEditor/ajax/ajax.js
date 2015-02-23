@@ -10,14 +10,15 @@ function GetItemSearchForm(a) {
 }
 
 function GetIconResult(a, b) {
-    var c;
-    document.getElementById("IconResult").innerHTML = "<center><br><br><i class='fa fa-spinner fa-spin' style='font-size:80px'></center><br><br>";
-    if (window.XMLHttpRequest) c = new XMLHttpRequest(); else c = new ActiveXObject("Microsoft.XMLHTTP");
-    c.onreadystatechange = function() {
-        if (4 == c.readyState && 200 == c.status) document.getElementById("IconResult").innerHTML = c.responseText;
-    };
-    c.open("GET", "ajax.php?M=Items&previcon=1&IconSearch=" + a + "&Type=" + b, true);
-    c.send();
+    $('#IconResult').html('<i class="fa fa-spinner fa-spin" style="font-size:180px;color:#666;position:absolute;left:50%;top:50%"></i>');
+    $.ajax({
+        url: "ajax.php?M=Items&previcon=1&IconSearch=" + a + "&Type=" + b,
+        context: document.body
+    }).done(function(e) {
+        /* Update Data Table as well */
+        $('#IconResult').html(e).fadeIn();
+        $('#IconResult').attr('lootdrop_loaded', loot_drop);
+    });
 }
 
 function GetITFileResult(a) {
