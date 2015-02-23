@@ -100,6 +100,7 @@
 		$sql = "SELECT `long_name`, `zoneidnumber`, `short_name` FROM `zone` ORDER BY `zoneidnumber`";
 		$result = mysql_query($sql);
 		$ret .= '<select class="form-control" id="zoneselect" title="Select the Zone you wish to list NPCs For">';
+        $ret .= '<option value="0"> --- Select --- </option>';
 		while($row = mysql_fetch_array($result)){
 			if($zone_name == $row['short_name']){ $sel = "selected"; } else { $sel = ""; }
 			$ret .= '<option value="'. $row['short_name'] . '" ' . $sel . '>' . $row['short_name'] . ' - ' .  $row['long_name'] . ' - (' .  $row['zoneidnumber'] .  ': ' . $row['short_name'] . ')' . '</option>';

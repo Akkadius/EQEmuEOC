@@ -185,7 +185,8 @@
 		</style>';
 
 		/* Get NPC List */
-		$query = "SELECT
+        if($_GET['Zone'] > 0) {
+            $query = "SELECT
 			npc_types.*
 			FROM
 			npc_types
@@ -194,6 +195,18 @@
 			WHERE spawn2.zone = '" . $_GET['Zone'] . "' AND spawn2.version = " . $_GET['inst_version'] . " " . $npc_filter . "
 			GROUP BY npc_types.id
 			ORDER BY npc_types.id";
+        }
+        else {
+            $query = "SELECT
+			npc_types.*
+			FROM
+			npc_types
+			WHERE id > 0
+			" . $npc_filter . "
+			GROUP BY npc_types.id
+			ORDER BY npc_types.id
+			";
+        }
 		$result = mysql_query($query);
 
 		# echo $query . '<br>' . mysql_error();
