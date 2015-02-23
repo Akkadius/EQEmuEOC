@@ -2,18 +2,6 @@
  * Created by Akkadius on 2/22/2015.
  */
 
-$(".modal-body input, .modal-body select").each(function () {
-    $(this).addClass("form-control");
-});
-
-$("select").each(function () {
-    $(this).tooltip();
-});
-
-$(":text").each(function () {
-    $(this).tooltip();
-});
-
 $(document).ready(function () {
     $("#armor_tint_selector").html("<div id=\"picker\" style=\"display:inline\"></div>");
     $("#picker").colpick({
@@ -49,5 +37,16 @@ $(document).ready(function () {
     });
     $(".page-content img").each(function() {
         $(this).css("border", "2px solid #666");
+    });
+    $(".modal-body input, .modal-body select").each(function () {
+        $(this).addClass("form-control");
+    });
+
+    $("select").each(function () {
+        $(this).tooltip();
+    });
+
+    $(":text").each(function () {
+        $(this).tooltip();
     });
 });

@@ -233,11 +233,12 @@
 			   position: relative; 
 			   width: 100%; /* for IE 6 */
 			} 
-			h2 { 
+			.image_label {
 			   position: absolute; 
-			   bottom: -90px;
+			   bottom: 0px;
 			   left: 0px;
-			   width: 100%;  
+			   width: 100%;
+			   font-size:14px !important;
 			}
 		</style>';
 		if(count($_GET) == 1){
@@ -257,22 +258,45 @@
 			$QueryResult = GetQueryResult('SELECT items.id, replace(items.idfile, "IT", "") AS WeaponList, items.icon FROM items WHERE itemtype = '. $_GET['WeaponType'] . '  GROUP BY `idfile` ORDER BY `WeaponList` ASC;');
 			while($row = mysql_fetch_array($QueryResult)){
 				if(file_exists($weapons_dir . "/" . $row['WeaponList'] . ".jpg")) {
-					echo '<div class="image" style="display:inline">' . "<a href='javascript:;' class='btn btn-default' onClick='FinishIDFile(" . $row['WeaponList'] . ")'><img src='" . $weapons_url . $row['WeaponList'] . ".jpg' title='IT". $row['WeaponList'] . "' width='120' height='180'/></a> "
-					. '<h2>IT' . $row['WeaponList'] . '</h2></div>';
+					echo '<div class="image" style="display:inline">' .
+                            "<a href='javascript:;' class='btn btn-default' onClick='FinishIDFile(" . $row['WeaponList'] . ")'>
+                                <span class='image-wrap'>
+                                    <img src='" . $weapons_url . $row['WeaponList'] . ".jpg' title='IT". $row['WeaponList'] . "' width='120' height='180' class='cut-out'/>
+                                    <span class='image_label badge badge-danger'>IT" . $row['WeaponList'] . "</span>
+                                </span>
+                            </a>
+                        </div>";
 				}
 			}
 		}
 		else{
 			for($i = 1; $i < 100000; $i++){
-				if($i == 1){ echo '<h1> EQ Classic </h1>'; }
-				if($i == 104){ echo '<h1> Kunark </h1>'; }
-				if($i == 161){ echo '<h1> Velious </h1>'; }
-				if($i == 10000){ echo '<h1> Luclin </h1>'; }
-				if($i == 10200){ echo '<h1> Planes of Power </h1>'; }
+				if($i == 1){ echo '<h1> EQ Classic </h1><hr>'; }
+				if($i == 104){ echo '<h1> Kunark </h1><hr>'; }
+				if($i == 161){ echo '<h1> Velious </h1><hr>'; }
+				if($i == 10000){ echo '<h1> Luclin </h1><hr>'; }
+				if($i == 10200){ echo '<h1> Planes of Power </h1><hr>'; }
+				if($i == 10735){ echo '<h1> Omens of War </h1><hr>'; }
+				if($i == 10782){ echo '<h1> Dragons of Norrath </h1><hr>'; }
+				if($i == 10810){ echo '<h1> Depths of Darkhallow </h1><hr>'; }
+				if($i == 10843){ echo '<h1> Prophecy of Ro </h1><hr>'; }
+				if($i == 10866){ echo '<h1> The Serpents Spine </h1><hr>'; }
+				if($i == 11085){ echo '<h1> The Buried Sea </h1><hr>'; }
+				if($i == 11128){ echo '<h1> Secrets of Faydwer </h1><hr>'; }
+				if($i == 11257){ echo '<h1> Seeds of Destruction </h1><hr>'; }
+				if($i == 11274){ echo '<h1> LoN </h1><hr>'; }
+				if($i == 11311){ echo '<h1> Underfoot </h1><hr>'; }
+				if($i == 11680){ echo '<h1> House of Thule </h1><hr>'; }
+				if($i == 12100){ echo '<h1> VoA </h1><hr>'; }
 				if(file_exists("cust_assets/weapons/" . $i . ".jpg")) {
 					echo '<div class="image" style="display:inline">' .
-					"<a href='javascript:;' class='btn btn-default' onClick='FinishIDFile(" . $i . ")'><img class='lazy' data-original='cust_assets/weapons/" .  $i . ".jpg' title='IT". $i . "' width='120' height='180'/></a> "
-					. '<h2 class="btn btn-default">IT' . $i . '</h2></div>'
+					    "<a href='javascript:;' onClick='FinishIDFile(" . $i . ")'>
+					        <span class='image-wrap'>
+                                <img class='lazy cut-out' data-original='cust_assets/weapons/" .  $i . ".jpg' title='IT". $i . "' width='120' height='180'/>
+                                <span class='image_label badge badge-danger'>IT" . $i . "</span>
+					        </span>
+                        </a> "
+					. '</div>'
 					;
 				}
 			}

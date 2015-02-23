@@ -334,7 +334,7 @@
 						$npc_fields["Visual Texture"][$field_name][1] =
                             '<a href="javascript:;" onclick="OpenWindow(\'min.php?Mod=IE&prevITfile=1&Field=' . $field_name . '&NPC=' . $row['id'] . '\', \'_blank\', 900, 900)">
 						        <span class="image-wrap " style="width: auto; height: auto;">
-						            <img src="includes/img.php?type=weaponimage&id='. $val . '" id="'.  $field_name . '" class="embossed">
+						            <img src="includes/img.php?type=weaponimage&id='. $val . '" id="'.  $field_name . '" class="embossed morphing-glowing">
 						        </span>
                             </a>
                         ';
@@ -362,6 +362,7 @@
         $td_content = "";
         $n = 0;
 
+        /* Manually push this field into the Appearance Category */
         $npc_fields["Appearance"]["tint"][0] = "Armor Tint";
         $npc_fields["Appearance"]["tint"][1] = "<div id='armor_tint_selector'></div>";
 
@@ -376,7 +377,7 @@
                 #print $key . '<br>';
                 if($key == "d_melee_texture1" || $key == "d_melee_texture2" || $key == "race"){
                     $td_content .= '
-                        <td style="text-align:center;vertical-align:top">' . $val[0] . '<br> ' . $val[1] . '  </td>';
+                        <td style="text-align:center;vertical-align:top">' . $val[1] . '<br><b>' .  $val[0] . '</b></td>';
                 }
                 else {
                     $td_content .= '

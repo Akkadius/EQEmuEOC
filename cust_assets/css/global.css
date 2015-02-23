@@ -51,6 +51,30 @@ body { background-color: #FFFFFF !important; }
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     border-radius: 20px;
+
+    -webkit-transition: 1s;
+    -moz-transition: 1s;
+    transition: 1s;
+}
+
+.morphing-glowing .image-wrap {
+    -webkit-transition: 1s;
+    -moz-transition: 1s;
+    transition: 1s;
+
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+
+.morphing-glowing .image-wrap:hover {
+    -webkit-box-shadow: 0 0 20px rgba(255,255,255,.6), inset 0 0 20px rgba(255,255,255,1);
+    -moz-box-shadow: 0 0 20px rgba(255,255,255,.6), inset 0 0 20px rgba(255,255,255,1);
+    box-shadow: 0 0 20px rgba(255,255,255,.6), inset 0 0 20px rgba(255,255,255,1);
+
+    -webkit-border-radius: 60em;
+    -moz-border-radius: 60em;
+    border-radius: 60em;
 }
 
 .image-wrap {
