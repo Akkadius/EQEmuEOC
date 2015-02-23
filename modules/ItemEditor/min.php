@@ -227,6 +227,7 @@
 			   font-size:14px !important;
 			}
 		</style>';
+
 		if(count($_GET) == 1){
 			echo "<embed src=\"images/swordblk.wav\" hidden=\"true\" autostart=\"true\" loop=\"false\" />";
 			$PageTitle = "Weapons Preview & Selection"; echo $SpecIncludes. '<title>'.$PageTitle.'</title>';
