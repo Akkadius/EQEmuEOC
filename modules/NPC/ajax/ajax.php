@@ -100,16 +100,30 @@
 
     /* Display NPC Data in the top right pane */
 	if($_GET['load_npc_top_pane_dash']){
-		if($_GET['load_npc_top_pane_dash'] <= 0){
-			echo 'No loot data present';
-			return;
-		}
+
 
 		$result = mysql_query("SELECT * FROM `npc_types` WHERE `id` = " . $_GET['load_npc_top_pane_dash']);
 		$npc_types = array();
 		while($row = mysql_fetch_array($result)){ $npc_types = $row; }
 		# echo var_dump($npc_types);
 
+        /* Load Race Image */
+        if(file_exists("cust_assets/races/" . $npc_types['race'] . ".jpg")) {
+            $race_img = "cust_assets/races/" . $npc_types['race'] . ".jpg";
+        }
+        else if (file_exists("cust_assets/races/Race (" . $npc_types['race'] . ").png")) {
+            $race_img = "cust_assets/races/Race (" . $npc_types['race'] . ").png";
+        }
+        if($race_img != '') {
+            $race_panel_image = '  <span class="image-wrap">
+                <img src="' . $race_img . '" id="' . $npc_types['race'] . '"  style="height:150px;width:auto;">
+            </span>
+        ';
+        }
+
+        if($_GET['load_npc_top_pane_dash'] <= 0){
+            echo 'No loot data present';
+        }
 		$result = mysql_query("SELECT * FROM `loottable` WHERE `id` = " . $npc_types['loottable_id']);
 		$loot_table = array();
 		while($row = mysql_fetch_array($result)){ $loot_table = $row; }
@@ -125,7 +139,17 @@
 		/* Loot Table Entries */
 		echo '
             <table>
-                <tr><td valign="top">
+                <tr>
+                <td valign="top">
+
+                <table>
+                    <tr>
+                        <td>' . $race_panel_image . '<br><b>' . $npc_types['name'] . '<br> ' . $npc_types['id'] . '</b></td>
+                    </tr>
+                </table>
+                </td>
+                <td valign="top" style="text-align:left">
+                <span class="label label-danger" style="font-weight:bold"> Loot Table ID: ' . $npc_types['loottable_id'] . '</span><br><br>
                 <table class="table table-condensed table-hover table-bordered loottable_entries ">
                     <thead>
                         <tr>
@@ -150,15 +174,9 @@
 						</tr>';
 				}
 
-			echo '</table>
+			echo '</table>';
 
-			<span class="label label-sm label-success"> (' .  $npc_types['id'] . ') ' . $npc_types['name'] . ' Loot Table ID: ' . $npc_types['loottable_id'] . '</span>';
-
-			echo '</td>
-				<td>
-					<i class="fa fa-arrow-circle-o-right" style="color:#666;font-size:40px;padding:15px"></i>
-				</td>
-				<td valign="top">';
+			echo '</td><td valign="top" style="text-align:left;"">';
 
 			echo '<div id="lootdrop_entries" style="display:inline"></div>';
 
@@ -173,6 +191,7 @@
     */
 	if($_GET['show_lootdrop_entries']){
 		/* Loot Drop Entries */
+        echo '<span class="label label-danger" style="font-weight:bold"> Loot Drop ID: ' . $_GET['show_lootdrop_entries'] . '</span><br><br>';
 		echo '<table class="table table-condensed table-hover table-bordered lootdrop_entries">
                 <thead>
                     <tr>
@@ -246,8 +265,20 @@
 			#shownpczone table tbody td input{ text-align:center; }
 		</style>';
 
+        # echo var_dump($_GET);
+
 		/* Get NPC List */
-        if($_GET['Zone'] > 0) {
+        if($_GET['Zone'] == "0") {
+            $query = "SELECT
+                npc_types.*
+                FROM
+                npc_types
+                WHERE id > 0
+                " . $npc_filter . "
+                GROUP BY npc_types.id
+                ORDER BY npc_types.id";
+        }
+        else {
             $query = "SELECT
                 npc_types.*
                 FROM
@@ -258,17 +289,10 @@
                 GROUP BY npc_types.id
                 ORDER BY npc_types.id";
         }
-        else {
-            $query = "SELECT
-                npc_types.*
-                FROM
-                npc_types
-                WHERE id > 0
-                " . $npc_filter . "
-                GROUP BY npc_types.id
-                ORDER BY npc_types.id";
-        }
 		$result = mysql_query($query);
+
+       #echo $query;
+       #exit;
 
 		# echo $query . '<br>' . mysql_error();
 		$RowData = array();
@@ -369,8 +393,8 @@
                     font-size: 12px !important;
                     height: 25px !important;
                 }
-                td{ width:50px; }
-                table input{ min-width:150px !important; }
+                .single_edit_table td{ width:50px; }
+                .single_edit_table table input{ min-width:150px !important; }
                 #picker {
                     margin:0;
                     padding:0;
