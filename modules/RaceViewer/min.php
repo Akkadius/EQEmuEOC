@@ -42,7 +42,6 @@
 
 	/* Floating Forms */
     if ($_GET['RaceView'] == 1) {
-
         if ($_GET['GenRaceFile'] == 1) {
             echo '
             <table class="table" style="border:1px solid black;background-color: #fff; width:300px !important; position: fixed;left:50px;z-index:999;border-radius:15px;-moz-border-radius: 15px;bottom:50px">
@@ -56,8 +55,6 @@
             </td></tr></table>';
         }
         else{
-
-
             echo '<table class="table search_box" style="background-color: #fff; width:400px !important; position: fixed;right:50px;z-index:999;border-radius:15px;bottom:50px"><tr>
                     <tr><td style="text-align:center"><h3><i class="fa fa-search"></i> Search for Race</h3></td></tr>
                     <tr><td><input type="text" id="search" onkeyup="if(event.keyCode == 13){ RaceSearch(this.value); }" style="height:24px;" placeholder="Search Race Name or Race ID here... (Press Enter)"></td></tr>
@@ -80,31 +77,38 @@
     echo '<h4 class="page-title"><br>Race Viewer</h4><hr>';
 
 	/* Show all Models */
-	if($_GET['RaceView'] == 1 || $do_regular_search ==  1){
+	if($_GET['RaceView'] == 1){
 		for($i = 0; $i <= 1000; $i++){
-			if(file_exists("cust_assets/races/Race (" . $i . ").png")){
-				if($_GET['GenRaceFile']){
-					if($race_file_chr_data[$i][1] == ""){
-                        $race_file_chr_data[$i][0] = "";
-                    }
-					echo '<a href="javascript:;" onclick="DoRaceFileGen(' . $i . ', \'' . $race_file_chr_data[$i][0] . '\', \'' . $race_file_chr_data[$i][1] . '\')">';
-				}
-				echo '<input type="hidden" id="tracker_' . $i . '" value="0">';
-				echo '<input type="hidden" id="char_string_data_' . $i . '" value="' . $race_file_chr_data[$i][0] . ',' . $race_file_chr_data[$i][1] . '">';
-				echo '  <span class="image-wrap">
-                            <img class="lazy" data-original="' . 'cust_assets/races/' . 'Race (' . $i . ').png"' . ' id="' . $i . '">
-                            <span class="image_label badge badge-danger">' . $races[$i] . ' (' . $i  . ')</span>
-                        </span>
-                ';
+            if(file_exists("cust_assets/races/" . $i . ".jpg")) {
+                $race_img = "cust_assets/races/" . $i . ".jpg";
+            }
+            else if (file_exists("cust_assets/races/Race (" . $i . ").png")) {
+                $race_img = "cust_assets/races/Race (" . $i . ").png";
+            }
+            else{
+                continue;
+            }
 
-				if($_GET['GenRaceFile']){
-                    echo '</a>';
+            if($_GET['GenRaceFile']){
+                if($race_file_chr_data[$i][1] == ""){
+                    $race_file_chr_data[$i][0] = "";
                 }
-			}
+                echo '<a href="javascript:;" onclick="DoRaceFileGen(' . $i . ', \'' . $race_file_chr_data[$i][0] . '\', \'' . $race_file_chr_data[$i][1] . '\')">';
+            }
+            echo '<input type="hidden" id="tracker_' . $i . '" value="0">';
+            echo '<input type="hidden" id="char_string_data_' . $i . '" value="' . $race_file_chr_data[$i][0] . ',' . $race_file_chr_data[$i][1] . '">';
+            echo '  <span class="image-wrap">
+                        <img class="lazy" data-original="' . $race_img . '" id="' . $i . '" style="height:180px;width:auto;">
+                        <span class="image_label badge badge-danger">' . $races[$i] . ' (' . $i  . ')</span>
+                    </span>
+            ';
+
+            if($_GET['GenRaceFile']) {
+                echo '</a>';
+            }
+
 		}
 	}
-
     echo '</div>';
-
 
 ?>
