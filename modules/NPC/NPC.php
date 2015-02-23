@@ -69,10 +69,10 @@
 						$npc_fields["Visual Texture"][$NPCACols[($n - 1)]][1] =  '<a href="javascript:;" onclick="OpenWindow(\'min.php?Mod=IE&prevITfile=1&Field=' . $NPCACols[($n - 1)] . '&NPC=' . $row['id'] . '\', \'_blank\', 900, 900)"> <img src="../images/weapons/'. $val . '.jpg" id="'.  $NPCACols[($n - 1)] . '" style="width:200px;height:280px;"></a><br>';
 						$npc_fields["Visual Texture"][$NPCACols[($n - 1)]][1] .=  "<input type='number' value='" . $val . "' id='" . $row['id'] . "^" . $NPCACols[($n - 1)] . "' class='" . $NPCACols[($n - 1)] . "' onchange='update_npc_field(" . $row['id'] . ", \"" . $NPCACols[($n - 1)] . "\", this.value)'>";
 					}
-					else if($npcfieldscat[$NPCACols[($n - 1)]][0]){
+					else if($field_category[$NPCACols[($n - 1)]][0]){
 						#echo $npcfieldscat[$NPCACols[($n - 1)]] . '<br>';
-						$npc_fields[$npcfieldscat[$NPCACols[($n - 1)]]][$NPCACols[($n - 1)]][0] = $NPCCols[($n - 1)];
-						$npc_fields[$npcfieldscat[$NPCACols[($n - 1)]]][$NPCACols[($n - 1)]][1] =  "<input type='text' value='" . $val . "' id='" . $row['id'] . "^" . $NPCACols[($n - 1)] . "' class='" . $NPCACols[($n - 1)] . "' onchange='update_npc_field(" . $row['id'] . ", \"" . $NPCACols[($n - 1)] . "\", this.value)'>";
+						$npc_fields[$field_category[$NPCACols[($n - 1)]]][$NPCACols[($n - 1)]][0] = $NPCCols[($n - 1)];
+						$npc_fields[$field_category[$NPCACols[($n - 1)]]][$NPCACols[($n - 1)]][1] =  "<input type='text' value='" . $val . "' id='" . $row['id'] . "^" . $NPCACols[($n - 1)] . "' class='" . $NPCACols[($n - 1)] . "' onchange='update_npc_field(" . $row['id'] . ", \"" . $NPCACols[($n - 1)] . "\", this.value)'>";
 					}
 					else{
 						$npc_fields['End'][$NPCACols[($n - 1)]][0] = $NPCCols[($n - 1)];

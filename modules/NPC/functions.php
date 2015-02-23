@@ -218,7 +218,7 @@
 		"lastname" => "NPC Lastname",
 	);
 	
-	$npcfieldscat = array(
+	$field_category = array(
 		"level" => "General",
 		"race" => "Appearance",
 		"class" => "General",
