@@ -1,5 +1,5 @@
 <?php
-	/* Minified Page requests
+	/*
 		Author: Akkadius
 		A lot of this code sucks, but its too old, it works and doesn't make sense to rewrite
 	*/
@@ -167,7 +167,7 @@
                 }
             </style>';
 
-        echo "<embed src=\"images/chest_op.wav\" hidden=\"true\" autostart=\"true\" loop=\"false\" />";
+        echo "<embed src='images/chest_op.wav' hidden='true' autostart='true' loop='false' />";
 
         echo '<table class="table table-striped table-hover table-condensed flip-content dataTable table-bordered dataTable" style="width:400px">
             <tr>
@@ -294,9 +294,9 @@
 		
 	}
 	if(isset($_GET['EditField'])){
-		$Value = isset($_GET["Value"]) ? mysql_real_escape_string($_GET["Value"]) : '';	
+		$Value = isset($_GET["Value"]) ? mysql_real_escape_string($_GET["Value"]) : '';
 		$PageTitle = "Field Edit: " . $ITD[$_GET['EditField']][1]; echo $SpecIncludes. '<title>'.$PageTitle.'</title>';
-		$OutPut .= "<br><center><h2>". $ITD[$_GET['EditField']][1] . "</h2><br>"; 
+		$OutPut .= "<br><center><h2>". $ITD[$_GET['EditField']][1] . "</h2><br>";
 		if($EditField == "banedmgrace"){
 			$OutPut .= '</td><td><select name="' . $EditField . '" '. $InputTitle . ' onchange="UpdateField(this.name, this.value);UpdateImage(this.value);" >';
 			foreach ($races as $key => $value){
@@ -315,7 +315,7 @@
 			else{
 				$OutPut .= '<img src="" id="MyRaceID" name=MyRaceID>';
 			}
-			echo $OutPut; 
+			echo $OutPut;
 		}
 		
 		if($EditField == "price"){
@@ -349,94 +349,6 @@
 			echo $OutPut;
 		}
 		if($EditField == "races"){
-			echo '<script type="text/javascript" language="JavaScript">  
-				function HighlightField(fieldname) {
-				if(document.getElementById(fieldname).checked){
-					document.getElementById(fieldname).checked = false;
-					document.getElementById(fieldname).style.filter="alpha(opacity=50);";
-					document.getElementById(fieldname).style.opacity="0.5";
-				}
-				else{
-					document.getElementById(fieldname).checked = true;
-					document.getElementById(fieldname).style.filter="alpha(opacity=99);";
-					document.getElementById(fieldname).style.opacity="0.99";
-				}
-				var total = parseInt(0);
-				for (var i = 0; i < document.getElementById(\'myform\').elements.length; i++) {
-					if(document.getElementById(\'myform\').elements[i].checked){
-						if(document.getElementById(\'myform\').elements[i].value > 0){
-							total +=  parseInt(document.getElementById(\'myform\').elements[i].value);
-						}
-					}
-				}
-				if(total >= 0){
-					opener.document.getElementById("races").value = total;
-					document.getElementById("result").innerHTML="Races set to <FONT COLOR=\"GREEN\"><b>" + total + "</b></FONT>";
-				}
-				else{
-					opener.document.getElementById("races").value = 0;
-				}
-			}
-			function SetFieldCheckTrue(fieldname){
-				document.getElementById(fieldname).checked = true;
-			}
-			function SetFieldCheckFalse(fieldname){
-				document.getElementById(fieldname).checked = false;
-			}
-			function checkedAll () {
-				for(var i = 1; i <= 16; i++){
-					HighlightField("race" + i);
-					HighlightField(i);
-				}
-			}
-			function CheckAll(Type){
-				if(Type == "All"){
-					if(document.getElementById("All").checked){
-						for(var i = 0; i <= 16; i++){
-							CheckClass(i, "true");
-						}
-					}
-					else{
-						for(var i = 0; i <= 16; i++){
-							CheckClass(i, "false");
-						}
-					}
-				}
-				var total = parseInt(0);
-				for (var i = 0; i < document.getElementById(\'myform\').elements.length; i++) {
-					if(document.getElementById(\'myform\').elements[i].checked){
-						if(document.getElementById(\'myform\').elements[i].value > 0){
-							total +=  parseInt(document.getElementById(\'myform\').elements[i].value);
-						}
-					}
-				}
-				if(total >= 0){
-					opener.document.getElementById("races").value = total;
-					document.getElementById("result").innerHTML="Races set to <FONT COLOR=\"GREEN\"><b>" + total + "</b></FONT>";
-				}
-				else{
-					opener.document.getElementById("races").value = 0;
-				}
-			}
-			function CheckClass(Class, Boolean){
-				if(Class){
-					if(Boolean == "true"){
-						document.getElementById(Class).checked = true;
-						document.getElementById("race" + Class).checked = true;
-						document.getElementById("race" + Class).style.filter="alpha(opacity=99);";
-						document.getElementById("race" + Class).style.opacity="0.99";
-					}
-					else{
-						document.getElementById(Class).checked = false;
-						document.getElementById("race" + Class).checked = false;
-						document.getElementById("race" + Class).style.filter="alpha(opacity=50);";
-						document.getElementById("race" + Class).style.opacity="0.5";
-					}
-				}
-			}
-			</script>';
-		
-		
 			$Races = array(
 				0 => array("None", 0, 0), 
 				1 => array("Human", 1, 1), 
@@ -477,6 +389,7 @@
 			echo '<br>Check All <input type="checkbox" onclick="CheckAll(\'All\');"id="All">';
 			echo '<div id="result" style="font-size:13px;"></div>';
 			$FJS .= '<script type="text/javascript">document.getElementById("All").checked = false;</script>';
+			$FJS .= '<script type="text/javascript" src="modules/ItemEditor/ajax/race_selector.js"></script>';
 			echo $FJS;
 			
 		}
@@ -510,22 +423,22 @@
 				body {font: normal 0.8em verdana,arial; margin: 2em;} 
 				.wrapped {display: none;}';
 			
-			for($i=0;$i<=22;$i++){
-				$OutPut .=  '.'. $Slots[$i][0] . 'UC {
-					background: url(cust_assets/inventory/slot_'. $i .'.gif) no-repeat;
+			for($i=0;$i<=22;$i++) {
+                $OutPut .= '.' . $Slots[$i][0] . 'UC {
+					background: url(cust_assets/inventory/slot_' . $i . '.gif) no-repeat;
 					padding: 20px;
 					cursor: pointer; 
 					opacity:0.50; 
 					filter:alpha(opacity=50);
 				}
-				.'. $Slots[$i][0] . 'C { 
-				  background: url(cust_assets/inventory/slot_'. $i .'.gif) no-repeat;
+				.' . $Slots[$i][0] . 'C {
+				  background: url(cust_assets/inventory/slot_' . $i . '.gif) no-repeat;
 					padding: 20px;
 					cursor: pointer;
 				}
 				
 				';
-			}
+            }
 			$OutPut .=  '</style>';
 			
 			$OutPut .=  '<center>
@@ -611,172 +524,42 @@
 				 16 => 'Berserker',
 			);
 			
-			echo '<script type="text/javascript" language="JavaScript"> 
-			
-			function HighlightField(fieldname) {
-				if(document.getElementById(fieldname).checked){
-					document.getElementById(fieldname).checked = false;
-					document.getElementById(fieldname).style.filter="alpha(opacity=50);";
-					document.getElementById(fieldname).style.opacity="0.5";
-				}
-				else{
-					document.getElementById(fieldname).checked = true;
-					document.getElementById(fieldname).style.filter="alpha(opacity=99);";
-					document.getElementById(fieldname).style.opacity="0.99";
-				}
-				var total = parseInt(0);
-				for (var i = 0; i < document.getElementById(\'myform\').elements.length; i++) {
-					if(document.getElementById(\'myform\').elements[i].checked){
-						if(document.getElementById(\'myform\').elements[i].value > 0){
-							total +=  parseInt(document.getElementById(\'myform\').elements[i].value);
-						}
-					}
-				}
-				if(total >= 0){
-					opener.document.getElementById("classes").value = total;
-					ChildStatusUpdate("<font color=yellow><b>Classes</b></font> set to <font color=#66FF00><b>" + total + "</font></b>");
-				}
-				else{
-					opener.document.getElementById("classes").value = 0;
-				}
-			}
-			function SetFieldCheckTrue(fieldname){
-				document.getElementById(fieldname).checked = true;
-			}
-			function SetFieldCheckFalse(fieldname){
-				document.getElementById(fieldname).checked = false;
-			}
-			function checkedAll () {
-				for(var i = 1; i <= 16; i++){
-					HighlightField("class" + i);
-					HighlightField(i);
-				}
-			}
-			function CheckClass(Class, Boolean){
-				if(Class){
-					if(Boolean == "true"){
-						document.getElementById(Class).checked = true;
-						document.getElementById("class" + Class).checked = true;
-						document.getElementById("class" + Class).style.filter="alpha(opacity=99);";
-						document.getElementById("class" + Class).style.opacity="0.99";
-					}
-					else{
-						document.getElementById(Class).checked = false;
-						document.getElementById("class" + Class).checked = false;
-						document.getElementById("class" + Class).style.filter="alpha(opacity=50);";
-						document.getElementById("class" + Class).style.opacity="0.5";
-					}
-				}
-			}
-			function CheckAll(Type){
-				if(Type == "Leather"){
-					if(document.getElementById("Leather").checked){
-						CheckClass("15", "true");
-						CheckClass("7", "true");
-						CheckClass("6", "true");
-					}
-					else{
-						CheckClass("15", "false");
-						CheckClass("7", "false");
-						CheckClass("6", "false");
-					}
-				}
-				if(Type == "Plate"){
-					if(document.getElementById("Plate").checked){
-						CheckClass("1", "true");
-						CheckClass("2", "true");
-						CheckClass("3", "true");
-						CheckClass("5", "true");
-						CheckClass("8", "true");
-					}
-					else{
-						CheckClass("1", "false");
-						CheckClass("2", "false");
-						CheckClass("3", "false");
-						CheckClass("5", "false");
-						CheckClass("8", "false");
-					}
-				}
-				if(Type == "Chain"){
-					if(document.getElementById("Chain").checked){
-						CheckClass("4", "true");
-						CheckClass("9", "true");
-						CheckClass("10", "true");
-						CheckClass("16", "true");
-					}
-					else{
-						CheckClass("4", "false");
-						CheckClass("9", "false");
-						CheckClass("10", "false");
-						CheckClass("16", "false");
-					}
-				}
-				if(Type == "Silk"){
-					if(document.getElementById("Silk").checked){
-						CheckClass("12", "true");
-						CheckClass("13", "true");
-						CheckClass("14", "true");
-						CheckClass("11", "true");
-					}
-					else{
-						CheckClass("12", "false");
-						CheckClass("13", "false");
-						CheckClass("14", "false");
-						CheckClass("11", "false");
-					}
-				}
-				if(Type == "All"){
-					if(document.getElementById("All").checked){
-						document.getElementById("Silk").checked = true;
-						document.getElementById("Leather").checked = true;
-						document.getElementById("Plate").checked = true;
-						document.getElementById("Chain").checked = true;
-						for(var i = 0; i <= 16; i++){
-							CheckClass(i, "true");
-						}
-					}
-					else{
-						document.getElementById("Silk").checked = false;
-						document.getElementById("Leather").checked = false;
-						document.getElementById("Plate").checked = false;
-						document.getElementById("Chain").checked = false;
-						for(var i = 0; i <= 16; i++){
-							CheckClass(i, "false");
-						}
-					}
-				}
-				var total = parseInt(0);
-				for (var i = 0; i < document.getElementById(\'myform\').elements.length; i++) {
-					if(document.getElementById(\'myform\').elements[i].checked){
-						if(document.getElementById(\'myform\').elements[i].value > 0){
-							total +=  parseInt(document.getElementById(\'myform\').elements[i].value);
-						}
-					}
-				}
-				if(total >= 0){
-					opener.document.getElementById("classes").value = total;
-					ChildStatusUpdate("<font color=yellow><b>Classes</b></font> set to <font color=#66FF00><b>" + total + "</font></b>");
-				}
-				else{
-					opener.document.getElementById("classes").value = 0;
-				}
-			}
-			  
-			</script>';
+			echo '<script type="text/javascript" src="modules/ItemEditor/ajax/class_selector.js"></script>';
 			$OutPut .= '<form id=myform><center><table class="itemedit"><tr><td class="itemtd"><center>';
 			$BitValue = 32768; $Input = ""; $Plate = "";
-			for($i = 16; $i >= 1; $i--){
-				$Checked = 0; $checkedstatus = ""; $NoCheckFade = "";
-				if($Value >= $BitValue){ $Value -= $BitValue; $Checked = 1; } 
-				if($Checked == 1){ $checkedstatus = "checked"; } else{ $NoCheckFade = " style='opacity:0.50; filter:alpha(opacity=50);'";  }
-				$Input = '<td><center><img src="cust_assets/monograms/'. $i . '.gif" id="class' . $i . '" '. $NoCheckFade . '" width=50 height=100><br>'. $PlayerClass[$i] .' <br><input type="checkbox" value="'. $BitValue . '" onclick="HighlightField(\'class'. $i .'\')" '. $checkedstatus . ' id="'. $i .'"> </center></td>';
-				if($Checked == 1){ $FJS .= '<script type="text/javascript">SetFieldCheckTrue(\'class'. $i .'\');</script>'; } else{ $FJS .= '<script type="text/javascript">SetFieldCheckFalse(\'class'. $i .'\');</script>'; }
-				if($i == 1 || $i == 2 || $i == 3 || $i == 5 || $i == 8){ $Plate .= $Input;}
-				if($i == 4 || $i == 9 || $i == 10 || $i == 16){ $Chain .= $Input;}
-				if($i == 6 || $i == 7 || $i == 15){ $Leather .= $Input;}
-				if($i == 11 || $i == 12 || $i == 13 || $i == 14){ $Silk .= $Input;}
-				$BitValue /= 2;
-			}
+            for ($i = 16; $i >= 1; $i--) {
+                $Checked = 0;
+                $checkedstatus = "";
+                $NoCheckFade = "";
+                if ($Value >= $BitValue) {
+                    $Value -= $BitValue;
+                    $Checked = 1;
+                }
+                if ($Checked == 1) {
+                    $checkedstatus = "checked";
+                } else {
+                    $NoCheckFade = " style='opacity:0.50; filter:alpha(opacity=50);'";
+                }
+                $Input = '<td><center><img src="cust_assets/monograms/' . $i . '.gif" id="class' . $i . '" ' . $NoCheckFade . '" width=50 height=100><br>' . $PlayerClass[$i] . ' <br><input type="checkbox" value="' . $BitValue . '" onclick="HighlightField(\'class' . $i . '\')" ' . $checkedstatus . ' id="' . $i . '"> </center></td>';
+                if ($Checked == 1) {
+                    $FJS .= '<script type="text/javascript">SetFieldCheckTrue(\'class' . $i . '\');</script>';
+                } else {
+                    $FJS .= '<script type="text/javascript">SetFieldCheckFalse(\'class' . $i . '\');</script>';
+                }
+                if ($i == 1 || $i == 2 || $i == 3 || $i == 5 || $i == 8) {
+                    $Plate .= $Input;
+                }
+                if ($i == 4 || $i == 9 || $i == 10 || $i == 16) {
+                    $Chain .= $Input;
+                }
+                if ($i == 6 || $i == 7 || $i == 15) {
+                    $Leather .= $Input;
+                }
+                if ($i == 11 || $i == 12 || $i == 13 || $i == 14) {
+                    $Silk .= $Input;
+                }
+                $BitValue /= 2;
+            }
 			$OutPut .= '<tr><td valign=center><center><h1>Plate:</h1>Check All Plate<br><input type="checkbox" onclick="CheckAll(\'Plate\');" id="Plate"></center></td><td>' . $Plate . '</td></tr>';
 			$OutPut .= '<tr><td><center><h1>Chain:</h1>Check All Chain<br><input type="checkbox" onclick="CheckAll(\'Chain\');" id="Chain"></center></td><td>' . $Chain . '</td></tr>';
 			$OutPut .= '<tr><td><center><h1>Leather:</h1>Check All Leather<br><input type="checkbox" onclick="CheckAll(\'Leather\');" id="Leather"></center></td><td>' . $Leather . '</td></tr>';
