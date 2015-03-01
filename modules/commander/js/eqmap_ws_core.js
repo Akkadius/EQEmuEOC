@@ -104,9 +104,9 @@ socket.onopen = function () {
     socket.send(JSON.stringify(obj));
     SideBarMenu("zone_action");
     BuildSideBarMenuOptions();
-    if(ace_file_to_load){
-        socket.send(JSON.stringify({id: 'quest_get_script', method: 'World.GetFileContents', params: ['' + ace_file_to_load + '']}));
-    }
+    // if(ace_file_to_load){
+    //     socket.send(JSON.stringify({id: 'quest_get_script', method: 'World.GetFileContents', params: ['' + ace_file_to_load + '']}));
+    // }
     // socket.send(JSON.stringify({id: 'quest_get_script', method: 'World.GetFileContents', params: ['quests/global/global_player.pl']}));
 }
 

@@ -31,6 +31,16 @@
                                         <li> <a href="index.php?M=TaskEditor"> <i class="fa fa-angle-right"></i> <i class="fa fa-list"></i> Task Editor </a> </li>
                                         <li> <a href="min.php?Mod=RaceViewer&RaceView=1&GenRaceFile=1"> <i class="fa fa-angle-right"></i> <i class="fa fa-file-text"></i> _chr.txt File Generator </a> </li>
                                         <li> <a href="index.php?M=QueryServ"> <i class="fa fa-angle-right"></i> <i class="fa fa-pencil-square"></i> Logging (QueryServ) (In Dev - Not functional)</a> </li>
+
+                                        <li> <h3>Character</h3> </li>
+									    <li class="divider" style="height: 1px; padding:0px !important"> </li>
+                                        <li> <a href="index.php?M=TaskEditor">
+                                            <i class="fa fa-sign-in"></i> Character Copier </a>
+                                        </li>
+
+									    <li> <h3>PEQ Editor(s)</h3> </li>
+									    <li class="divider" style="height: 1px; padding:0px !important"> </li>
+
                                         <li class="divider" style="height: 1px; padding:0px !important"> </li>
                                         <li> <a href="min.php?Mod=PEQEditor&Rev=460"> <i class="fa fa-angle-right"></i> PEQ Editor Rev 460 <br> <img src="cust_assets/images/PEQ_Logo.png" style="height:50px;width:auto"> </a> </li>
                                     </ul>
