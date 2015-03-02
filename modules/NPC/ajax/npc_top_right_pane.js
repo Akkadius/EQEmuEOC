@@ -5,6 +5,8 @@
 $(document).ready(function() {
     var lootdrop_table = $(".lootdrop_entries").DataTable( {
         scrollY:        "100px",
+        scrollX:        "200px",
+        sScrollXInner: "300px",
         scrollCollapse: true,
         paging:         false,
         "searching": false,
@@ -35,4 +37,74 @@ $(document).ready(function() {
         });
 
     });
+
+    $( ".loottable_entries td, .DTFC_Cloned td" ).unbind("mouseenter");
+    $( ".loottable_entries td, .DTFC_Cloned td" ).bind("mouseenter", function() {
+        // console.log("Hovering in");
+
+        // if($(this).attr("is_field_translated") == 1){
+        //     return;
+        // }
+
+        loot_table = $(this).parent().attr("loot_table");
+        loot_drop = $(this).parent().attr("loot_drop");
+        field_name = $(this).attr("field_name");
+        // field_name = $(this).attr("npc_db_field");
+        width = $(this).css("width");
+        height = $(this).css("height");
+        data = $(this).html();
+
+        /* If attr is set to non edit, return */
+        if($(this).attr("nonedit") == 1){
+            return;
+        }
+
+        // console.log(loot_table + ' ' + loot_drop);
+
+        /* Dont replace the button */
+        if(data.match(/button/i)){ return; }
+
+        $(this).html('<input type="text" class="form-control" value="' + data + '" onchange="update_loottable(' + loot_table + ', ' + loot_drop + ', ' + field_name + ', this.value)">');
+        $(this).children("input").css('width', (parseInt(width) * 1));
+        $(this).children("input").css('height', (parseInt(height)));
+        $(this).children("input").css("font-size", "12px");
+        // $('textarea').autosize();
+        data = "";
+    });
+
+    $( ".loottable_entries td, .DTFC_Cloned td" ).unbind("mouseleave");
+    $( ".loottable_entries td, .DTFC_Cloned td" ).bind("mouseleave", function() {
+        data = "";
+        if($(this).has("select").length){
+            data = $(this).children("select").val();
+        }
+        else if($(this).has("input").length){
+            data = $(this).children("input").val();
+        }
+
+        if($(this).has("button").length){ return; }
+
+        /* If no data present and */
+        if(!data && (!$(this).has("select").length && !$(this).has("input").length)){
+            $(this).attr("is_field_translated", 0);
+            return;
+        }
+
+        // console.log('data catch ' + data);
+
+        $(this).html(data);
+        data = "";
+        $(this).attr("is_field_translated", 0);
+    });
 });
+
+function update_loottable(loot_table, loot_drop, field_name, val){
+    $.ajax({
+        url: "ajax.php?M=NPC&update_loottable=" + loot_table + "&loot_drop=" + loot_drop + "&field=" + field_name + "&value=" + val,
+        context: document.body
+    }).done(function(e) {
+        /* Update Data Table as well */
+        $('#lootdrop_entries').html(e).fadeIn();
+        Notific8("NPC Editor", loot_drop + " :: Updated " + field_name + " to value '" + val + "'", 3000);
+    });
+}

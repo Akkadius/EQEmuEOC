@@ -52,6 +52,7 @@ $(document).ready(function() {
 
         // console.log(npc_id + " "  + field_name);
 
+
         /* Dont replace the button */
         if(data.match(/button/i)){ return; }
 
