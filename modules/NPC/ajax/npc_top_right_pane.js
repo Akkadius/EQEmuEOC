@@ -64,7 +64,7 @@ $(document).ready(function() {
         /* Dont replace the button */
         if(data.match(/button/i)){ return; }
 
-        $(this).html('<input type="text" class="form-control" value="' + data + '" onchange="update_loottable(' + loot_table + ', ' + loot_drop + ', ' + field_name + ', this.value)">');
+        $(this).html('<input type="text" class="form-control" value="' + data + '" onchange="update_loottable(' + loot_table + ', ' + loot_drop + ', \'' + field_name + '\', this.value)">');
         $(this).children("input").css('width', (parseInt(width) * 1));
         $(this).children("input").css('height', (parseInt(height)));
         $(this).children("input").css("font-size", "12px");

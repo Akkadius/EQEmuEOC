@@ -165,4 +165,18 @@
         echo $FJS;
     }
 
+    /* Save Loot Table Field Values */
+    if(isset($_GET['update_loottable'])){
+        $loot_table = $_GET['update_loottable'];
+        $loot_drop = $_GET['loot_drop'];
+        $db_field = $_GET['field'];
+        $db_value = $_GET['value'];
+
+        $result = mysql_query(
+            "UPDATE `loottable_entries` SET
+            " . $db_field . " = " . $db_value . "
+            WHERE loottable_id = " . $loot_table . "
+            AND lootdrop_id = " . $loot_drop . "
+        ");
+    }
 ?>
