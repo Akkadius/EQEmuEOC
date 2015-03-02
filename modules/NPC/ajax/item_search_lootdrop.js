@@ -11,5 +11,6 @@ $('#item_search').submit(function(event){
         context: document.body
     }).done(function(data) {
         $('#item_search_result_lootdrop').html(data);
+        $('#item_search').hide();
     });
 });

@@ -121,7 +121,7 @@
     if($_GET['show_lootdrop_entries']){
         /* Loot Drop Entries */
         echo '
-            <a href="javascript:;" class="btn green btn-xs" onclick="loot_drop_add_item()">
+            <a href="javascript:;" class="btn green btn-xs" onclick="loot_drop_add_item(' . $_GET['show_lootdrop_entries'] . ')">
                 <i class="fa fa-plus"></i>
                 Add Item
             </a>
@@ -150,7 +150,9 @@
                     FROM
                     lootdrop_entries
                     INNER JOIN items ON lootdrop_entries.item_id = items.id
-                    WHERE `lootdrop_id` = " . $_GET['show_lootdrop_entries']);
+                    WHERE `lootdrop_id` = " . $_GET['show_lootdrop_entries'])
+
+        ;
         while($row = mysql_fetch_array($result)){
             echo '
                     <tr loot_table="' . $row['loottable_id'] . '">
@@ -206,5 +208,19 @@
             WHERE loottable_id = " . $loot_table . "
             AND lootdrop_id = " . $loot_drop . "
         ");
+    }
+
+    /* Add Loot entry to lootdrop */
+    if(isset($_GET['db_loot_drop_add_item'])){
+        $loot_drop = $_GET['loot_drop'];
+        $item_id = $_GET['db_loot_drop_add_item'];
+
+        $result = mysql_query(
+            'REPLACE INTO `lootdrop_entries`
+            (lootdrop_id, item_id, item_charges, equip_item, chance, minlevel, maxlevel, multiplier)
+            VALUES
+            (' . $loot_drop . ', ' . $item_id . ', 1, 1, 100, 0, 255, 1)
+            ');
+        echo mysql_error();
     }
 ?>

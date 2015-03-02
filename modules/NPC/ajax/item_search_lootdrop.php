@@ -8,11 +8,10 @@
 
     require_once('includes/constants.php');
     require_once('modules/ItemEditor/functions.php');
-    /* All of this code is stupid, but I've cleaned most of it up - Akka */
 
     /* Display Search Result for Item */
     if(isset($_GET['item_search_lootdrop'])){
-
+        /* All of this code is stupid and was originally from Allaclone, but I've cleaned most of it up - Akka */
         $isearch = (isset($_GET['isearch']) ? mysql_real_escape_string($_GET['isearch']) : '');
         $iname = (isset($_GET['iname']) ? mysql_real_escape_string($_GET['iname']) : '');
         $iclass = (isset($_GET['iclass']) ? mysql_real_escape_string($_GET['iclass']) : '');
@@ -38,15 +37,12 @@
         $ieffect = (isset($_GET['ieffect']) ? mysql_real_escape_string($_GET['ieffect']) : '');
         $ireqlevel = (isset($_GET['ireqlevel']) ? mysql_real_escape_string($_GET['ireqlevel']) : '');
         $iminlevel = (isset($_GET['iminlevel']) ? mysql_real_escape_string($_GET['iminlevel']) : '');
-        $inodrop = (isset($_GET['inodrop']) ? mysql_real_escape_string($_GET['inodrop']) : '');
+        // $inodrop = (isset($_GET['inodrop']) ? mysql_real_escape_string($_GET['inodrop']) : '');
         $iavailability = (isset($_GET['iavailability']) ? mysql_real_escape_string($_GET['iavailability']) : '');
         $iavailevel = (isset($_GET['iavailevel']) ? mysql_real_escape_string($_GET['iavailevel']) : '');
         $ideity = (isset($_GET['ideity']) ? mysql_real_escape_string($_GET['ideity']) : '');
         $itemfield = (isset($_GET['itemfield']) ? mysql_real_escape_string($_GET['itemfield']) : '');
         $itemfieldvalue = (isset($_GET['itemfieldvalue']) ? mysql_real_escape_string($_GET['itemfieldvalue']) : '');
-
-        # p_var_dump($_GET);
-
 
         $Query = "SELECT
             items.icon,
@@ -178,7 +174,7 @@
         $Query .= " GROUP BY items.id ORDER BY items.Name LIMIT " . $mysql_result_limit;
         # $content_out .= '<code>' . $Query . '</code>';
         $QueryResult = mysql_query($Query);
-        # echo mysql_error();
+        echo mysql_error();
         # echo $Query;
 
         $iname = "";
@@ -191,6 +187,7 @@
                     HookHoverTips();
               </script>
           ";
+            $content_out .= '<center><a href="javascript:;" class="btn btn-xs btn-default green" onclick="$(\'#item_search\').show();">Back to Search Form</a>';
             $Tableborder = 0;
             $num_rows = mysql_num_rows($QueryResult);
             $total_row_count = $num_rows;
@@ -200,25 +197,28 @@
 
             if ($num_rows == 0) {
                 $content_out .= "<b>No items found...</b><br>";
-            } else {
+            }
+            else {
                 $OutOf = "";
                 if ($total_row_count > $num_rows) {
                     $OutOf = " (Searches are limited to 100 Max Results)";
                 }
                 $content_out .= "<h4 id='result_scroll'><b>" . $num_rows . " " . ($num_rows == 1 ? "item" : "items") . " displayed</b>" . $OutOf . "</h4>";
                 $content_out .= "<table class='table table-hover'>";
-                $content_out .= "<tr>
-                                    <th>Icon & Color</th>
-                                    <th>Item Name</th>
-                                    <th>Item ID</th>
-                                    <th>Item Type</th>
-                                    <th>AC</th>
-                                    <th>HPs</th>
-                                    <th>Mana</th>
-                                    <th>Damage</th>
-                                    <th>Delay</th>
-                                    <th>Ratio</th>
-                                    ";
+                $content_out .=
+                    "<tr>
+                        <th>Icon & Color</th>
+                        <th>Item Name</th>
+                        <th>Options</th>
+                        <th>Item ID</th>
+                        <th>Item Type</th>
+                        <th>AC</th>
+                        <th>HPs</th>
+                        <th>Mana</th>
+                        <th>Damage</th>
+                        <th>Delay</th>
+                        <th>Ratio</th>
+                    ";
                 $content_out .= "</tr>";
                 $RowClass = "lr";
                 for ($count = 1; $count <= $num_rows; $count++) {
@@ -238,6 +238,7 @@
                     $TableData .= "</td><td>";
                     $TableData .= " <a href='?M=ItemEditor&Edit=" . $row["id"] . "' id='" . $row["id"] . "' target='" . $row["id"] . "' " . HoverTip("global.php?item_view=" . $row['id']) . " >" . $row["Name"] . "</a><br><small style='color:gray'>" . $row['lore'] . "</small>";
                     $TableData .= "</td>";
+                    $TableData .= "<td><a href='javascript:;' class='btn btn-xs red' onclick='add_to_lootdrop(" . $_GET['loot_drop_add_item_stack'] . ", " . $row['id'] . ")'> Add to Lootdrop <i class='fa fa-sign-in'></i></a></td>";
                     $TableData .= "<td>" . $row["id"] . "</td>";
                     $TableData .= "<td>" . $dbitypes[$row["itemtype"]] . "</td>";
                     $TableData .= "<td>" . number_format($row["ac"]) . "</td>";
@@ -257,15 +258,13 @@
     /* Display Item Search Form */
     else{
         $content_out .= '<div style="padding-left:150px">';
-
-
         $content_out .= "<form method='GET' id='item_search'>";
         $itemfields = array("id", "minstatus", "Name", "aagi", "ac", "accuracy", "acha", "adex", "aint", "artifactflag", "asta", "astr", "attack", "augrestrict", "augslot1type", "augslot1visible", "augslot2type", "augslot2visible", "augslot3type", "augslot3visible", "augslot4type", "augslot4visible", "augslot5type", "augslot5visible", "augtype", "avoidance", "awis", "bagsize", "bagslots", "bagtype", "bagwr", "banedmgamt", "banedmgraceamt", "banedmgbody", "banedmgrace", "bardtype", "bardvalue", "book", "casttime", "casttime_", "charmfile", "charmfileid", "classes", "color", "combateffects", "extradmgskill", "extradmgamt", "price", "cr", "damage", "damageshield", "deity", "delay", "augdistiller", "dotshielding", "dr", "clicktype", "clicklevel2", "elemdmgtype", "elemdmgamt", "endur", "factionamt1", "factionamt2", "factionamt3", "factionamt4", "factionmod1", "factionmod2", "factionmod3", "factionmod4", "filename", "focuseffect", "fr", "fvnodrop", "haste", "clicklevel", "hp", "regen", "icon", "idfile", "itemclass", "itemtype", "ldonprice", "ldontheme", "ldonsold", "light", "lore", "loregroup", "magic", "mana", "manaregen", "enduranceregen", "material", "maxcharges", "mr", "nodrop", "norent", "pendingloreflag", "pr", "procrate", "races", "range", "reclevel", "recskill", "reqlevel", "sellrate", "shielding", "size", "skillmodtype", "skillmodvalue", "slots", "clickeffect", "spellshield", "strikethrough", "stunresist", "summonedflag", "tradeskills", "favor", "weight", "UNK012", "UNK013", "benefitflag", "UNK054", "UNK059", "booktype", "recastdelay", "recasttype", "guildfavor", "UNK123", "UNK124", "attuneable", "nopet", "updated", "comment", "UNK127", "pointtype", "potionbelt", "potionbeltslots", "stacksize", "notransfer", "stackable", "UNK134", "UNK137", "proceffect", "proctype", "proclevel2", "proclevel", "UNK142", "worneffect", "worntype", "wornlevel2", "wornlevel", "UNK147", "focustype", "focuslevel2", "focuslevel", "UNK152", "scrolleffect", "scrolltype", "scrolllevel2", "scrolllevel", "UNK157", "serialized", "verified", "serialization", "source", "UNK033", "lorefile", "UNK014", "svcorruption", "UNK038", "UNK060", "augslot1unk2", "augslot2unk2", "augslot3unk2", "augslot4unk2", "augslot5unk2", "UNK120", "UNK121", "questitemflag", "UNK132", "clickunk5", "clickunk6", "clickunk7", "procunk1", "procunk2", "procunk3", "procunk4", "procunk6", "procunk7", "wornunk1", "wornunk2", "wornunk3", "wornunk4", "wornunk5", "wornunk6", "wornunk7", "focusunk1", "focusunk2", "focusunk3", "focusunk4", "focusunk5", "focusunk6", "focusunk7", "scrollunk1", "scrollunk2", "scrollunk3", "scrollunk4", "scrollunk5", "scrollunk6", "scrollunk7", "UNK193", "purity", "evolvinglevel", "clickname", "procname", "wornname", "focusname", "scrollname", "dsmitigation", "heroic_str", "heroic_int", "heroic_wis", "heroic_agi", "heroic_dex", "heroic_sta", "heroic_cha", "heroic_pr", "heroic_dr", "heroic_fr", "heroic_cr", "heroic_mr", "heroic_svcorrup", "healamt", "spelldmg", "clairvoyance", "backstabdmg", "created", "elitematerial", "ldonsellbackrate", "scriptfileid", "expendablearrow", "powersourcecapacity", "bardeffect", "bardeffecttype", "bardlevel2", "bardlevel", "bardunk1", "bardunk2", "bardunk3", "bardunk4", "bardunk5", "bardname", "bardunk7", "UNK214", "UNK219", "UNK220", "UNK221", "UNK222", "UNK223", "UNK224", "UNK225", "UNK226", "UNK227", "UNK228", "UNK229", "UNK230", "UNK231", "UNK232", "UNK233", "UNK234", "UNK235", "UNK236", "UNK237", "UNK238", "UNK239", "UNK240", "UNK241", "UNK242");
         $content_out .= '<div style="width:1000px">';
 
         $content_out .= '<h2 class="page-title"><i class="fa fa-search" style="font-size:30px"></i> Item Search <small>Begin your item editing search by specifying search criteria below...</small></h2>';
         $content_out .= FormStart();
-        $content_out .= FormInput('Name', '<input type="text" placeholder="Name, ID or Lore search here..." style="width:500px" value="' . $iname . '" id="iname" class="form-control"/>', 'Item Type', SelectIType("itype",$itype));
+        $content_out .= FormInput('Name', '<input type="hidden" id="loot_drop_add_item_stack" value="' . $_GET['loot_drop_add_item'] . '"> <input type="text" placeholder="Name, ID or Lore search here..." style="width:500px" value="' . $iname . '" id="iname" class="form-control"/>', 'Item Type', SelectIType("itype",$itype));
         $content_out .= FormInput('Class', SelectIClass("iclass", $iclass));
         $content_out .= FormInput('Race', SelectRace  ("irace",   $irace));
         $content_out .= FormInput('Slot', SelectSlot  ("islot",   $islot));
