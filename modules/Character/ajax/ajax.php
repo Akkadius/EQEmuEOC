@@ -50,7 +50,6 @@
             character_data
             INNER JOIN account ON character_data.account_id = account.id
             WHERE character_data.`name` LIKE '%" . $_GET['character_search'] . "%'
-            GROUP by account.id
         ";
 
         $result = mysql_query($sql);
