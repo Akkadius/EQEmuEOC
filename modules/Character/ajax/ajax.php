@@ -55,7 +55,7 @@
 
         $result = mysql_query($sql);
         echo '<h3>Search Results</h3><hr>';
-        echo '<table class="table table-striped table-hover table-condensed flip-content table-bordered" style="width:900px">';
+        echo '<table class="table table-striped table-hover table-condensed flip-content table-bordered" style="width:1100px">';
 
         echo '
             <thead>
@@ -97,11 +97,11 @@
     if (isset($_GET['do_copy_character'])) {
         if ($_GET['source_character'] && $_GET['destination_account'] && $_GET['new_character_name']) {
             $source_character = $_GET['source_character'];
-            $desination_account = $_GET['destination_account'];
+            $destination_account = $_GET['destination_account'];
             $destination_character_name = $_GET['new_character_name'];
 
             # $new_character_id = DuplicateMySQLRecord("character_data", "id", $source_character);
-            $new_character_id = CopyCharacterRecord($source_character, $desination_account, $destination_character_name);
+            $new_character_id = CopyCharacterRecord($source_character, $destination_account, $destination_character_name);
 
             /* Check if destination character already exists */
             if($new_character_id == 0){

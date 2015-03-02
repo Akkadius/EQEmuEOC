@@ -27,7 +27,7 @@
                     $query .= '`' . $key . '` = "' . str_replace('"', '\"', mysql_real_escape_string($destination_character_name)) . '", ';
                 }
                 else if($key == "account_id"){
-                    $query .= '`' . $key . '` = "' . str_replace('"', '\"', $destination_account_id . '", ';
+                    $query .= '`' . $key . '` = "' . str_replace('"', '\"', $destination_account_id) . '", ';
                 }
                 else {
                     $query .= '`' . $key . '` = "' . str_replace('"', '\"', mysql_real_escape_string($value)) . '", ';
