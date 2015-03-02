@@ -75,6 +75,7 @@
         "character_inspect_messages" => "id",
         "character_leadership_abilities" => "id",
         "character_alt_currency" => "char_id",
+        "character_tasks" => "charid",
         "guild_members" => "char_id"
     );
 
