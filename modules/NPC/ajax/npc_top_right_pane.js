@@ -22,6 +22,16 @@ $(document).ready(function() {
 
         console.log(loot_table + ' ' + loot_drop);
 
+        $(".loottable_entries td").each(function() {
+            $(this).css("background", "");
+        });
+
+        $(".loottable_entries td").each(function() {
+            if($(this).attr("loot_drop") == loot_drop){
+                $(this).css("background", "yellow");
+            }
+        });
+
         if($('#lootdrop_entries').attr('lootdrop_loaded') == loot_drop){
             return;
         }

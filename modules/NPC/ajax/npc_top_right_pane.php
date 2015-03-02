@@ -78,18 +78,19 @@
                                 <th>Droplimit</th>
                                 <th>Min Drop</th>
                             </tr>
-                        </thead> ';
+                        </thead>
+            ';
 
         $result = mysql_query("SELECT * FROM `loottable_entries` WHERE `loottable_id` = " . $npc_types['loottable_id'] . " AND `loottable_id` > 0");
         while($row = mysql_fetch_array($result)){
             echo '
-                            <tr loot_table="' . $npc_types['loottable_id'] . '" loot_drop="' . $row['lootdrop_id'] . '">
-                                <td nonedit="1">' . $row['lootdrop_id'] . '</td>
-                                <td field_name="multiplier">' . $row['multiplier'] . '</td>
-                                <td field_name="probability">' . $row['probability'] . '</td>
-                                <td field_name="droplimit">' . $row['droplimit'] . '</td>
-                                <td field_name="mindrop">' . $row['mindrop'] . '</td>
-                            </tr>';
+                    <tr loot_table="' . $npc_types['loottable_id'] . '" loot_drop="' . $row['lootdrop_id'] . '">
+                        <td loot_drop="' . $row['lootdrop_id'] . '" nonedit="1">' . $row['lootdrop_id'] . '</td>
+                        <td loot_drop="' . $row['lootdrop_id'] . '" field_name="multiplier">' . $row['multiplier'] . '</td>
+                        <td loot_drop="' . $row['lootdrop_id'] . '" field_name="probability">' . $row['probability'] . '</td>
+                        <td loot_drop="' . $row['lootdrop_id'] . '" field_name="droplimit">' . $row['droplimit'] . '</td>
+                        <td loot_drop="' . $row['lootdrop_id'] . '" field_name="mindrop">' . $row['mindrop'] . '</td>
+                    </tr>';
         }
 
         echo '</table>';
