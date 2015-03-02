@@ -1,5 +1,7 @@
 /* Database Functions */
 
+global_loader = "<i class='fa fa-spinner fa-spin' style='font-size:80px'>";
+
 function DoDBSwitch(db){ 
 	$.ajax({
 		url: "ajax.php?M=DBAuth&DoDBSwitch=" + encodeURIComponent(db),

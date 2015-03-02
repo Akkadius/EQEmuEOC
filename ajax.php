@@ -4,7 +4,7 @@
 	$IncludeDir = str_replace('includes', '', $IncludeDir); #echo $IncludeDir; exit;
 	require_once($IncludeDir . '/includes/config.php');
 	require_once($IncludeDir . '/includes/functions.php');
-	
+
 	if($_GET['M'] == "Items"){ include('modules/ItemEditor/ajax/ajax.php'); }
 	if($_GET['M'] == "TaskEditor"){ include('modules/TaskEditor/js/ajax.php'); } 
 	if($_GET['M'] == "NPC"){ include('modules/NPC/ajax/ajax.php'); }
@@ -15,5 +15,6 @@
 	if($_GET['M'] == "dbstr"){ include('modules/dbstr/js/ajax.php'); }   
 	if($_GET['M'] == "ZT"){ include('modules/Zone_Tools/ajax/ajax.php'); }   
 	if($_GET['M'] == "race_viewer"){ include('modules/RaceViewer/ajax/ajax.php'); }
+	if($_GET['M'] == "Character"){ include('modules/Character/ajax/ajax.php'); }
 
 ?>

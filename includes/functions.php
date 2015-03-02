@@ -51,6 +51,12 @@
 
 	/* Global Scoped Functions */
 
+    function p_var_dump($data){
+        print '<pre>';
+        print var_dump($data);
+        print '</pre>';
+    }
+
     function DuplicateMySQLRecord ($table, $id_field, $id_copied_from, $copied_to_id = 0) {
         /* load the original record into an array */
 
@@ -61,7 +67,7 @@
             /* insert the new record and get the new auto_increment id */
             mysql_query("INSERT INTO {$table} (`{$id_field}`) VALUES (NULL)");
             $new_id = mysql_insert_id();
-            # echo mysql_error();
+            echo mysql_error();
         }
         else {
             $new_id = $copied_to_id;

@@ -1,126 +1,57 @@
-function CharacterTool(Data) {
-	var xmlhttp;
-	document.getElementById("charactertool").innerHTML="<center><br><br><img src=\'images/loaders/loader8.gif\'></center><br><br>";
-	if (window.XMLHttpRequest) { xmlhttp=new XMLHttpRequest(); }
-	else {  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"); }
-	xmlhttp.onreadystatechange=function() {
-		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-			document.getElementById("charactertool").innerHTML=xmlhttp.responseText;
-		}
-	}
-	xmlhttp.open("GET","ajax.php?Ajax=Character&CharTool=" + Data, true);
-	xmlhttp.send();
-}  
-
-function CharSearch(Data) {
-	var xmlhttp;
-	document.getElementById("charactersearch").innerHTML="<center><br><br><img src=\'images/loaders/loader8.gif\'></center><br><br>";
-	if (window.XMLHttpRequest) { xmlhttp=new XMLHttpRequest(); }
-	else {  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"); }
-	xmlhttp.onreadystatechange=function() {
-		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-			document.getElementById("charactersearch").innerHTML=xmlhttp.responseText;
-		}
-	}
-	xmlhttp.open("GET","ajax.php?Ajax=Character&CharSearch=" + Data, true);
-	xmlhttp.send();
+function CharacterTool(val) {
+    u = "character_copy_options";
+    $("#" + u).html(global_loader);
+    $.ajax({
+        url: "ajax.php?M=Character&character_copier",
+        context: document.body
+    }).done(function(e) {
+        $("#" + u).html(e);
+    });
 }
 
-function CharSearchMGMT(Data) {
-	var xmlhttp;
-	document.getElementById("charactersearch").innerHTML="<center><br><br><img src=\'images/loaders/loader8.gif\'></center><br><br>";
-	if (window.XMLHttpRequest) { xmlhttp=new XMLHttpRequest(); }
-	else {  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"); }
-	xmlhttp.onreadystatechange=function() {
-		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-			document.getElementById("charactersearch").innerHTML=xmlhttp.responseText;
-		}
-	}
-	xmlhttp.open("GET","ajax.php?Ajax=Character&CharSearchMGMT=" + Data, true);
-	xmlhttp.send();
+function CharacterSearch(val) {
+    u = "character_search_result";
+    $("#" + u).html(global_loader);
+    $.ajax({
+        url: "ajax.php?M=Character&character_search=" + val,
+        context: document.body
+    }).done(function(e) {
+        $("#" + u).html(e);
+    });
 }
 
-function DoCharMGMT(Data) {
-	var xmlhttp;
-	document.getElementById("charactersearch").innerHTML="<center><br><br><img src=\'images/loaders/loader8.gif\'></center><br><br>";
-	if (window.XMLHttpRequest) { xmlhttp=new XMLHttpRequest(); }
-	else {  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"); }
-	xmlhttp.onreadystatechange=function() {
-		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-			document.getElementById("charactersearch").innerHTML=xmlhttp.responseText;
-		}
-	}
-	xmlhttp.open("GET","ajax.php?Ajax=Character&DoCharMGMT=" + Data, true);
-	xmlhttp.send();
+function handle_source_character(val){
+    $('#origchar').val(val);
 }
 
-function DoCharTaskProgShow(Data, TaskID) {
-	var xmlhttp;
-	document.getElementById("charactersearch").innerHTML="<center><br><br><img src=\'images/loaders/loader8.gif\'></center><br><br>";
-	if (window.XMLHttpRequest) { xmlhttp=new XMLHttpRequest(); }
-	else {  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"); }
-	xmlhttp.onreadystatechange=function() {
-		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-			document.getElementById("charactersearch").innerHTML=xmlhttp.responseText;
-		}
-	}
-	xmlhttp.open("GET","ajax.php?Ajax=Character&DoCharTaskProgShow=" + Data + "&TaskID=" + TaskID, true);
-	xmlhttp.send();
-}
-
-function DoGMCommand(Data, Action) {
-	var xmlhttp;
-	document.getElementById("GMCommand").innerHTML="<center><br><br><img src=\'images/loaders/loader8.gif\'></center><br><br>";
-	if (window.XMLHttpRequest) { xmlhttp=new XMLHttpRequest(); }
-	else {  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"); }
-	xmlhttp.onreadystatechange=function() {
-		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-			document.getElementById("GMCommand").innerHTML=xmlhttp.responseText;
-		}
-	}
-	xmlhttp.open("GET","ajax.php?Ajax=Character&DoGMCommand=" + Data + "&Action=" + Action, true); 
-	xmlhttp.send();
-}
-
-function SendTaskUpdate(Data, TaskID, Activity, Count) {
-	var xmlhttp;
-	
-	if (window.XMLHttpRequest) { xmlhttp=new XMLHttpRequest(); }
-	else {  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"); }
-	xmlhttp.onreadystatechange=function() {
-		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-			//document.getElementById("charactersearch").innerHTML=xmlhttp.responseText;
-			document.getElementById("charactersearch").innerHTML="<center><br><br><img src=\'images/loaders/loader8.gif\'></center><br><br>";
-			setTimeout(function(){ DoCharTaskProgShow(Data, TaskID); }, 1000); 
-		}
-	} 
-	if(document.getElementById("activity_" + Activity).value){ Count = document.getElementById("activity_" + Activity).value; }
-	xmlhttp.open("GET","ajax.php?Ajax=Character&SendTaskUpdate=" + Data + "&TaskID=" + TaskID + "&ActivityID=" + Activity + "&Count=" + Count, true);
-	xmlhttp.send();
-	
+function handle_destination_account(val){
+    $('#dest_account').val(val);
 }
 
 function CopyCharacter(){
-	if(document.getElementById("origchar").value == "Origin Character"){
-		document.getElementById("copycharresults").innerHTML="There needs to be an Origin Character specified";
-		return;
-	}
-	if(document.getElementById("destaccount").value == "Destination Account"){
-		document.getElementById("copycharresults").innerHTML="There needs to be a Destination Account specified";
-		return;
-	}
-	var CharCopy = document.getElementById("origchar").value;
-	var DestAcc = document.getElementById("destaccount").value;
-	
-	var xmlhttp;
-	document.getElementById("copycharresults").innerHTML="<center><br><br><img src=\'images/loaders/loader8.gif\'></center><br><br>";
-	if (window.XMLHttpRequest) { xmlhttp=new XMLHttpRequest(); }
-	else {  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"); }
-	xmlhttp.onreadystatechange=function() {
-		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-			document.getElementById("copycharresults").innerHTML=xmlhttp.responseText;
-		}
-	}
-	xmlhttp.open("GET","ajax.php?Ajax=Character&CopyChar=1&CharToCopy=" + CharCopy + "&DestAcc=" + DestAcc, true);
-	xmlhttp.send();
+    u = "character_copy_result";
+    if($('#new_character_name').val() == "") {
+        $("#" + u).html("You must specify a new character name");
+        return;
+    }
+    if($('#origchar').val() == "Origin Character"){
+        $("#" + u).html("There needs to be an Origin Character specified");
+        return;
+    }
+    if($('#dest_account').val() == "Destination Account"){
+        $("#" + u).html("There needs to be a Destination Account specified");
+        return;
+    }
+
+    var character_copy = $('#origchar').val();
+    var destination_account = $('#dest_account').val();
+
+    $("#" + u).html(global_loader);
+    $.ajax({
+        url: "ajax.php?M=Character&do_copy_character&source_character=" + character_copy + "&destination_account=" + destination_account + "&new_character_name=" + encodeURIComponent($('#new_character_name').val()),
+        context: document.body
+    }).done(function(e) {
+        $("#" + u).html(e);
+    });
+
 }

@@ -95,15 +95,15 @@ function WriteAutoScalerFields() {
     ChildStatusUpdate("Values written to parent window");
 }
 
-$(document).ready(function() { 
+$(document).ready(function() {
     $("input").change(function() {
         $(this).css("border-color", "rgba(82, 168, 236, 0.8)");
     });
     $("select").change(function() {
         $(this).css("border-color", "rgba(82, 168, 236, 0.8)");
     });
-	$(".btn").each(function() { 
-        $(this).addClass("btn-xs"); 
+	$(".btn").each(function() {
+        $(this).addClass("btn-xs");
     });
 });
 
