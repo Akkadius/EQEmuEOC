@@ -120,7 +120,6 @@
         ';
         }
 
-
 		$result = mysql_query("SELECT * FROM `loottable` WHERE `id` = " . $npc_types['loottable_id']);
 		$loot_table = array();
 		while($row = mysql_fetch_array($result)){ $loot_table = $row; }
@@ -137,19 +136,30 @@
 
 		/* Loot Table Entries */
 		echo '
-            <table>
+            <table style="width:175px !important">
                 <tr>
-                <td valign="top">
+                    <td valign="top" style="text-align:center;width:175px !important">
+                        <center>
+                        <table style="width:175px !important">
+                            <tr>
+                                <td style="padding:5px !important;text-align:center;">
+                                    ' . $race_panel_image . '<br>
+                                    <b>' . $npc_types['name'] . '<br>
+                                    ' . $npc_types['id'] . '
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                        </td>
+                        <td valign="top" style="text-align:left;width:400px !important">
 
-                <table>
-                    <tr>
-                        <td style="padding:5px !important;width:150px">' . $race_panel_image . '<br><b>' . $npc_types['name'] . '<br> ' . $npc_types['id'] . '</b></td>
-                    </tr>
-                </table>
-                </td>
-                <td valign="top" style="text-align:left">
 
-                <span class="label label-danger" style="font-weight:bold"> Loot Table ID: ' . $npc_types['loottable_id'] . '</span><br><br>
+                            <a href="javascript:;" class="btn green btn-xs" onclick="getTaskSelectList(0)">
+                                <i class="fa fa-plus"></i>
+                                Add Lootdrop
+                            </a>
+
+                            <br><br>
 
                 <table class="table table-condensed table-hover table-bordered loottable_entries ">
                     <thead>
@@ -181,15 +191,12 @@
             }
             else{
                 echo '
-                    <a href="javascript:;" class="btn green btn-xs" onclick="getTaskSelectList(0)">
-                        <i class="fa fa-plus"></i>
-                        New Task
-                    </a>
+                    <span class="label label-danger" style="font-weight:bold"> Loot Table ID: ' . $npc_types['loottable_id'] . '</span>
                 ';
             }
 
             /* Begin Loot table pane */
-			echo '</td><td valign="top" style="text-align:left;"">';
+			echo '</td><td valign="top" style="text-align:left;padding:10px !important;">';
 
 			echo '<div id="lootdrop_entries" style="display:inline"></div>';
 
@@ -205,6 +212,7 @@
 	if($_GET['show_lootdrop_entries']){
 		/* Loot Drop Entries */
         echo '<span class="label label-danger" style="font-weight:bold"> Loot Drop ID: ' . $_GET['show_lootdrop_entries'] . '</span><br><br>';
+
 		echo '<table class="table table-condensed table-hover table-bordered lootdrop_entries">
                 <thead>
                     <tr>

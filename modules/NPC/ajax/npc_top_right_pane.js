@@ -4,7 +4,7 @@
 
 $(document).ready(function() {
     var lootdrop_table = $(".lootdrop_entries").DataTable( {
-        scrollY:        "120px",
+        scrollY:        "100px",
         scrollCollapse: true,
         paging:         false,
         "searching": false,
