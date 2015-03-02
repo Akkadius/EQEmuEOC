@@ -101,11 +101,10 @@
     /* Display NPC Data in the top right pane */
 	if($_GET['load_npc_top_pane_dash']){
 
-
 		$result = mysql_query("SELECT * FROM `npc_types` WHERE `id` = " . $_GET['load_npc_top_pane_dash']);
 		$npc_types = array();
 		while($row = mysql_fetch_array($result)){ $npc_types = $row; }
-		# echo var_dump($npc_types);
+		# p_var_dump($npc_types);
 
         /* Load Race Image */
         if(file_exists("cust_assets/races/" . $npc_types['race'] . ".jpg")) {
@@ -121,13 +120,13 @@
         ';
         }
 
-        if($_GET['load_npc_top_pane_dash'] <= 0){
-            echo 'No loot data present';
-        }
+
 		$result = mysql_query("SELECT * FROM `loottable` WHERE `id` = " . $npc_types['loottable_id']);
 		$loot_table = array();
 		while($row = mysql_fetch_array($result)){ $loot_table = $row; }
-		#echo var_dump($loot_table);
+        # p_var_dump($loot_table);
+        # echo $npc_types['loottable_id'] . '<br>';
+		# echo var_dump($loot_table);
 
 		echo '<style>
 			#top_right_pane table tbody tr{ height:10px !important; }
@@ -144,16 +143,17 @@
 
                 <table>
                     <tr>
-                        <td>' . $race_panel_image . '<br><b>' . $npc_types['name'] . '<br> ' . $npc_types['id'] . '</b></td>
+                        <td style="padding:5px !important;width:150px">' . $race_panel_image . '<br><b>' . $npc_types['name'] . '<br> ' . $npc_types['id'] . '</b></td>
                     </tr>
                 </table>
                 </td>
                 <td valign="top" style="text-align:left">
+
                 <span class="label label-danger" style="font-weight:bold"> Loot Table ID: ' . $npc_types['loottable_id'] . '</span><br><br>
+
                 <table class="table table-condensed table-hover table-bordered loottable_entries ">
                     <thead>
                         <tr>
-
                             <th>Loot Drop ID</th>
                             <th>Multiplier</th>
                             <th>Probability</th>
@@ -162,7 +162,7 @@
                         </tr>
                     </thead> ';
 
-				$result = mysql_query("SELECT * FROM `loottable_entries` WHERE `loottable_id` = " . $npc_types['loottable_id']);
+				$result = mysql_query("SELECT * FROM `loottable_entries` WHERE `loottable_id` = " . $npc_types['loottable_id'] . " AND `loottable_id` > 0");
 				while($row = mysql_fetch_array($result)){
 					echo '
 						<tr loot_table="' . $npc_types['loottable_id'] . '" loot_drop="' . $row['lootdrop_id'] . '">
@@ -176,6 +176,19 @@
 
 			echo '</table>';
 
+            if($npc_types['loottable_id'] <= 0){
+                echo 'No loot data present';
+            }
+            else{
+                echo '
+                    <a href="javascript:;" class="btn green btn-xs" onclick="getTaskSelectList(0)">
+                        <i class="fa fa-plus"></i>
+                        New Task
+                    </a>
+                ';
+            }
+
+            /* Begin Loot table pane */
 			echo '</td><td valign="top" style="text-align:left;"">';
 
 			echo '<div id="lootdrop_entries" style="display:inline"></div>';
