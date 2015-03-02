@@ -103,7 +103,7 @@
 	}
 
 	/* List Zone NPCS :: Grid Editor */
-	if($_GET['ShowZone']){
+	if(isset($_GET['show_npc_result'])){
 		/* Parse Columns */
 		$npc_cols = array();
 		$npc_a_cols = array();
