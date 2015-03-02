@@ -4,7 +4,7 @@ function ShowZone() {
 	var inst_version = $("#zinstid").val();
 	var NPC = $("#npcname").val();
 	$.ajax({
-		url: "ajax.php?M=NPC&show_npc_result&Zone=" + zone_sn + "&inst_version=" + inst_version + "&npc_filter=" + encodeURIComponent(NPC),
+		url: "ajax.php?M=NPC&show_npc_table&Zone=" + zone_sn + "&inst_version=" + inst_version + "&npc_filter=" + encodeURIComponent(NPC),
 		context: document.body
 	}).done(function(e) {
 		$("#shownpczone").html(e);
@@ -16,7 +16,7 @@ function ShowZone() {
 function ShowZoneFromURL(zone_sn, inst_version, name_filter, field_filter){
     $("#shownpczone").html("<b style='color:red;font-size:30px'>LOADING, PLEASE WAIT...</b><hr><i class='fa fa-spinner fa-spin' style='font-size:80px'>");
 	$.ajax({
-		url: "ajax.php?M=NPC&show_npc_result&Zone=" + zone_sn + "&inst_version=" + inst_version + "&npc_filter=" + encodeURIComponent(name_filter),
+		url: "ajax.php?M=NPC&show_npc_table&Zone=" + zone_sn + "&inst_version=" + inst_version + "&npc_filter=" + encodeURIComponent(name_filter),
 		context: document.body
 	}).done(function(e) {
 		$("#shownpczone").html(e);
