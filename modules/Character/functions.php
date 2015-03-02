@@ -1,6 +1,6 @@
 <?php
 
-    function CopyCharacterRecord($source_character_id, $destination_character_name){
+    function CopyCharacterRecord($source_character_id, $destination_account_id, $destination_character_name){
         $table = "character_data";
         $id_copied_from = $source_character_id;
         $id_field = "id";
@@ -25,6 +25,9 @@
             if ($key != $id_field) {
                 if($key == "name"){
                     $query .= '`' . $key . '` = "' . str_replace('"', '\"', mysql_real_escape_string($destination_character_name)) . '", ';
+                }
+                else if($key == "account_id"){
+                    $query .= '`' . $key . '` = "' . str_replace('"', '\"', $destination_account_id . '", ';
                 }
                 else {
                     $query .= '`' . $key . '` = "' . str_replace('"', '\"', mysql_real_escape_string($value)) . '", ';

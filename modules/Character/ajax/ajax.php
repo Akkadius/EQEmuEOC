@@ -101,7 +101,7 @@
             $destination_character_name = $_GET['new_character_name'];
 
             # $new_character_id = DuplicateMySQLRecord("character_data", "id", $source_character);
-            $new_character_id = CopyCharacterRecord($source_character, $destination_character_name);
+            $new_character_id = CopyCharacterRecord($source_character, $desination_account, $destination_character_name);
 
             /* Check if destination character already exists */
             if($new_character_id == 0){
