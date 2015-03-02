@@ -118,3 +118,13 @@ function HookHoverTips(){
         $( ".ajax_tooltip_content" ).unbind( "mouseleave");
     });
 }
+
+function GetFormQueryString(ID){
+    query_string = "";
+    $('#' + ID + '').find('input, select, textarea').each(function(key){
+        val = $(this).val();
+        if(val == 'undefined'){ val = ''; }
+        query_string = query_string + "&" + $(this).attr('id') + "=" + encodeURIComponent(val);
+    });
+    return query_string;
+}

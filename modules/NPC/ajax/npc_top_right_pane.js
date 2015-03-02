@@ -22,6 +22,7 @@ $(document).ready(function() {
 
         console.log(loot_table + ' ' + loot_drop);
 
+        /* Highlight Row entry for loot table */
         $(".loottable_entries td").each(function() {
             $(this).css("background", "");
         });
@@ -117,4 +118,8 @@ function update_loottable(loot_table, loot_drop, field_name, val){
         $('#lootdrop_entries').html(e).fadeIn();
         Notific8("NPC Editor", loot_drop + " :: Updated " + field_name + " to value '" + val + "'", 3000);
     });
+}
+
+function loot_drop_add_item(){
+    DoModal("ajax.php?M=NPC&loot_drop_add_item");
 }

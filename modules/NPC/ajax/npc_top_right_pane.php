@@ -62,7 +62,7 @@
                             <td valign="top" style="text-align:left;width:400px !important">
 
 
-                                <a href="javascript:;" class="btn green btn-xs" onclick="getTaskSelectList(0)">
+                                <a href="javascript:;" class="btn green btn-xs">
                                     <i class="fa fa-plus"></i>
                                     Add Lootdrop
                                 </a>
@@ -100,12 +100,12 @@
         }
         else{
             echo '
-                        <span class="label label-danger" style="font-weight:bold"> Loot Table ID: ' . $npc_types['loottable_id'] . '</span>
-                    ';
+                    <span class="label label-danger" style="font-weight:bold"> Loot Table ID: ' . $npc_types['loottable_id'] . '</span>
+                ';
         }
 
         /* Begin Loot table pane */
-        echo '</td><td valign="top" style="text-align:left;padding:10px !important;">';
+        echo '</td><td valign="top" style="text-align:left;padding-left:10px !important;">';
 
         echo '<div id="lootdrop_entries" style="display:inline"></div>';
 
@@ -120,7 +120,12 @@
     */
     if($_GET['show_lootdrop_entries']){
         /* Loot Drop Entries */
-        echo '<span class="label label-danger" style="font-weight:bold"> Loot Drop ID: ' . $_GET['show_lootdrop_entries'] . '</span><br><br>';
+        echo '
+            <a href="javascript:;" class="btn green btn-xs" onclick="loot_drop_add_item()">
+                <i class="fa fa-plus"></i>
+                Add Item
+            </a>
+        <br>';
 
         echo '
                 <table class="table table-condensed table-hover table-bordered lootdrop_entries" style="width:200px">
@@ -161,9 +166,31 @@
                         <td>' . $row['multiplier'] . '</td>
                     </tr>';
         }
-        echo '</table> ';
+        echo '</table>
+        <span class="label label-danger" style="font-weight:bold; height:15px !important"> Loot Drop ID: ' . $_GET['show_lootdrop_entries'] . '</span>
+        ';
         $FJS .= '<script type="text/javascript" src="modules/NPC/ajax/npc_top_right_pane.js"></script>';
         echo $FJS;
+    }
+
+    /* Display Form to queue adding an item */
+    if(isset($_GET['loot_drop_add_item'])){
+        echo '<style>
+            .iframe_seamless{
+                background-color: transparent;
+                border: 0px none transparent;
+                padding: 0px;
+                overflow: hidden;
+            }
+        </style>';
+
+        require_once("modules/NPC/ajax/item_search_lootdrop.php");
+        $content_out .= '<script type="text/javascript" src="modules/NPC/ajax/item_search_lootdrop.js"></script>';
+        echo Modal('Add Item to Lootdrop', $content_out, '');
+    }
+
+    if(isset($_GET['item_search_lootdrop'])) {
+        require_once("modules/NPC/ajax/item_search_lootdrop.php");
     }
 
     /* Save Loot Table Field Values */

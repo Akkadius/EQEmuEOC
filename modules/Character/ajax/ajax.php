@@ -176,7 +176,7 @@
                 }
             }
 
-            echo '<textarea style="width:100%;height:600px">' . $total_query_data . '</textarea>';
+            echo '<textarea style="width:100%;height:400px">' . $total_query_data . '</textarea>';
 
         }
     }
