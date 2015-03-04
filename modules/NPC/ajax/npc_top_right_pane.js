@@ -6,7 +6,7 @@ $(document).ready(function() {
     var lootdrop_table = $(".lootdrop_entries").DataTable( {
         scrollY:        "145px",
         scrollX:        "200px",
-        sScrollXInner: "650px",
+        sScrollXInner: "700px",
         scrollCollapse: true,
         paging:         false,
         "searching": false,
@@ -15,10 +15,10 @@ $(document).ready(function() {
         "bSort" : false,
     } );
 
-    $(".lootdrop_entries").css("width", "650px");
+    $(".lootdrop_entries").css("width", "700px");
     var timer = setInterval(function () {
+        $(".lootdrop_entries").css("width", "700px");
         lootdrop_table.draw();
-        $(".lootdrop_entries").css("width", "650px");
         window.clearInterval(timer);
     }, 500);
 
@@ -27,6 +27,8 @@ $(document).ready(function() {
     $( ".loottable_entries tr" ).bind( "click", function() {
         loot_table = $(this).attr("loot_table");
         loot_drop = $(this).attr("loot_drop");
+        probability = $(this).attr("probability");
+        multiplier = $(this).attr("multiplier");
         data = $(this).html();
 
         console.log(loot_table + ' ' + loot_drop);
@@ -47,7 +49,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: "ajax.php?M=NPC&show_lootdrop_entries=" + loot_drop,
+            url: "ajax.php?M=NPC&show_lootdrop_entries=" + loot_drop + "&multiplier=" + multiplier + "&probability=" + probability,
             context: document.body
         }).done(function(e) {
             /* Update Data Table as well */
@@ -59,8 +61,8 @@ $(document).ready(function() {
     });
 
     /* Hook Mouse Enter and Leave Events for Loottable (table) */
-    $( ".loottable_entries td, .DTFC_Cloned td" ).unbind("mouseenter");
-    $( ".loottable_entries td, .DTFC_Cloned td" ).bind("mouseenter", function() {
+    $( ".loottable_entries td" ).unbind("mouseenter");
+    $( ".loottable_entries td" ).bind("mouseenter", function() {
         loot_table = $(this).parent().attr("loot_table");
         loot_drop = $(this).parent().attr("loot_drop");
         field_name = $(this).attr("field_name");

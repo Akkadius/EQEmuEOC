@@ -86,7 +86,7 @@
             $result = mysql_query("SELECT * FROM `loottable_entries` WHERE `loottable_id` = " . $npc_types['loottable_id'] . " AND `loottable_id` > 0");
             while ($row = mysql_fetch_array($result)) {
                 echo '
-                    <tr loot_table="' . $npc_types['loottable_id'] . '" loot_drop="' . $row['lootdrop_id'] . '">
+                    <tr loot_table="' . $npc_types['loottable_id'] . '" loot_drop="' . $row['lootdrop_id'] . '" probability="' . $row['probability'] . '" multiplier="' . $row['multiplier'] . '">
                         <td>
                             <button type="button" class="btn badge btn-default btn-sm red btn-xs" onclick="do_loot_table_delete(' . $npc_types['loottable_id'] . ', ' . $row['lootdrop_id'] . ')" title="Delete Item from Lootdrop"><i class="fa fa-times"></i> </button>
                         </td>
@@ -97,7 +97,6 @@
                         <td loot_drop="' . $row['lootdrop_id'] . '" field_name="mindrop">' . $row['mindrop'] . '</td>
                     </tr>';
             }
-
             echo '</table>';
         }
 
@@ -116,9 +115,8 @@
         $FJS .= '<script type="text/javascript" src="modules/NPC/ajax/npc_top_right_pane.js"></script>';
         echo $FJS;
     }
-    /*
-        Lootdrop Entries call from Loot table row select
-    */
+
+    /* Lootdrop :: Display Table */
     if($_GET['show_lootdrop_entries']){
         echo '<style>
                 .lootdrop_entries table { width: 700px !important; }
@@ -145,9 +143,10 @@
                         <tr>
                             <th></th>
                             <th>Item ID</th>
-                            <th style="width:200px !important">Name</th>
+                            <th style="width:180px !important">Name</th>
                             <th>Equipped</th>
                             <th>% Chance</th>
+                            <th style="text-align:center">Real <br>Chance</th>
                             <th>Min LVL</th>
                             <th>Max LVL</th>
                             <th>Multiplier</th>
@@ -167,32 +166,32 @@
 
         while($row = mysql_fetch_array($result)){
             echo '
-                    <tr loot_drop="' . $_GET['show_lootdrop_entries'] . '" item_id="' . $row['item_id'] . '"">
-                        <td>
-                            <button type="button" class="btn badge btn-default btn-sm red btn-xs" onclick="do_lootdrop_delete(' . $_GET['show_lootdrop_entries'] . ', ' . $row['item_id'] . ')" title="Delete Item from Lootdrop"><i class="fa fa-times"></i> </button>
-                        </td>
-                        <td nonedit="1">' . $row['item_id'] . '</td>
-                        <td style="text-align:left" nonedit="1">
-                            <img class="lazy" data-original="cust_assets/icons/item_622.png" style="height:15px;width:auto" src="cust_assets/icons/item_' . $row['icon'] . '.png" style="display: inline;">
-                            <a href="javascript:;" ' . HoverTip("global.php?item_view=" . $row['id']) . '>' . $row['Name'] . '</a>
-                        </td>
-                        <td field_name="equip_item">' . $row['equip_item'] . '</td>
-                        <td field_name="chance">' . $row['chance'] . '</td>
-                        <td field_name="minlevel">' . $row['minlevel'] . '</td>
-                        <td field_name="maxlevel">' . $row['maxlevel'] . '</td>
-                        <td field_name="multiplier">' . $row['multiplier'] . '</td>
-                    </tr>';
+                <tr loot_drop="' . $_GET['show_lootdrop_entries'] . '" item_id="' . $row['item_id'] . '"">
+                    <td>
+                        <button type="button" class="btn badge btn-default btn-sm red btn-xs" onclick="do_lootdrop_delete(' . $_GET['show_lootdrop_entries'] . ', ' . $row['item_id'] . ')" title="Delete Item from Lootdrop"><i class="fa fa-times"></i> </button>
+                    </td>
+                    <td nonedit="1">' . $row['item_id'] . '</td>
+                    <td style="text-align:left" nonedit="1">
+                        <img class="lazy" data-original="cust_assets/icons/item_622.png" style="height:15px;width:auto" src="cust_assets/icons/item_' . $row['icon'] . '.png" style="display: inline;">
+                        <a href="javascript:;" ' . HoverTip("global.php?item_view=" . $row['id']) . '>' . (strlen($row['Name']) > 25  ? (substr($row['Name'], 0, 25) . '...') : $row['Name']) . '</a>
+                    </td>
+                    <td field_name="equip_item">' . $row['equip_item'] . '</td>
+                    <td field_name="chance">' . $row['chance'] . '</td>
+                    <td nonedit="1" style="background-color:orange"> ' . round($row['chance'] / $_GET['probability'], 3) . '</td>
+                    <td field_name="minlevel">' . $row['minlevel'] . '</td>
+                    <td field_name="maxlevel">' . $row['maxlevel'] . '</td>
+                    <td field_name="multiplier">' . $row['multiplier'] . '</td>
+                </tr>';
         }
-        echo '</table>
-
-        ';
+        echo '</table>';
         $FJS .= '<script type="text/javascript" src="modules/NPC/ajax/npc_top_right_pane.js"></script>';
         echo $FJS;
     }
 
     /* Lootdrop :: Display Form to queue adding an item */
     if(isset($_GET['loot_drop_add_item'])){
-        echo '<style>
+        echo '
+        <style>
             .iframe_seamless{
                 background-color: transparent;
                 border: 0px none transparent;
@@ -205,6 +204,7 @@
         $content_out .= '<script type="text/javascript" src="modules/NPC/ajax/item_search_lootdrop.js"></script>';
         echo Modal('Add Item to Lootdrop', $content_out, '');
     }
+
     /* Lootdrop :: Displays Item Search Result */
     if(isset($_GET['item_search_lootdrop'])) {
         require_once("modules/NPC/ajax/item_search_lootdrop.php");
@@ -220,6 +220,7 @@
 			</center>';
         echo Modal('Lootdrop Item Removal Confirm', $Content, '');
     }
+
     /* Lootdrop :: Delete Item from DB */
     if($_GET['do_lootdrop_delete_confirmed']){
         $loot_drop = $_GET['do_lootdrop_delete_confirmed'];
@@ -230,6 +231,7 @@
             echo mysql_error();
         }
     }
+
     /* Loot Table :: Delete Item :: Confirmation Window */
     if($_GET['do_loot_table_delete']){
         $loot_table = $_GET['do_loot_table_delete'];
@@ -242,6 +244,7 @@
 			</center>';
         echo Modal('Loot Table Loot Drop Removal Confirm', $Content, '');
     }
+
     /* Loot Table :: Delete Item from DB */
     if($_GET['do_loot_table_delete_confirmed']){
         $loot_table = $_GET['do_loot_table_delete_confirmed'];
@@ -252,6 +255,7 @@
             echo mysql_error();
         }
     }
+
     /* Loot Table :: Save Loot Table Field Values */
     if(isset($_GET['update_loottable'])){
         $loot_table = $_GET['update_loottable'];
@@ -266,6 +270,7 @@
             AND lootdrop_id = " . $loot_drop . "
         ");
     }
+
     /* Lootdrop :: Save Loot Drop Field Values */
     if(isset($_GET['update_loot_drop'])){
         $loot_drop = $_GET['update_loot_drop'];
@@ -281,6 +286,7 @@
             echo mysql_error();
         }
     }
+
     /* Lootdrop :: Add Loot entry to lootdrop */
     if(isset($_GET['db_loot_drop_add_item'])){
         $loot_drop = $_GET['loot_drop'];

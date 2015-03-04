@@ -84,6 +84,7 @@ $(document).ready(function() {
 
 } );
 
+/* NPC TABLE :: Click */
 $( "#npc_head_table td" ).click(function() {
     npc_id = $(this).attr("npc_id");
     db_field = $(this).attr("npc_db_field");
@@ -111,7 +112,6 @@ $( "#npc_head_table td" ).click(function() {
         }
     });
 
-
     $.ajax({
         url: "ajax.php?M=NPC&load_npc_top_pane_dash=" + npc_id,
         context: document.body
@@ -123,6 +123,7 @@ $( "#npc_head_table td" ).click(function() {
 
 });
 
+/* NPC TABLE :: Double Click */
 $( "#npc_head_table td" ).dblclick(function() {
     npc_id = $(this).attr("npc_id");
     db_field = $(this).attr("npc_db_field");
