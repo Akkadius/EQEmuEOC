@@ -16,7 +16,6 @@ $(document).ready(function() {
     } );
 
     var timer = setInterval(function () {
-        // var table = $(".lootdrop_entries").DataTable();
         lootdrop_table.draw();
         window.clearInterval(timer);
     }, 500);
@@ -56,6 +55,7 @@ $(document).ready(function() {
 
     });
 
+    /* Hook Mouse Enter and Leave Events for Loottable (table) */
     $( ".loottable_entries td, .DTFC_Cloned td" ).unbind("mouseenter");
     $( ".loottable_entries td, .DTFC_Cloned td" ).bind("mouseenter", function() {
         // console.log("Hovering in");
@@ -90,9 +90,12 @@ $(document).ready(function() {
         data = "";
     });
 
+    /* Hook Mouse Leave Events for Loottable (table) */
     $( ".loottable_entries td, .DTFC_Cloned td" ).unbind("mouseleave");
     $( ".loottable_entries td, .DTFC_Cloned td" ).bind("mouseleave", function() {
         data = "";
+
+        /* Grab data from cell depending on input type */
         if($(this).has("select").length){
             data = $(this).children("select").val();
         }
@@ -100,6 +103,7 @@ $(document).ready(function() {
             data = $(this).children("input").val();
         }
 
+        /* If cell contains cell... skip */
         if($(this).has("button").length){ return; }
 
         /* If no data present and */
@@ -107,8 +111,6 @@ $(document).ready(function() {
             $(this).attr("is_field_translated", 0);
             return;
         }
-
-        // console.log('data catch ' + data);
 
         $(this).html(data);
         data = "";
@@ -131,23 +133,46 @@ function loot_drop_add_item(loot_drop_add_item){
     DoModal("ajax.php?M=NPC&loot_drop_add_item=" + loot_drop_add_item);
 }
 
+function reload_lootdrop_entries_table_pane(loot_drop){
+    /* Lets Update the top right pane */
+    $.ajax({
+        url: "ajax.php?M=NPC&show_lootdrop_entries=" + loot_drop,
+        context: document.body
+    }).done(function(e) {
+        /* Update Data Table as well */
+        $('#lootdrop_entries').html(e).fadeIn();
+        $('#lootdrop_entries').attr('lootdrop_loaded', loot_drop);
+        HookHoverTips();
+    });
+}
+
 function add_to_lootdrop(loot_drop, item_id){
     $.ajax({
         url: "ajax.php?M=NPC&db_loot_drop_add_item=" + item_id + "&loot_drop=" + loot_drop,
         context: document.body
     }).done(function(e) {
         Notific8("NPC Editor", loot_drop + " :: Added " + item_id + " ", 3000);
-
-        /* Lets Update the top right pane */
-        $.ajax({
-            url: "ajax.php?M=NPC&show_lootdrop_entries=" + loot_drop,
-            context: document.body
-        }).done(function(e) {
-            /* Update Data Table as well */
-            $('#lootdrop_entries').html(e).fadeIn();
-            $('#lootdrop_entries').attr('lootdrop_loaded', loot_drop);
-            HookHoverTips();
-        });
-
+        reload_lootdrop_entries_table_pane(loot_drop);
     });
+}
+
+function do_lootdrop_delete(lootdrop_id, item_id){
+    DoModal("ajax.php?M=NPC&do_lootdrop_delete=" + lootdrop_id + "&item_id=" + item_id);
+}
+
+function do_lootdrop_delete_confirmed(lootdrop_id, item_id){
+    /* Delete item from lootdrop */
+    $.ajax({
+        url: "ajax.php?M=NPC&do_lootdrop_delete_confirmed=" + lootdrop_id + "&item_id=" + item_id,
+        context: document.body
+    }).done(function(e) {
+        $('#ajax-modal').modal('hide');
+        Notific8("NPC Editor", "Removed item: " + item_id + " from Lootdrop ID: " + lootdrop_id + "" + e, 2000);
+        /* Refresh Table when removed */
+        reload_lootdrop_entries_table_pane(lootdrop_id);
+    });
+}
+
+function do_loottable_delete(loottable_id, lootdrop_id){
+    DoModal("ajax.php?M=NPC&do_loottable_delete=" + loottable_id + "&lootdrop_id=" + lootdrop_id);
 }

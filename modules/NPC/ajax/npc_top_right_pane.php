@@ -131,6 +131,7 @@
                 <table class="table table-condensed table-hover table-bordered lootdrop_entries" style="width:200px">
                     <thead>
                         <tr>
+                            <th></th>
                             <th>Item ID</th>
                             <th>Name</th>
                             <th>Equipped</th>
@@ -156,6 +157,9 @@
         while($row = mysql_fetch_array($result)){
             echo '
                     <tr loot_table="' . $row['loottable_id'] . '">
+                        <td>
+                            <button type="button" class="btn badge btn-default btn-sm red btn-xs" onclick="do_lootdrop_delete(' . $_GET['show_lootdrop_entries'] . ', ' . $row['item_id'] . ')" title="Delete Item from Lootdrop"><i class="fa fa-times"></i> </button>
+                        </td>
                         <td>' . $row['item_id'] . '</td>
                         <td style="text-align:left">
                             <img class="lazy" data-original="cust_assets/icons/item_622.png" style="height:15px;width:auto" src="cust_assets/icons/item_' . $row['icon'] . '.png" style="display: inline;">
@@ -195,6 +199,26 @@
         require_once("modules/NPC/ajax/item_search_lootdrop.php");
     }
 
+    /* Lootdrop :: Delete Item :: Confirmation Window */
+    if($_GET['do_lootdrop_delete']){
+        $loot_drop = $_GET['do_lootdrop_delete'];
+        $item_id = $_GET['item_id'];
+        $Content .= '
+			<center>
+				<button type="button" class="btn btn-default btn-sm red btn-xs" onclick="do_lootdrop_delete_confirmed(' . $loot_drop . ', ' . $item_id . ')"><i class="fa fa-times"></i> Confirm Delete </button>
+			</center>';
+        echo Modal('Lootdrop Item Removal Confirm', $Content, '');
+    }
+    /* Lootdrop :: Delete Item from DB */
+    if($_GET['do_lootdrop_delete_confirmed']){
+        $loot_drop = $_GET['do_lootdrop_delete_confirmed'];
+        $item_id = $_GET['item_id'];
+        $result = mysql_query(
+            "DELETE FROM `lootdrop_entries` WHERE `lootdrop_id` = " . $loot_drop . " AND `item_id` = " . $item_id);
+        if(!$result){
+            echo mysql_error();
+        }
+    }
     /* Save Loot Table Field Values */
     if(isset($_GET['update_loottable'])){
         $loot_table = $_GET['update_loottable'];
@@ -209,7 +233,6 @@
             AND lootdrop_id = " . $loot_drop . "
         ");
     }
-
     /* Add Loot entry to lootdrop */
     if(isset($_GET['db_loot_drop_add_item'])){
         $loot_drop = $_GET['loot_drop'];
