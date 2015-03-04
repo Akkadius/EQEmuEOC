@@ -67,6 +67,8 @@
                                     Add Lootdrop
                                 </a>
 
+                                <span class="label label-danger" style="font-weight:bold"> Loot Table ID: ' . $npc_types['loottable_id'] . '</span>
+
                                 <br><br>
 
                     <table class="table table-condensed table-hover table-bordered loottable_entries ">
@@ -100,7 +102,7 @@
         }
         else{
             echo '
-                    <span class="label label-danger" style="font-weight:bold"> Loot Table ID: ' . $npc_types['loottable_id'] . '</span>
+
                 ';
         }
 
@@ -119,21 +121,32 @@
         Lootdrop Entries call from Loot table row select
     */
     if($_GET['show_lootdrop_entries']){
+        echo '<style>
+                .lootdrop_entries table { width: 700px !important; }
+                .lootdrop_entries table tbody tr{ height:10px !important; }
+                .lootdrop_entries table tbody td{ padding: 1px !important; text-align:center;  }
+                .lootdrop_entries table tbody td{ padding: 1px !important; text-align:center; }
+                .lootdrop_entries table tbody td input{ text-align:center; }
+                .lootdrop_entries th { font-size:13px !important; padding: 5px !important; }
+            </style>';
+
         /* Loot Drop Entries */
         echo '
             <a href="javascript:;" class="btn green btn-xs" onclick="loot_drop_add_item(' . $_GET['show_lootdrop_entries'] . ')">
                 <i class="fa fa-plus"></i>
                 Add Item
             </a>
+
+            <span class="label label-danger" style="font-weight:bold; height:15px !important;position:relative;right:0px"> Loot Drop ID: ' . $_GET['show_lootdrop_entries'] . '</span>
         <br>';
 
         echo '
-                <table class="table table-condensed table-hover table-bordered lootdrop_entries" style="width:200px">
+                <table class="table table-condensed table-hover table-bordered lootdrop_entries">
                     <thead>
                         <tr>
                             <th></th>
                             <th>Item ID</th>
-                            <th>Name</th>
+                            <th style="width:200px !important">Name</th>
                             <th>Equipped</th>
                             <th>% Chance</th>
                             <th>Min LVL</th>
@@ -144,16 +157,15 @@
                 ';
         $result = mysql_query(
             "SELECT
-                    lootdrop_entries.*,
-                    items.id,
-                    items.`Name`,
-                    items.icon
-                    FROM
-                    lootdrop_entries
-                    INNER JOIN items ON lootdrop_entries.item_id = items.id
-                    WHERE `lootdrop_id` = " . $_GET['show_lootdrop_entries'])
+                lootdrop_entries.*,
+                items.id,
+                items.`Name`,
+                items.icon
+                FROM
+                lootdrop_entries
+                INNER JOIN items ON lootdrop_entries.item_id = items.id
+                WHERE `lootdrop_id` = " . $_GET['show_lootdrop_entries']);
 
-        ;
         while($row = mysql_fetch_array($result)){
             echo '
                     <tr loot_table="' . $row['loottable_id'] . '">
@@ -173,7 +185,7 @@
                     </tr>';
         }
         echo '</table>
-        <span class="label label-danger" style="font-weight:bold; height:15px !important"> Loot Drop ID: ' . $_GET['show_lootdrop_entries'] . '</span>
+
         ';
         $FJS .= '<script type="text/javascript" src="modules/NPC/ajax/npc_top_right_pane.js"></script>';
         echo $FJS;

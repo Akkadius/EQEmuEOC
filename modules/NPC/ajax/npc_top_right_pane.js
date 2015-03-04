@@ -4,9 +4,9 @@
 
 $(document).ready(function() {
     var lootdrop_table = $(".lootdrop_entries").DataTable( {
-        scrollY:        "100px",
+        scrollY:        "145px",
         scrollX:        "200px",
-        sScrollXInner: "300px",
+        sScrollXInner: "650px",
         scrollCollapse: true,
         paging:         false,
         "searching": false,
@@ -15,10 +15,14 @@ $(document).ready(function() {
         "bSort" : false,
     } );
 
+    $(".lootdrop_entries").css("width", "650px");
     var timer = setInterval(function () {
         lootdrop_table.draw();
+        $(".lootdrop_entries").css("width", "650px");
         window.clearInterval(timer);
     }, 500);
+
+
 
     $( ".loottable_entries tr" ).unbind( "click");
     $( ".loottable_entries tr" ).bind( "click", function() {
