@@ -22,8 +22,7 @@ $(document).ready(function() {
         window.clearInterval(timer);
     }, 500);
 
-
-
+    /* Loot Table Click Hooks */
     $( ".loottable_entries tr" ).unbind( "click");
     $( ".loottable_entries tr" ).bind( "click", function() {
         loot_table = $(this).attr("loot_table");
@@ -62,16 +61,65 @@ $(document).ready(function() {
     /* Hook Mouse Enter and Leave Events for Loottable (table) */
     $( ".loottable_entries td, .DTFC_Cloned td" ).unbind("mouseenter");
     $( ".loottable_entries td, .DTFC_Cloned td" ).bind("mouseenter", function() {
-        // console.log("Hovering in");
-
-        // if($(this).attr("is_field_translated") == 1){
-        //     return;
-        // }
-
         loot_table = $(this).parent().attr("loot_table");
         loot_drop = $(this).parent().attr("loot_drop");
         field_name = $(this).attr("field_name");
-        // field_name = $(this).attr("npc_db_field");
+        width = $(this).css("width");
+        height = $(this).css("height");
+        data = $(this).html();
+
+        /* If attr is set to non edit, return */
+        if($(this).attr("nonedit") == 1){
+            return;
+        }
+
+        /* Dont replace the button */
+        if(data.match(/button/i)){ return; }
+
+        $(this).html('<input type="text" class="form-control" value="' + data + '" onchange="update_loottable(' + loot_table + ', ' + loot_drop + ', \'' + field_name + '\', this.value)">');
+        $(this).children("input").css('width', (parseInt(width) * 1));
+        $(this).children("input").css('height', (parseInt(height)));
+        $(this).children("input").css("font-size", "12px");
+        // $('textarea').autosize();
+        data = "";
+    });
+
+    /* Hook Mouse Leave Events for Loottable (table) */
+    $( ".loottable_entries td" ).unbind("mouseleave");
+    $( ".loottable_entries td" ).bind("mouseleave", function() {
+        data = "";
+
+        /* Grab data from cell depending on input type */
+        if($(this).has("select").length){
+            data = $(this).children("select").val();
+        }
+        else if($(this).has("input").length){
+            data = $(this).children("input").val();
+        }
+
+        /* If cell contains cell... skip */
+        if($(this).has("button").length){ return; }
+
+        /* If no data present and */
+        if(!data && (!$(this).has("select").length && !$(this).has("input").length)){
+            $(this).attr("is_field_translated", 0);
+            return;
+        }
+
+        $(this).html(data);
+        data = "";
+        $(this).attr("is_field_translated", 0);
+    });
+
+    /* Hook Mouse Enter and Leave Events for Lootdrop (table) */
+    $( ".lootdrop_entries td" ).unbind("mouseenter");
+    $( ".lootdrop_entries td" ).bind("mouseenter", function() {
+        loot_drop = $(this).parent().attr("loot_drop");
+        l_item_id = $(this).parent().attr("item_id");
+        field_name = $(this).attr("field_name");
+
+        console.log(field_name);
+
         width = $(this).css("width");
         height = $(this).css("height");
         data = $(this).html();
@@ -86,7 +134,7 @@ $(document).ready(function() {
         /* Dont replace the button */
         if(data.match(/button/i)){ return; }
 
-        $(this).html('<input type="text" class="form-control" value="' + data + '" onchange="update_loottable(' + loot_table + ', ' + loot_drop + ', \'' + field_name + '\', this.value)">');
+        $(this).html('<input type="text" class="form-control" value="' + data + '" onchange="update_loot_drop(' + loot_drop + ', ' + l_item_id + ', \'' + field_name + '\', this.value)">');
         $(this).children("input").css('width', (parseInt(width) * 1));
         $(this).children("input").css('height', (parseInt(height)));
         $(this).children("input").css("font-size", "12px");
@@ -94,9 +142,9 @@ $(document).ready(function() {
         data = "";
     });
 
-    /* Hook Mouse Leave Events for Loottable (table) */
-    $( ".loottable_entries td, .DTFC_Cloned td" ).unbind("mouseleave");
-    $( ".loottable_entries td, .DTFC_Cloned td" ).bind("mouseleave", function() {
+    /* Hook Mouse Leave Events for Lootdrop (table) */
+    $( ".lootdrop_entries td, .DTFC_Cloned td" ).unbind("mouseleave");
+    $( ".lootdrop_entries td, .DTFC_Cloned td" ).bind("mouseleave", function() {
         data = "";
 
         /* Grab data from cell depending on input type */
@@ -133,6 +181,19 @@ function update_loottable(loot_table, loot_drop, field_name, val){
     });
 }
 
+function update_loot_drop(loot_drop, item_id, field_name, val){
+    $.ajax({
+        url: "ajax.php?M=NPC&update_loot_drop=" + loot_drop + "&item_id=" + item_id + "&field=" + field_name + "&value=" + val,
+        context: document.body
+    }).done(function(e) {
+        /* Update Data Table as well */
+        Notific8("NPC Editor", "Loot Drop :: Updated " + field_name + " to value '" + val + "' for item " + item_id, 1000);
+        if(e != ''){
+            alert(e);
+        }
+    });
+}
+
 function loot_drop_add_item(loot_drop_add_item){
     DoModal("ajax.php?M=NPC&loot_drop_add_item=" + loot_drop_add_item);
 }
@@ -155,7 +216,7 @@ function add_to_lootdrop(loot_drop, item_id){
         url: "ajax.php?M=NPC&db_loot_drop_add_item=" + item_id + "&loot_drop=" + loot_drop,
         context: document.body
     }).done(function(e) {
-        Notific8("NPC Editor", loot_drop + " :: Added " + item_id + " ", 3000);
+        Notific8("NPC Editor", loot_drop + " :: Added " + item_id + " ", 2000);
         reload_lootdrop_entries_table_pane(loot_drop);
     });
 }

@@ -67,7 +67,7 @@
                                     Add Lootdrop
                                 </a>
 
-                                <span class="label label-danger" style="font-weight:bold"> Loot Table ID: ' . $npc_types['loottable_id'] . '</span>
+                                <span class="badge label label-danger" style="font-weight:bold"> Loot Table ID: ' . $npc_types['loottable_id'] . '</span>
 
                                 <br><br>
 
@@ -137,7 +137,7 @@
                 Add Item
             </a>
 
-            <span class="label label-danger" style="font-weight:bold; height:15px !important;position:relative;right:0px"> Loot Drop ID: ' . $_GET['show_lootdrop_entries'] . '</span>
+            <span class="badge label label-danger" style="font-weight:bold; height:15px !important;position:relative;right:0px"> Loot Drop ID: ' . $_GET['show_lootdrop_entries'] . '</span>
         <br>';
 
         echo '
@@ -168,20 +168,20 @@
 
         while($row = mysql_fetch_array($result)){
             echo '
-                    <tr loot_table="' . $row['loottable_id'] . '">
+                    <tr loot_drop="' . $_GET['show_lootdrop_entries'] . '" item_id="' . $row['item_id'] . '"">
                         <td>
                             <button type="button" class="btn badge btn-default btn-sm red btn-xs" onclick="do_lootdrop_delete(' . $_GET['show_lootdrop_entries'] . ', ' . $row['item_id'] . ')" title="Delete Item from Lootdrop"><i class="fa fa-times"></i> </button>
                         </td>
-                        <td>' . $row['item_id'] . '</td>
-                        <td style="text-align:left">
+                        <td nonedit="1">' . $row['item_id'] . '</td>
+                        <td style="text-align:left" nonedit="1">
                             <img class="lazy" data-original="cust_assets/icons/item_622.png" style="height:15px;width:auto" src="cust_assets/icons/item_' . $row['icon'] . '.png" style="display: inline;">
                             <a href="javascript:;" ' . HoverTip("global.php?item_view=" . $row['id']) . '>' . $row['Name'] . '</a>
                         </td>
-                        <td>' . $row['equip_item'] . '</td>
-                        <td>' . $row['chance'] . '</td>
-                        <td>' . $row['minlevel'] . '</td>
-                        <td>' . $row['maxlevel'] . '</td>
-                        <td>' . $row['multiplier'] . '</td>
+                        <td field_name="equip_item">' . $row['equip_item'] . '</td>
+                        <td field_name="chance">' . $row['chance'] . '</td>
+                        <td field_name="minlevel">' . $row['minlevel'] . '</td>
+                        <td field_name="maxlevel">' . $row['maxlevel'] . '</td>
+                        <td field_name="multiplier">' . $row['multiplier'] . '</td>
                     </tr>';
         }
         echo '</table>
@@ -244,6 +244,21 @@
             WHERE loottable_id = " . $loot_table . "
             AND lootdrop_id = " . $loot_drop . "
         ");
+    }
+    /* Save Loot Drop Field Values */
+    if(isset($_GET['update_loot_drop'])){
+        $loot_drop = $_GET['update_loot_drop'];
+        $item_id = $_GET['item_id'];
+        $db_field = $_GET['field'];
+        $db_value = $_GET['value'];
+        $result = mysql_query(
+            "UPDATE `lootdrop_entries` SET
+            " . $db_field . " = " . $db_value . "
+            WHERE item_id = " . $item_id . "
+            AND lootdrop_id = " . $loot_drop);
+        if(!$result){
+            echo mysql_error();
+        }
     }
     /* Add Loot entry to lootdrop */
     if(isset($_GET['db_loot_drop_add_item'])){
