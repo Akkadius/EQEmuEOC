@@ -59,11 +59,10 @@
 			.form div,
 			blockquote,
 			.modal,
-			.btn-default,
 			.mega-menu-content,
 			.mega-menu-dropdown,
 			.table td{ 
-				background-color: #333333 !important; 
+				background-color: #333333 !important;
 				// color: gray !important;
 				color: rgb(232, 228, 228) !important;
 			}

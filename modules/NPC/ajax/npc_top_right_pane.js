@@ -4,7 +4,7 @@
 
 $(document).ready(function() {
     var lootdrop_table = $(".lootdrop_entries").DataTable( {
-        scrollY:        "145px",
+        scrollY:        "130px",
         scrollX:        "200px",
         sScrollXInner: "700px",
         scrollCollapse: true,
@@ -196,11 +196,28 @@ function update_loot_drop(loot_drop, item_id, field_name, val){
     });
 }
 
+function loottable_add(loottable_id){
+    DoModal("ajax.php?M=NPC&loottable_add=" + loottable_id);
+}
+
 function loot_drop_add_item(loot_drop_add_item){
     DoModal("ajax.php?M=NPC&loot_drop_add_item=" + loot_drop_add_item);
 }
 
 function reload_lootdrop_entries_table_pane(loot_drop){
+    /* Lets Update the top right pane */
+    $.ajax({
+        url: "ajax.php?M=NPC&show_lootdrop_entries=" + loot_drop,
+        context: document.body
+    }).done(function(e) {
+        /* Update Data Table as well */
+        $('#lootdrop_entries').html(e).fadeIn();
+        $('#lootdrop_entries').attr('lootdrop_loaded', loot_drop);
+        HookHoverTips();
+    });
+}
+
+function loot_search_result(search){
     /* Lets Update the top right pane */
     $.ajax({
         url: "ajax.php?M=NPC&show_lootdrop_entries=" + loot_drop,
