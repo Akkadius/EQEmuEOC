@@ -28,52 +28,52 @@
             ';
         }
 
-        $result = mysql_query("SELECT * FROM `loottable` WHERE `id` = " . $npc_types['loottable_id']);
-        $loot_table = array();
-        while($row = mysql_fetch_array($result)){ $loot_table = $row; }
-        # p_var_dump($loot_table);
-        # echo $npc_types['loottable_id'] . '<br>';
-        # echo var_dump($loot_table);
-
         echo '<style>
-                #top_right_pane table tbody tr{ height:10px !important; }
-                #top_right_pane table tbody td{ padding: 1px !important; text-align:center;  }
-                #top_right_pane table tbody td{ padding: 1px !important; text-align:center; }
-                #top_right_pane table tbody td input{ text-align:center; }
-            </style>';
+            #top_right_pane table tbody tr{ height:10px !important; }
+            #top_right_pane table tbody td{ padding: 1px !important; text-align:center;  }
+            #top_right_pane table tbody td{ padding: 1px !important; text-align:center; }
+            #top_right_pane table tbody td input{ text-align:center; height:20px !important; }
+        </style>';
 
-        /* Loot Table Entries */
-        echo '
-                <table style="width:175px !important">
-                    <tr>
-                        <td valign="top" style="text-align:center;width:175px !important">
-                            <center>
-                            <table style="width:175px !important">
-                                <tr>
-                                    <td style="padding:5px !important;text-align:center;">
-                                        ' . $race_panel_image . '<br>
-                                        <b>' . $npc_types['name'] . '<br>
-                                        ' . $npc_types['id'] . '
-                                        </b>
-                                    </td>
-                                </tr>
-                            </table>
-                            </td>
-                            <td valign="top" style="text-align:left;width:400px !important">
+        echo '<table style="width:175px !important">
+                <tr>
+                    <td valign="top" style="text-align:center;width:175px !important">
+                        <center>
+                        <table style="width:175px !important">
+                            <tr>
+                                <td style="padding:5px !important;text-align:center;">
+                                    ' . $race_panel_image . '<br>
+                                    <b>' . $npc_types['name'] . '<br>
+                                    ' . $npc_types['id'] . '
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                        </td>
+                        <td valign="top" style="text-align:left;width:400px !important">';
 
+        if($npc_types['loottable_id'] > 0) {
+            $result = mysql_query("SELECT * FROM `loottable` WHERE `id` = " . $npc_types['loottable_id']);
+            $loot_table = array();
+            while ($row = mysql_fetch_array($result)) {
+                $loot_table = $row;
+            }
 
-                                <a href="javascript:;" class="btn green btn-xs">
-                                    <i class="fa fa-plus"></i>
-                                    Add Lootdrop
-                                </a>
+            /* Loot Table Entries */
+            echo '
+                    <a href="javascript:;" class="btn green btn-xs">
+                        <i class="fa fa-plus"></i>
+                        Add Lootdrop
+                    </a>
 
-                                <span class="badge label label-danger" style="font-weight:bold"> Loot Table ID: ' . $npc_types['loottable_id'] . '</span>
+                    <span class="badge label label-danger" style="font-weight:bold"> Loot Table ID: ' . $npc_types['loottable_id'] . '</span>
 
-                                <br><br>
+                    <br><br>
 
                     <table class="table table-condensed table-hover table-bordered loottable_entries ">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>Loot Drop ID</th>
                                 <th>Multiplier</th>
                                 <th>Probability</th>
@@ -83,27 +83,26 @@
                         </thead>
             ';
 
-        $result = mysql_query("SELECT * FROM `loottable_entries` WHERE `loottable_id` = " . $npc_types['loottable_id'] . " AND `loottable_id` > 0");
-        while($row = mysql_fetch_array($result)){
-            echo '
+            $result = mysql_query("SELECT * FROM `loottable_entries` WHERE `loottable_id` = " . $npc_types['loottable_id'] . " AND `loottable_id` > 0");
+            while ($row = mysql_fetch_array($result)) {
+                echo '
                     <tr loot_table="' . $npc_types['loottable_id'] . '" loot_drop="' . $row['lootdrop_id'] . '">
+                        <td>
+                            <button type="button" class="btn badge btn-default btn-sm red btn-xs" onclick="do_loot_table_delete(' . $npc_types['loottable_id'] . ', ' . $row['lootdrop_id'] . ')" title="Delete Item from Lootdrop"><i class="fa fa-times"></i> </button>
+                        </td>
                         <td loot_drop="' . $row['lootdrop_id'] . '" nonedit="1">' . $row['lootdrop_id'] . '</td>
                         <td loot_drop="' . $row['lootdrop_id'] . '" field_name="multiplier">' . $row['multiplier'] . '</td>
                         <td loot_drop="' . $row['lootdrop_id'] . '" field_name="probability">' . $row['probability'] . '</td>
                         <td loot_drop="' . $row['lootdrop_id'] . '" field_name="droplimit">' . $row['droplimit'] . '</td>
                         <td loot_drop="' . $row['lootdrop_id'] . '" field_name="mindrop">' . $row['mindrop'] . '</td>
                     </tr>';
-        }
+            }
 
-        echo '</table>';
+            echo '</table>';
+        }
 
         if($npc_types['loottable_id'] <= 0){
             echo 'No loot data present';
-        }
-        else{
-            echo '
-
-                ';
         }
 
         /* Begin Loot table pane */
@@ -191,7 +190,7 @@
         echo $FJS;
     }
 
-    /* Display Form to queue adding an item */
+    /* Lootdrop :: Display Form to queue adding an item */
     if(isset($_GET['loot_drop_add_item'])){
         echo '<style>
             .iframe_seamless{
@@ -206,7 +205,7 @@
         $content_out .= '<script type="text/javascript" src="modules/NPC/ajax/item_search_lootdrop.js"></script>';
         echo Modal('Add Item to Lootdrop', $content_out, '');
     }
-
+    /* Lootdrop :: Displays Item Search Result */
     if(isset($_GET['item_search_lootdrop'])) {
         require_once("modules/NPC/ajax/item_search_lootdrop.php");
     }
@@ -231,7 +230,29 @@
             echo mysql_error();
         }
     }
-    /* Save Loot Table Field Values */
+    /* Loot Table :: Delete Item :: Confirmation Window */
+    if($_GET['do_loot_table_delete']){
+        $loot_table = $_GET['do_loot_table_delete'];
+        $loot_drop_id = $_GET['loot_drop_id'];
+        $Content .= '
+			<center>
+				<button type="button" class="btn btn-default btn-sm red btn-xs" onclick="do_loot_table_delete_confirmed(' . $loot_table . ', ' . $loot_drop_id . ')">
+				    <i class="fa fa-times"></i> Confirm Delete
+				</button>
+			</center>';
+        echo Modal('Loot Table Loot Drop Removal Confirm', $Content, '');
+    }
+    /* Loot Table :: Delete Item from DB */
+    if($_GET['do_loot_table_delete_confirmed']){
+        $loot_table = $_GET['do_loot_table_delete_confirmed'];
+        $loot_drop_id = $_GET['loot_drop_id'];
+        $result = mysql_query(
+            "DELETE FROM `loottable_entries` WHERE `loottable_id` = " . $loot_table . " AND `lootdrop_id` = " . $loot_drop_id);
+        if(!$result){
+            echo mysql_error();
+        }
+    }
+    /* Loot Table :: Save Loot Table Field Values */
     if(isset($_GET['update_loottable'])){
         $loot_table = $_GET['update_loottable'];
         $loot_drop = $_GET['loot_drop'];
@@ -245,7 +266,7 @@
             AND lootdrop_id = " . $loot_drop . "
         ");
     }
-    /* Save Loot Drop Field Values */
+    /* Lootdrop :: Save Loot Drop Field Values */
     if(isset($_GET['update_loot_drop'])){
         $loot_drop = $_GET['update_loot_drop'];
         $item_id = $_GET['item_id'];
@@ -260,7 +281,7 @@
             echo mysql_error();
         }
     }
-    /* Add Loot entry to lootdrop */
+    /* Lootdrop :: Add Loot entry to lootdrop */
     if(isset($_GET['db_loot_drop_add_item'])){
         $loot_drop = $_GET['loot_drop'];
         $item_id = $_GET['db_loot_drop_add_item'];

@@ -238,6 +238,30 @@ function do_lootdrop_delete_confirmed(lootdrop_id, item_id){
     });
 }
 
+function do_loot_table_delete(loot_table, loot_drop_id){
+    DoModal("ajax.php?M=NPC&do_loot_table_delete=" + loot_table + "&loot_drop_id=" + loot_drop_id);
+}
+
+function do_loot_table_delete_confirmed(loot_table, loot_drop_id){
+    /* Delete item from lootdrop */
+    $.ajax({
+        url: "ajax.php?M=NPC&do_loot_table_delete_confirmed=" + loot_table + "&loot_drop_id=" + loot_drop_id,
+        context: document.body
+    }).done(function(e) {
+        $('#ajax-modal').modal('hide');
+        Notific8("NPC Editor", "Removed Lootdrop ID: " + loot_drop_id + " from Loot Table ID: " + loot_table, 2000);
+        if(e != ''){
+            alert(e);
+        }
+        /* Remove Row physically from table */
+        $(".loottable_entries tr").each(function() {
+            if($(this).attr("loot_drop") == loot_drop_id){
+                $(this).remove();
+            }
+        });
+    });
+}
+
 function do_loottable_delete(loottable_id, lootdrop_id){
     DoModal("ajax.php?M=NPC&do_loottable_delete=" + loottable_id + "&lootdrop_id=" + lootdrop_id);
 }
