@@ -14,6 +14,13 @@ $(document).ready(function() {
         "sDom": '<"top">rt<"bottom"flp><"clear">',
         "bSort" : false,
     } );
+
+    var timer = setInterval(function () {
+        // var table = $(".lootdrop_entries").DataTable();
+        lootdrop_table.draw();
+        window.clearInterval(timer);
+    }, 500);
+
     $( ".loottable_entries tr" ).unbind( "click");
     $( ".loottable_entries tr" ).bind( "click", function() {
         loot_table = $(this).attr("loot_table");
