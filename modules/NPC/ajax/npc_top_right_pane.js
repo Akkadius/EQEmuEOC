@@ -20,7 +20,7 @@ $(document).ready(function() {
         $(".lootdrop_entries").css("width", "700px");
         lootdrop_table.draw();
         window.clearInterval(timer);
-    }, 500);
+    }, 100);
 
     /* Loot Table Click Hooks */
     $( ".loottable_entries tr" ).unbind( "click");

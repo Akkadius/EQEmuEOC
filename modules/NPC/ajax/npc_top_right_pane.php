@@ -247,21 +247,6 @@
 			</center>';
         echo Modal('Loot Table Loot Drop Removal Confirm', $Content, '');
     }
-    /* Loot Table :: Search for Loot Drop Tables */
-    if($_GET['loottable_add']){
-        $loot_table = $_GET['loottable_add'];
-        $Content .= FormStart();
-        $Content .= FormInput('Lootdrop Search', '<input type="text" class="form-control" id="loot_search" onkeyup="do_loot_search(this.value)>');
-        $Content .= FormInput('',
-            '<a href="javascript:;" class="btn green btn-xs" onclick="do_loot_search($(\'#loot_search\').val())">
-                <i class="fa fa-search"></i>
-                Search
-            </a>
-            ');
-        $Content .= FormEnd();
-        $Content .= '<div id="loot_search_result"></div>';
-        echo Modal('Loot Table, Search for Lootdrop', $Content, '');
-    }
 
     /* Loot Table :: Delete Item from DB */
     if($_GET['do_loot_table_delete_confirmed']){

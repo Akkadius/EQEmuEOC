@@ -14,6 +14,7 @@
     require_once('modules/NPC/ajax/npc_special_attacks.php');
     require_once('modules/NPC/ajax/npc_table.php');
     require_once('modules/NPC/ajax/single_npc_edit.php');
+    require_once('modules/NPC/ajax/loot_table_search_lootdrop.php');
 
 	/* Modal: Mass Edit Window */
 	if(isset($_GET['MassEdit'])){
