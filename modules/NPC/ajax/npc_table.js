@@ -102,15 +102,10 @@ $( "#npc_head_table td" ).click(function() {
         return;
     }
 
-    $(".npc_data_table td").each(function() {
-        $(this).css("background", "");
-    });
+    /* Highlight Row when selected */
+    $("td[background='yellow']").css("background", "").attr("background", "");
+    $("td[npc_id='" + npc_id + "']").css("background", "yellow").attr("background", "yellow");
 
-    $(".npc_data_table td").each(function() {
-        if($(this).attr("npc_id") == npc_id){
-            $(this).css("background", "yellow");
-        }
-    });
 
     $.ajax({
         url: "ajax.php?M=NPC&load_npc_top_pane_dash=" + npc_id,
