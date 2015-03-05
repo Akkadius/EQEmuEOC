@@ -6,10 +6,13 @@
  * Time: 3:19 AM
  */
 
+
     /* Loot Table :: Search for Loot Drop Tables */
     if($_GET['loottable_add']){
         $loot_table = $_GET['loottable_add'];
         $Content .= FormStart();
+        $Content .= FormInput('Create New', '<a href="javascript:;" class="btn green btn-xs" onclick="do_create_new_lootdrop(' . $loot_table . ')"><i class="fa fa-plus"></i> Create New Lootdrop</a>');
+        $Content .= FormInput('', 'OR');
         $Content .= FormInput('Lootdrop Search', '<input type="text" class="form-control" id="loot_search" onkeyup="if(event.keyCode == 13){ do_loot_search(this.value, ' . $loot_table . ') }">');
         $Content .= FormInput('',
             '<a href="javascript:;" class="btn green btn-xs" onclick="do_loot_search($(\'#loot_search\').val())">
@@ -75,5 +78,19 @@
             VALUES (' . $loot_table . ', ' . $loot_drop . ', 1, 100, 1, 1)');
         if(!$result){ echo mysql_error(); }
     }
+    /* Loot Table :: DB Create new Unique Loot Drop and add it */
+    if($_GET['do_create_new_lootdrop']){
+        $loot_table = $_GET['do_create_new_lootdrop'];
+        $next_id = GetNextAvailableIDInTable("lootdrop", "id");
 
+        $result = mysql_query('REPLACE INTO `lootdrop` (id, name)
+            VALUES (' . $next_id . ', \'EOC Created :: ' . mysql_real_escape_string(date('Y-m-d H:i:s')) . '\')');
+        if(!$result){ echo mysql_error(); }
+
+        $result = mysql_query('REPLACE INTO `loottable_entries` (loottable_id, lootdrop_id, multiplier, probability, droplimit, mindrop)
+            VALUES (' . $loot_table . ', ' . $next_id . ', 1, 100, 1, 1)');
+        if(!$result){ echo mysql_error(); }
+
+        echo 'Created Lootdrop ID: ' . $next_id . ' and inserted it into Loot Table ID: ' . $loot_table;
+    }
 ?>

@@ -29,20 +29,32 @@ function do_loot_search(search_val, loot_table){
     });
 }
 
+function refresh_npc_pane(){
+    $.ajax({
+        url: "ajax.php?M=NPC&load_npc_top_pane_dash=" + $('#top_right_pane').attr('npc_loaded'),
+        context: document.body
+    }).done(function(e) {
+        /* Update Data Table as well */
+        $('#top_right_pane').html(e).fadeIn();
+    });
+}
+
 function do_loot_table_loot_drop_add(loot_table, loot_drop){
     $.ajax({
         url: "ajax.php?M=NPC&do_loot_table_loot_drop_add=" + loot_table + "&loot_drop=" + loot_drop,
         context: document.body
     }).done(function(e) {
-        // if(e){ alert(e); }
+        refresh_npc_pane();
+    });
+}
 
-        $.ajax({
-            url: "ajax.php?M=NPC&load_npc_top_pane_dash=" + $('#top_right_pane').attr('npc_loaded'),
-            context: document.body
-        }).done(function(e) {
-            /* Update Data Table as well */
-            $('#top_right_pane').html(e).fadeIn();
-        });
-
+function do_create_new_lootdrop(loot_table){
+    $.ajax({
+        url: "ajax.php?M=NPC&do_create_new_lootdrop=" + loot_table,
+        context: document.body
+    }).done(function(e) {
+        refresh_npc_pane();
+        $('#ajax-modal').modal('hide');
+        Notific8("NPC Editor", e, 2000);
     });
 }

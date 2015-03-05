@@ -90,4 +90,20 @@
         return $new_id;
     }
 
+    function GetNextAvailableIDInTable($table_name, $id_field){
+        $query = '
+            SELECT
+            t1.' . $id_field . ' + 1 AS next_id
+            FROM ' . $table_name . ' t1
+            LEFT JOIN ' . $table_name . ' t2
+            ON t1.' . $id_field . ' + 1 = t2.' . $id_field . '
+            WHERE t2.' . $id_field . ' IS NULL
+            ORDER BY next_id DESC
+            LIMIT 1';
+        $result = mysql_query($query);echo mysql_error();
+        while($row = mysql_fetch_array($result)){
+            return $row['next_id'];
+        }
+    }
+
 ?>
