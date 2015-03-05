@@ -164,6 +164,7 @@
                 INNER JOIN items ON lootdrop_entries.item_id = items.id
                 WHERE `lootdrop_id` = " . $_GET['show_lootdrop_entries']);
 
+        $item_count = 0;
         while($row = mysql_fetch_array($result)){
             echo '
                 <tr loot_drop="' . $_GET['show_lootdrop_entries'] . '" item_id="' . $row['item_id'] . '"">
@@ -182,8 +183,10 @@
                     <td field_name="maxlevel">' . $row['maxlevel'] . '</td>
                     <td field_name="multiplier">' . $row['multiplier'] . '</td>
                 </tr>';
+            $item_count++;
         }
         echo '</table>';
+        echo '<span class="badge label label-danger" style="font-weight:bold">' . $item_count . ' item(s) in lootdrop total</span>';
         $FJS .= '<script type="text/javascript" src="modules/NPC/ajax/npc_top_right_pane.js"></script>';
         echo $FJS;
     }
