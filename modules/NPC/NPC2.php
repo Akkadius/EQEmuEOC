@@ -52,7 +52,7 @@
 	echo '<table>
 		<tr>
 		<td>
-			<table class="table" style="width:200px !important">
+			<table class="table table-striped table-hover table-condensed flip-content table-bordered" style="width:200px !important">
 				<tr><td style="text-align:right">Zone</td>			<td>' . GetZoneListSelect($_GET['zone']) . '</td></tr>
 				<tr><td style="text-align:right">Instance <br>Version</td>	<td><input class="form-control span2" type="text" value="' . ($_GET['version'] > 0 ? $_GET['version'] : 0) . '" id="zinstid" title="The Instance Version you wish to see"></td></tr>
 				<tr><td style="text-align:right">NPC<br>Name</td>		<td><input type="text" value="' . $_GET['npc_filter'] . '" class="form-control" id="npcname" title="Name of the NPC to Search For" onkeyup="if(event.keyCode == 13){ ShowZone();}"></td></tr>
