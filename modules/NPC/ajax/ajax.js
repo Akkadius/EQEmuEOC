@@ -1,4 +1,5 @@
 function ShowZone() {
+    $('#top_right_pane').html('');
     $("#shownpczone").html("<b style='color:red;font-size:30px'>LOADING, PLEASE WAIT...</b><hr><i class='fa fa-spinner fa-spin' style='font-size:80px'>");
 	var zone_sn = $("#zoneselect").val();
 	var inst_version = $("#zinstid").val();

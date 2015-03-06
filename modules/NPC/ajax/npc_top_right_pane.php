@@ -53,10 +53,20 @@
                         </td>
                         <td valign="bottom" style="text-align:center !important;width:100px !important;padding:10px !important" class="table table-striped table-hover table-condensed flip-content table-bordered" >
                             <center>
-                            <a href="javascript:;" class="btn red btn-xs btn-default" onclick="do_make_npc_kos(' . $npc_types['id'] . ')">
-                                <i class="fa fa-circle-o"></i>
-                                Make KOS
-                            </a>
+                            <table>
+                                <tr><td>
+                                    <a href="javascript:;" class="btn yellow btn-xs btn-default" onclick="do_npc_special_abilities_edit()">
+                                        <i class="fa fa-bolt"></i>
+                                        Special Abilities
+                                    </a>
+                                </td></td>
+                                <tr><td>
+                                    <a href="javascript:;" class="btn red btn-xs btn-default" onclick="do_make_npc_kos(' . $npc_types['id'] . ')">
+                                        <i class="fa fa-circle-o"></i>
+                                        Make KOS
+                                    </a>
+                            </td></td>
+                            </table>
                         </td>
                         <td valign="top" style="text-align:left;width:400px !important;padding-left:15px !important">';
 

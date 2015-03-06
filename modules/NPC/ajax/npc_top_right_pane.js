@@ -235,3 +235,10 @@ function do_loottable_delete(loottable_id, lootdrop_id){
 function do_make_npc_kos(npc_id){
     update_npc_field(npc_id, 'npc_faction_id', 19471);
 }
+
+function do_npc_special_abilities_edit(){
+    db_field = 'special_abilities';
+    npc_id = $('#top_right_pane').attr('npc_loaded');
+    input_data = $( "td[" + npc_id + "-" + db_field + "]").html();
+    DoModal("ajax.php?M=NPC&special_abilities_editor&val=" + input_data + "&npc_id=" + npc_id + "&db_field=" + db_field);
+}
