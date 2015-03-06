@@ -46,8 +46,9 @@
                         text-align:center;
                         font-size: 12px !important;
                         height: 25px !important;
+                        width:75px; !important
                     }
-                    .single_edit_table td{ width:50px; }
+                    .single_edit_table td{ width:120px; }
                     .single_edit_table table input{ min-width:150px !important; }
                     #picker {
                         margin:0;
@@ -121,11 +122,9 @@
 
         foreach ($category_order as $order_val) {
             if($order_val != '') {
-                $Content .= '
-                        <h2> <span class="label label-success">' . $order_val . '</span></h2>
-                    ';
+                $Content .= '<br><span class="label label-danger badge" style="font-weight:bold">' . $order_val . '</span><br><br>';
             }
-            $Content .= '<table class="table-bordered table-striped table-condensed flip-content single_edit_table">';
+            $Content .= '<table class="table-bordered table-striped table-condensed flip-content single_edit_table" style="width:70%">';
             foreach ($npc_fields[$order_val] as $key => $val) {
                 #print $key . '<br>';
                 if($key == "d_melee_texture1" || $key == "d_melee_texture2" || $key == "race"){
