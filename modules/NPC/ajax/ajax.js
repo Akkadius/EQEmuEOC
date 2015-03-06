@@ -23,7 +23,8 @@ function ShowZoneFromURL(zone_sn, inst_version, name_filter, field_filter){
 	});
 }
 
-function update_npc_field(npc_id, db_field, db_val){
+function update_npc_field(npc_id, db_field, db_val, notify){
+    notify = typeof notify !== 'undefined' ? notify : 1;
 	if(db_field == "armortint_id"){
 		$(".armortint_red").val(0);
 		$(".armortint_green").val(0);
@@ -47,51 +48,57 @@ function update_npc_field(npc_id, db_field, db_val){
 		url: "ajax.php?M=NPC&DoFieldUpdateSingleNPC=1&NPC=" + npc_id + "&Field=" + db_field + "&Value=" + db_val,
 		context: document.body
 	}).done(function(e) {
-		Notific8("NPC Editor", "Field '" + db_field + "' updated to value '" + db_val + "'", 3000);
+        if(notify == 1) {
+            Notific8("NPC Editor", "Field '" + db_field + "' updated to value '" + db_val + "'", 3000);
+        }
 	});
+}
+
+function working_notify(){
+    Notific8("NPC Editor", "Working....", 3000);
+}
+
+function do_set_field_mass_value(){
+    var db_field = $("#npctypesfield").val();
+    var value = $("#massfieldvalue").val();
+    $("td[npc_db_field=" + db_field + "]").each(function( index ) {
+        // console.log($(this).html());
+        npc_id = $(this).attr("npc_id");
+        update_npc_field(npc_id, db_field, value, 0);
+    });
+    Notific8("NPC Editor", "Updated all '" + db_field + "' to value '" + value + "' in NPC list", 3000);
 }
 
 function SetFieldMassValue(){
-	var db_field = $("#npctypesfield").val();
-	var value = $("#massfieldvalue").val();
-	$("td[npc_db_field=" + db_field + "]").each(function( index ) {
-		// console.log($(this).html());
-		npc_id = $(this).attr("npc_id");
-		update_npc_field(npc_id, db_field, value);
-	});
-	Notific8("NPC Editor", "Updated " + db_field + " to value '" + value + "'", 3000);
+    working_notify();
+    var timer = setInterval(function () {
+        do_set_field_mass_value();
+        window.clearInterval(timer);
+    }, 200);
+}
+
+function do_set_field_mass_value_min_max(){
+    var db_field = $("#npctypesfield").val();
+    var min_value = parseInt($("#minfieldvalue").val());
+    var max_value = parseInt($("#maxfieldvalue").val());
+    $("td[npc_db_field=" + db_field + "]").each(function( index ) {
+        // console.log($(this).html());
+        npc_id = $(this).attr("npc_id");
+        update_npc_field(npc_id, db_field, GetRandomInt(min_value, max_value), 0);
+    });
+    Notific8("NPC Editor", "Updated all fields '" + db_field + "' with random values between '" + min_value + "' and '" + max_value + "' in NPC list", 3000);
 }
 
 function SetFieldMassValueMinMax(){
-	var db_field = $("#npctypesfield").val();
-	var min_value = parseInt($("#minfieldvalue").val());
-	var max_value = parseInt($("#maxfieldvalue").val());
-	$("td[npc_db_field=" + db_field + "]").each(function( index ) {
-		// console.log($(this).html());
-		npc_id = $(this).attr("npc_id");
-		update_npc_field(npc_id, db_field, GetRandomInt(min_value, max_value));
-	});
+    working_notify();
+    var timer = setInterval(function () {
+        do_set_field_mass_value_min_max();
+        window.clearInterval(timer);
+    }, 200);
 }
 
 function GetRandomInt (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function DoFieldUpdate(val) {
-	var n = val.split("^");
-	var FieldValue = document.getElementById(val).value;
-	if (n[0] && n[1]) {
-		var xmlhttp;
-		if (window.XMLHttpRequest) {
-			xmlhttp = new XMLHttpRequest();
-		}
-		else {
-			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		}
-		xmlhttp.open("GET", "ajax.php?M=NPC&DoFieldUpdate=1&NPC=" + n[0] + "&Field=" + encodeURIComponent(n[1]) + "&Value=" + encodeURIComponent(FieldValue), true);
-		xmlhttp.send();
-	}
-	Notific8("NPC Editor", "Updated NPCID " + n[0] + " Field '" + n[1] + "' to value '" + val + "'", 3000);
 }
 
 function RaceChange(NPCID, val){
