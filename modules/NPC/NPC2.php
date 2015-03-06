@@ -16,6 +16,7 @@
 	$FJS .= '<script src="cust_assets/js/jquery_context/jquery.contextmenu.js"></script>
     		 <link rel="stylesheet" href="cust_assets/js/jquery_context/jquery.contextmenu.css">';
 	$FJS .= '<link rel="stylesheet" href="assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css">';
+
 	echo '<style>
 			/* Ensure that the demo table scrolls */
 			th, td { white-space: nowrap; }
@@ -41,6 +42,9 @@
 			html, body {
 				overflow: hidden;
 			}
+			.search_box input, .search_box select{
+
+			}
 		</style>';
 
 	echo '<link href="cust_assets/js/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>';
@@ -52,11 +56,22 @@
 	echo '<table>
 		<tr>
 		<td>
-			<table class="table table-striped table-hover table-condensed flip-content table-bordered" style="width:200px !important">
+			<table class="table table-striped table-hover table-condensed flip-content table-bordered search_box" style="width:200px !important">
 				<tr><td style="text-align:right">Zone</td>			<td>' . GetZoneListSelect($_GET['zone']) . '</td></tr>
-				<tr><td style="text-align:right">Instance <br>Version</td>	<td><input class="form-control span2" type="text" value="' . ($_GET['version'] > 0 ? $_GET['version'] : 0) . '" id="zinstid" title="The Instance Version you wish to see"></td></tr>
+				<tr><td style="text-align:right">Instance <br>Version</td>	<td><input class="form-control" type="text" value="' . ($_GET['version'] > 0 ? $_GET['version'] : 0) . '" id="zinstid" title="The Instance Version you wish to see"></td></tr>
 				<tr><td style="text-align:right">NPC<br>Name</td>		<td><input type="text" value="' . $_GET['npc_filter'] . '" class="form-control" id="npcname" title="Name of the NPC to Search For" onkeyup="if(event.keyCode == 13){ ShowZone();}"></td></tr>
-				<tr><td style="text-align:right"></td>				<td><button type="button" value="Search!" class="btn btn-default green btn-xs" onclick="ShowZone()" title="Click this when you are ready to execute"><i class="fa fa-search"></i> Search</button> <button type="button" value="Mass Field Editor" class="btn btn-default blue btn-xs" onclick="DoModal(\'ajax.php?M=NPC&MassEdit\')" title="Mass Field Editor"><i class="fa fa-edit"></i> Mass Field Editor</button></td></tr>
+				<tr>
+				    <td style="text-align:right">
+				    </td>
+                    <td>
+				        <button type="button" value="Search!" class="btn btn-default green btn-xs" onclick="ShowZone()" title="Click this when you are ready to execute">
+				            <i class="fa fa-search"></i> Search
+				        </button>
+
+				        <button type="button" value="Mass Field Editor" class="btn btn-default blue btn-xs" onclick="DoModal(\'ajax.php?M=NPC&MassEdit\')" title="Mass Field Editor">
+				            <i class="fa fa-edit"></i> Mass Field Editor</button>
+				        </td>
+                    </tr>
 			</table>
 		</td>
 		<td valign="top" style="padding-left:20px">

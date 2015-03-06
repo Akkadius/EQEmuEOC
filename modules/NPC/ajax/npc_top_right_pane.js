@@ -3,23 +3,24 @@
  */
 
 $(document).ready(function() {
-    var lootdrop_table = $(".lootdrop_entries").DataTable( {
+    var lootdrop_table = $(".loottable_entries").DataTable( {
         scrollY:        "105px",
         scrollX:        "200px",
-        sScrollXInner: "700px",
+        sScrollXInner: "320px",
         scrollCollapse: true,
         paging:         false,
         "searching": false,
-        "ordering": true,
+        "ordering": false,
         "sDom": '<"top">rt<"bottom"flp><"clear">',
         "bSort" : false,
+
     } );
 
-    $(".lootdrop_entries").css("width", "700px");
-    var timer = setInterval(function () {
-        $(".lootdrop_entries").css("width", "700px");
+    $(".loottable_entries").css("width", "320px");
+    var timer_2 = setInterval(function () {
+        $(".lootdrop_entries").css("width", "320px");
         lootdrop_table.draw();
-        window.clearInterval(timer);
+        window.clearInterval(timer_2);
     }, 100);
 
     /* Loot Table Click Hooks */
@@ -32,6 +33,10 @@ $(document).ready(function() {
         data = $(this).html();
 
         console.log(loot_table + ' ' + loot_drop);
+
+        /* We don't want anything to try and trigger on the table header */
+        if($(this).parent('thead').length > 0)
+            return;
 
         /* Highlight Row entry for loot table */
         $(".loottable_entries td").each(function() {
@@ -89,64 +94,6 @@ $(document).ready(function() {
     /* Hook Mouse Leave Events for Loottable (table) */
     $( ".loottable_entries td" ).unbind("mouseleave");
     $( ".loottable_entries td" ).bind("mouseleave", function() {
-        data = "";
-
-        /* Grab data from cell depending on input type */
-        if($(this).has("select").length){
-            data = $(this).children("select").val();
-        }
-        else if($(this).has("input").length){
-            data = $(this).children("input").val();
-        }
-
-        /* If cell contains cell... skip */
-        if($(this).has("button").length){ return; }
-
-        /* If no data present and */
-        if(!data && (!$(this).has("select").length && !$(this).has("input").length)){
-            $(this).attr("is_field_translated", 0);
-            return;
-        }
-
-        $(this).html(data);
-        data = "";
-        $(this).attr("is_field_translated", 0);
-    });
-
-    /* Hook Mouse Enter and Leave Events for Lootdrop (table) */
-    $( ".lootdrop_entries td" ).unbind("mouseenter");
-    $( ".lootdrop_entries td" ).bind("mouseenter", function() {
-        loot_drop = $(this).parent().attr("loot_drop");
-        l_item_id = $(this).parent().attr("item_id");
-        field_name = $(this).attr("field_name");
-
-        console.log(field_name);
-
-        width = $(this).css("width");
-        height = $(this).css("height");
-        data = $(this).html();
-
-        /* If attr is set to non edit, return */
-        if($(this).attr("nonedit") == 1){
-            return;
-        }
-
-        // console.log(loot_table + ' ' + loot_drop);
-
-        /* Dont replace the button */
-        if(data.match(/button/i)){ return; }
-
-        $(this).html('<input type="text" class="form-control" value="' + data + '" onchange="update_loot_drop(' + loot_drop + ', ' + l_item_id + ', \'' + field_name + '\', this.value)">');
-        $(this).children("input").css('width', (parseInt(width) * 1));
-        $(this).children("input").css('height', (parseInt(height)));
-        $(this).children("input").css("font-size", "12px");
-        // $('textarea').autosize();
-        data = "";
-    });
-
-    /* Hook Mouse Leave Events for Lootdrop (table) */
-    $( ".lootdrop_entries td, .DTFC_Cloned td" ).unbind("mouseleave");
-    $( ".lootdrop_entries td, .DTFC_Cloned td" ).bind("mouseleave", function() {
         data = "";
 
         /* Grab data from cell depending on input type */
@@ -283,4 +230,8 @@ function do_loot_table_delete_confirmed(loot_table, loot_drop_id){
 
 function do_loottable_delete(loottable_id, lootdrop_id){
     DoModal("ajax.php?M=NPC&do_loottable_delete=" + loottable_id + "&lootdrop_id=" + lootdrop_id);
+}
+
+function do_make_npc_kos(npc_id){
+    update_npc_field(npc_id, 'npc_faction_id', 19471);
 }

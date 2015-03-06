@@ -8,7 +8,7 @@
 
     /* Display NPC Data in the top right pane */
     if($_GET['load_npc_top_pane_dash']){
-
+        require_once('includes/constants.php');
         $result = mysql_query("SELECT * FROM `npc_types` WHERE `id` = " . $_GET['load_npc_top_pane_dash']);
         $npc_types = array();
         while($row = mysql_fetch_array($result)){ $npc_types = $row; }
@@ -23,34 +23,42 @@
         }
         if($race_img != '') {
             $race_panel_image = '  <span class="image-wrap">
-                    <img src="' . $race_img . '" id="' . $npc_types['race'] . '"  style="height:150px;width:auto;">
+                    <img src="' . $race_img . '" id="' . $npc_types['race'] . '"  style="height:140px;width:auto;">
                 </span>
             ';
         }
 
         echo '<style>
+            #top_right_pane table tbody th{ font-size:12px !important; }
             #top_right_pane table tbody tr{ height:10px !important; }
             #top_right_pane table tbody td{ padding: 1px !important; text-align:center;  }
-            #top_right_pane table tbody td{ padding: 1px !important; text-align:center; }
             #top_right_pane table tbody td input{ text-align:center; height:20px !important; }
+            .loottable_entries th { padding:1px !important; font-size: 8px !important; text-align:center }
         </style>';
 
-        echo '<table style="width:175px !important">
+        echo '<table style="width:175px !important; ">
                 <tr>
-                    <td valign="top" style="text-align:center;width:175px !important">
+                    <td valign="top" style="text-align:center;width:175px !important" class="table table-striped table-hover table-condensed flip-content table-bordered">
                         <center>
+                        <span class="badge label label-danger" style="font-weight:bold">' . $dbclasses[$npc_types['class']] . '</span>
                         <table style="width:175px !important">
                             <tr>
                                 <td style="padding:5px !important;text-align:center;">
                                     ' . $race_panel_image . '<br>
-                                    <b>' . $npc_types['name'] . '<br>
-                                    ' . $npc_types['id'] . '
-                                    </b>
+                                    <span class="badge label label-primary" style="font-weight:bold">' . $npc_types['name'] . '</span><br>
+                                    <span class="badge label label-success" style="font-weight:bold">' . $npc_types['id'] . '</span>
                                 </td>
                             </tr>
                         </table>
                         </td>
-                        <td valign="top" style="text-align:left;width:400px !important">';
+                        <td valign="bottom" style="text-align:center !important;width:100px !important;padding:10px !important" class="table table-striped table-hover table-condensed flip-content table-bordered" >
+                            <center>
+                            <a href="javascript:;" class="btn red btn-xs btn-default" onclick="do_make_npc_kos(' . $npc_types['id'] . ')">
+                                <i class="fa fa-circle-o"></i>
+                                Make KOS
+                            </a>
+                        </td>
+                        <td valign="top" style="text-align:left;width:400px !important;padding-left:15px !important">';
 
         if($npc_types['loottable_id'] > 0) {
             $result = mysql_query("SELECT * FROM `loottable` WHERE `id` = " . $npc_types['loottable_id']);
@@ -74,11 +82,11 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>Loot Drop ID</th>
+                                <th style="width:25px;text-align:center;">Loot<br>Drop ID</th>
                                 <th>Multiplier</th>
                                 <th>Probability</th>
-                                <th>Droplimit</th>
-                                <th>Min Drop</th>
+                                <th>Drop<br>limit</th>
+                                <th>Min<br>Drop</th>
                             </tr>
                         </thead>
             ';
@@ -178,7 +186,7 @@
                     </td>
                     <td field_name="equip_item">' . $row['equip_item'] . '</td>
                     <td field_name="chance">' . $row['chance'] . '</td>
-                    <td nonedit="1" style="background-color:orange"> ' . round($_GET['probability'] / $row['chance'], 3) . '</td>
+                    <td nonedit="1" style="background-color:orange"> ' . round($_GET['probability'] / $row['chance'], 3) . '%</td>
                     <td field_name="minlevel">' . $row['minlevel'] . '</td>
                     <td field_name="maxlevel">' . $row['maxlevel'] . '</td>
                     <td field_name="multiplier">' . $row['multiplier'] . '</td>
@@ -187,7 +195,7 @@
         }
         echo '</table>';
         echo '<span class="badge label label-danger" style="font-weight:bold">' . $item_count . ' item(s) in lootdrop total</span>';
-        $FJS .= '<script type="text/javascript" src="modules/NPC/ajax/npc_top_right_pane.js"></script>';
+        $FJS .= '<script type="text/javascript" src="modules/NPC/ajax/npc_top_right_pane_lootdrop_display.js"></script>';
         echo $FJS;
     }
 
