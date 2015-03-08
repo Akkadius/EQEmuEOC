@@ -366,7 +366,7 @@
 	);
 	
 	$yes_no = array(0 => "No", 1 => "Yes");
-	
+
 	function GetFieldSelect($field_name, $value, $npc_id, $from_npc_grid_tool = 0){
 		global $edit_options, $yes_no, $trap_types, $adventure_templates, $bodytypes, $genders, $dbclasses, $dbiracenames;
 		$found_select = 0;
@@ -402,15 +402,18 @@
 				$ret .= '<option value="'. $key . '" ' . $sel . '>'. $key . ': ' . $val . '</option>';
 			}
 			$found_select = 1;
-		}
-		else if($field_name == "gender"){
-			$ret .= '<option value="0">0: None</option>';
-			foreach ($genders as $key => $val){
-				if($key == $value){ $sel = "selected"; } else { $sel = ""; }
-				$ret .= '<option value="'. $key . '" ' . $sel . '>'. $key . ': ' . $val . '</option>';
-			}
-			$found_select = 1;
-		}
+		} else if ($field_name == "gender") {
+            $ret .= '<option value="0">0: None</option>';
+            foreach ($genders as $key => $val) {
+                if ($key == $value) {
+                    $sel = "selected";
+                } else {
+                    $sel = "";
+                }
+                $ret .= '<option value="' . $key . '" ' . $sel . '>' . $key . ': ' . $val . '</option>';
+            }
+            $found_select = 1;
+        }
 		else if($field_name == "bodytype"){
 			$ret .= '<option value="0">0: None</option>';
 			foreach ($bodytypes as $key => $val){
@@ -421,7 +424,7 @@
 		}
 		else if($field_name == "size"){
 			for($i=1;$i<=255;$i++){
-				if($i == $value){ $sel = "selected"; } else { $sel = ""; } 
+				if($i == $value){ $sel = "selected"; } else { $sel = ""; }
 				$ret .= '<option value="'. $i . '" ' . $sel . '>'. $i . '</option>';
 			}
 			$found_select = 1;
@@ -430,28 +433,28 @@
 			$query = "SELECT * FROM `npc_emotes`";
 			$result = mysql_query($query); $eid_data = array();
 			$ret .= '<option value="0">0: None</option>';
-			while($row = mysql_fetch_array($result)){ 
-				if($row['emoteid'] == $value){ $sel = "selected"; } else { $sel = ""; } 
+			while($row = mysql_fetch_array($result)){
+				if($row['emoteid'] == $value){ $sel = "selected"; } else { $sel = ""; }
 				$ret .= '<option value="'. $row['emoteid'] . '" ' . $sel . '>'. $row['emoteid'] . ': ' . (strlen($row['text']) > 100 ? (substr($row['text'], 0, 100) . '...') : $row['text']) . '</option>';
-			}
-			$found_select = 1;
+                $found_select = 1;
+            }
 		}
 		else if($field_name == "armortint_id"){
 			$query = "SELECT * FROM `npc_types_tint` order by `id`";
 			$result = mysql_query($query); $eid_data = array();
 			$ret .= '<option value="0">0: None</option>';
-			while($row = mysql_fetch_array($result)){ 
-				if($row['id'] == $value){ $sel = "selected"; } else { $sel = ""; } 
+			while($row = mysql_fetch_array($result)){
+				if($row['id'] == $value){ $sel = "selected"; } else { $sel = ""; }
 				$ret .= '<option value="'. $row['id'] . '" ' . $sel . '>'. $row['id'] . ': ' . $row['tint_set_name'] . '</option>';
+                $found_select = 1;
 			}
-			$found_select = 1;
 		}
 		else if($field_name == "npc_spells_id"){
 			$query = "SELECT * FROM `npc_spells` order by `id`";
 			$result = mysql_query($query); $eid_data = array();
 			$ret .= '<option value="0">0: None</option>';
-			while($row = mysql_fetch_array($result)){ 
-				if($row['id'] == $value){ $sel = "selected"; } else { $sel = ""; } 
+			while($row = mysql_fetch_array($result)){
+				if($row['id'] == $value){ $sel = "selected"; } else { $sel = ""; }
 				$ret .= '<option value="'. $row['id'] . '" ' . $sel . '>'. $row['id'] . ': ' . $row['name'] . '</option>';
 			}
 			$found_select = 1;
@@ -460,8 +463,8 @@
 			$query = "SELECT * FROM `npc_faction` order by `id`";
 			$result = mysql_query($query); $eid_data = array();
 			$ret .= '<option value="0">0: None</option>';
-			while($row = mysql_fetch_array($result)){ 
-				if($row['id'] == $value){ $sel = "selected"; } else { $sel = ""; } 
+			while($row = mysql_fetch_array($result)){
+				if($row['id'] == $value){ $sel = "selected"; } else { $sel = ""; }
 				$ret .= '<option value="'. $row['id'] . '" ' . $sel . '>'. $row['id'] . ': ' . $row['name'] . '</option>';
 			}
 			$found_select = 1;
@@ -481,12 +484,12 @@
 				";
 			$result = mysql_query($query); $eid_data = array();
 			$ret .= '<option value="0">0: None</option>';
-			while($row = mysql_fetch_array($result)){ 
-				if($row['id'] == $value){ $sel = "selected"; } else { $sel = ""; } 
+			while($row = mysql_fetch_array($result)){
+				if($row['id'] == $value){ $sel = "selected"; } else { $sel = ""; }
 				$ret .= '<option value="'. $row['id'] . '" ' . $sel . '>'. $row['id'] . ': ' . $trap_types[$row['type']] . ' Spell: ' . $row['name'] . '</option>';
 			}
 			$found_select = 1;
-		} 
+		}
 		else if($field_name == "alt_currency_id"){
 			$query = "SELECT
 				alternate_currency.id,
@@ -499,8 +502,8 @@
 				";
 			$result = mysql_query($query); $eid_data = array();
 			$ret .= '<option value="0">0: None</option>';
-			while($row = mysql_fetch_array($result)){ 
-				if($row['id'] == $value){ $sel = "selected"; } else { $sel = ""; } 
+			while($row = mysql_fetch_array($result)){
+				if($row['id'] == $value){ $sel = "selected"; } else { $sel = ""; }
 				$ret .= '<option value="'. $row['id'] . '" ' . $sel . '>'. $row['id'] . ': ' . $row['Name'] . '</option>';
 			}
 			$found_select = 1;
