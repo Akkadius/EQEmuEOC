@@ -368,7 +368,7 @@
 	$yes_no = array(0 => "No", 1 => "Yes");
 	
 	function GetFieldSelect($field_name, $value, $npc_id, $from_npc_grid_tool = 0){
-		global $edit_options, $yes_no, $trap_types, $adventure_templates, $bodytypes, $genders, $dbclasses;
+		global $edit_options, $yes_no, $trap_types, $adventure_templates, $bodytypes, $genders, $dbclasses, $dbiracenames;
 		$found_select = 0;
 		$ret .= "<select class='form-control' title='" . ProcessFieldTitle($field_name) . "'  value='" . $value . "' id='" . $npc_id . "^" . $field_name . "' class='" . $field_name . "' onchange='update_npc_field(" . $npc_id . ", \"" . $field_name . "\", this.value)'>";
 		if($field_name == "prim_melee_type" || $field_name == "sec_melee_type"){
@@ -378,6 +378,15 @@
 			}
 			$found_select = 1;
 		}
+		else if($field_name == "race"){
+            for($i = 1; $i < 700; $i++){
+                if($dbiracenames[$i]){
+                    if($i == $value){ $sel = "selected"; } else { $sel = ""; }
+                    $ret .= '<option value="'. $i . '" ' . $sel . '>'. $i . ': ' . $dbiracenames[$i] . '</option>';
+                }
+            }
+            $found_select = 1;
+        }
 		else if($field_name == "adventure_template_id"){
 			$ret .= '<option value="0">0: None</option>';
 			foreach ($adventure_templates as $key => $val){
