@@ -196,7 +196,7 @@
                     </td>
                     <td field_name="equip_item">' . $row['equip_item'] . '</td>
                     <td field_name="chance">' . $row['chance'] . '</td>
-                    <td nonedit="1" style="background-color:orange"> ' . round($_GET['probability'] / $row['chance'], 3) . '%</td>
+                    <td nonedit="1" style="background-color:orange"> ' . round(($_GET['probability'] / 100) * ($row['chance'] / 100) * 100, 3) . '%</td>
                     <td field_name="minlevel">' . $row['minlevel'] . '</td>
                     <td field_name="maxlevel">' . $row['maxlevel'] . '</td>
                     <td field_name="multiplier">' . $row['multiplier'] . '</td>
