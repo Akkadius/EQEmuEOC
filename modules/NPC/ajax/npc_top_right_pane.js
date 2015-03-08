@@ -4,7 +4,7 @@
 
 $(document).ready(function() {
     var lootdrop_table = $(".loottable_entries").DataTable( {
-        scrollY:        "105px",
+        scrollY:        "75px",
         scrollX:        "200px",
         sScrollXInner: "320px",
         scrollCollapse: true,
@@ -63,6 +63,18 @@ $(document).ready(function() {
             HookHoverTips();
         });
 
+    });
+
+    $( "#min_coin, #max_coin" ).unbind("change");
+    $( "#min_coin, #max_coin" ).bind("change", function() {
+        loot_table = $(this).attr('loot_table');
+        /* Delete item from lootdrop */
+        $.ajax({
+            url: "ajax.php?M=NPC&do_cash_update=" + loot_table + "&field=" + $(this).attr('id') + "&value=" + $(this).val(),
+            context: document.body
+        }).done(function(e) {
+            Notific8("NPC Editor", "Updated " + $(this).attr('id') + " to value " + $(this).val(), 2000);
+        });
     });
 
     /* Hook Mouse Enter and Leave Events for Loottable (table) */

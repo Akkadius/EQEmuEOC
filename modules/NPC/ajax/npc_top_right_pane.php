@@ -116,6 +116,24 @@
                     </tr>';
             }
             echo '</table>';
+
+            $coin_img = '
+                    <img class="lazy" data-original="cust_assets/icons/item_644.png" width="15" height="15" src="cust_assets/icons/item_644.png" style="display: inline;">
+                ';
+
+            echo '<table class="table table-condensed table-hover table-bordered" style="margin-bottom: 0px;">';
+                echo '
+                    <tr>
+                        <td style="text-align:right">' . $coin_img . 'Min Coin</td>
+                        <td><input type="text" class="form-control" id="min_coin" value="' . $loot_table['mincash'] . '" style="text-align:left" loot_table="' . $loot_table['id'] . '""></td>
+                    </tr>';
+                echo '
+                    <tr>
+                        <td style="text-align:right">' . $coin_img . 'Max Coin</td>
+                        <td><input type="text" class="form-control" id="max_coin" value="' . $loot_table['maxcash'] . '" style="text-align:left" loot_table="' . $loot_table['id'] . '"">
+                        </td>
+                    </tr>';
+            echo '</table>';
         }
 
         if($npc_types['loottable_id'] <= 0){
@@ -321,4 +339,16 @@
             ');
         echo mysql_error();
     }
+
+    /* Loot Table :: Update mincash/maxcash */
+    if(isset($_GET['do_cash_update'])){
+        $loot_table_id = $_GET['do_cash_update'];
+        $field = $_GET['field'];
+        $value = $_GET['value'];
+        if($field == "min_coin"){ $field = "mincash"; }
+        if($field == "max_coin"){ $field = "maxcash"; }
+        $result = mysql_query("UPDATE `loottable` SET `" . $field . "` = " . $value . " WHERE `id` = " . $loot_table_id);
+        echo mysql_error();
+    }
+
 ?>
