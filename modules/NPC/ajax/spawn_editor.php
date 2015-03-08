@@ -146,9 +146,9 @@
     }
     /* Handle field updates from spawn editor tables */
     if(isset($_GET['do_spawn_edit_update'])){
-        $table_name = $_GET['do_spawn_edit_update'];
-        $field = $_GET['field'];
-        $value = $_GET['value'];
+        $table_name = mysql_real_escape_string($_GET['do_spawn_edit_update']);
+        $field = mysql_real_escape_string($_GET['field']);
+        $value = mysql_real_escape_string($_GET['value']);
         $db_key = $_GET['db_key'];
         $db_key_val = $_GET['db_key_val'];
 
@@ -163,7 +163,7 @@
         }
 
         mysql_query("UPDATE `" . $table_name . "` SET `" . $field . "` = " . $value . " WHERE " . $filter);
-        echo "UPDATE `" . $table_name . "` SET `" . $field . "` = " . $value . " WHERE " . $filter;
+        # echo "UPDATE `" . $table_name . "` SET `" . $field . "` = " . $value . " WHERE " . $filter;
         echo mysql_error();
     }
 
