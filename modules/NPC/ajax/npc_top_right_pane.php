@@ -51,21 +51,31 @@
                             </tr>
                         </table>
                         </td>
-                        <td valign="bottom" style="text-align:center !important;width:100px !important;padding:10px !important" class="table table-striped table-hover table-condensed flip-content table-bordered" >
+                        <td valign="middle" style="text-align:left !important;width:100px !important;padding:10px !important" class="table table-striped table-hover table-condensed flip-content table-bordered" >
                             <center>
                             <table>
-                                <tr><td>
-                                    <a href="javascript:;" class="btn yellow btn-xs btn-default" onclick="do_npc_special_abilities_edit()">
+
+                                <tr><td style="text-align: left !important;">
+                                    <a href="javascript:;" class="btn btn-xs btn-default" onclick="do_spawn_editor(' . $npc_types['id'] . ')" style="width:100%">
+                                        <i class="fa fa-male"></i>
+                                        Spawn Editor
+                                    </a>
+                                </td>
+
+                                <tr><td style="text-align:left !important;">
+                                    <a href="javascript:;" class="btn purple btn-xs btn-default" onclick="do_npc_special_abilities_edit()" style="width:100%">
                                         <i class="fa fa-bolt"></i>
                                         Special Abilities
                                     </a>
-                                </td></td>
-                                <tr><td>
-                                    <a href="javascript:;" class="btn red btn-xs btn-default" onclick="do_make_npc_kos(' . $npc_types['id'] . ')">
+                                </td>
+
+                                <tr><td style="text-align:left !important;">
+                                    <a href="javascript:;" class="btn red btn-xs btn-default" onclick="do_make_npc_kos(' . $npc_types['id'] . ')" style="width:100%">
                                         <i class="fa fa-circle-o"></i>
                                         Make KOS
                                     </a>
-                            </td></td>
+                                </td>
+
                             </table>
                         </td>
                         <td valign="top" style="text-align:left;width:400px !important;padding-left:15px !important">';
@@ -124,12 +134,12 @@
             echo '<table class="table table-condensed table-hover table-bordered" style="margin-bottom: 0px;">';
                 echo '
                     <tr>
-                        <td style="text-align:right">' . $coin_img . 'Min Coin</td>
+                        <td style="text-align:right">' . $coin_img . ' Min Coin</td>
                         <td><input type="text" class="form-control" id="min_coin" value="' . $loot_table['mincash'] . '" style="text-align:left" loot_table="' . $loot_table['id'] . '""></td>
                     </tr>';
                 echo '
                     <tr>
-                        <td style="text-align:right">' . $coin_img . 'Max Coin</td>
+                        <td style="text-align:right">' . $coin_img . ' Max Coin</td>
                         <td><input type="text" class="form-control" id="max_coin" value="' . $loot_table['maxcash'] . '" style="text-align:left" loot_table="' . $loot_table['id'] . '"">
                         </td>
                     </tr>';

@@ -254,3 +254,8 @@ function do_npc_special_abilities_edit(){
     input_data = $( "td[" + npc_id + "-" + db_field + "]").html();
     DoModal("ajax.php?M=NPC&special_abilities_editor&val=" + input_data + "&npc_id=" + npc_id + "&db_field=" + db_field);
 }
+
+function do_spawn_editor(npc_id){
+    npc_id = typeof npc_id !== 'undefined' ? npc_id : 0;
+    DoModal("ajax.php?M=NPC&do_spawn_editor=" + npc_id);
+}
