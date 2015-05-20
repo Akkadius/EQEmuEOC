@@ -847,6 +847,24 @@
 		"persistdeath" => array("Whether or not this spell will persist beyond death"),
 		"rank" => array("Used in spell ranks"),
 	);
+
+    $l_sp_buffformulas = array(
+        0    => "Not a Buff",
+        1    => "Lowest of Level / 2 or Duration",
+        2    => "Duration / 5 * 3",
+        3    => "Lowest of Level * 30 or Duration",
+        4    => "Duration if not 0, else 50",
+        5    => "Lowest of Duration or 3",
+        6    => "Lowest of Level / 2 or Duration",
+        7    => "Duration if not 0, else Level",
+        8    => "Lowest of Level + 10 or Duration",
+        9    => "Lowest of Level * 2 + 10 or Duration",
+        10   => "Lowest of Level * 3 + 10 or Duration",
+        11   => "Duration",
+        12   => "Duration",
+        50   => "72000 (5 Days)",
+        3600 => "Duration if not 0, else 3600"
+    );
 	
 	$target_type_enums = array(
 		1 =>    array("ST_TargetOptional", "red"),
@@ -976,7 +994,7 @@
 		Ex: Some inputs have data translation, so they are appropriate for drop down lists...
 	*/
 	function SpellFieldInput($SpellID, $FieldName, $FieldData){ 
-		global $spells_new_fields, $dbskills, $Spell_Categories, $spell_editor_fields, $Spell_Effects, $Base_Formulas, $target_type_enums, $select_fields, $dbspellresists_color, $npc_category;
+		global $spells_new_fields, $dbskills, $Spell_Categories, $spell_editor_fields, $Spell_Effects, $Base_Formulas, $target_type_enums, $select_fields, $l_sp_buffformulas, $dbspellresists_color, $npc_category;
 		if($FieldName == "id"){ $dis = " disabled"; } 
 		else { $dis = ""; } 
 		if($FieldName == "new_icon"){
@@ -995,15 +1013,24 @@
 			$ret .= '</select>';
 			return $ret;
 		}
-		/* Formulas */
-		else if(preg_match('/formula/i', $FieldName)){
-			$ret .= '<select class="form-control" title="' . $spells_new_fields[$FieldName][0] . '" value="' . $FieldData . '" spell-id="' . $SpellID . '" id="' . $FieldName . '" class="form-control" onchange="DoSpellFieldInputEdit(this.id)" ' . $dis . '>';
-					foreach($Base_Formulas as $key => $val){
-						$ret .= '<option value="' . $key . '"' . ($FieldData == $key ? ' selected="1"' : '') . '>' . $key . ': ' . $val . '</option>'; 
-					}			
-			$ret .= '</select>';
-			return $ret;
-		}
+        /* Formulas */
+        else if(preg_match('/buffdurationformula/i', $FieldName)){
+            $ret .= '<select class="form-control" title="' . $spells_new_fields[$FieldName][0] . '" value="' . $FieldData . '" spell-id="' . $SpellID . '" id="' . $FieldName . '" class="form-control" onchange="DoSpellFieldInputEdit(this.id)" ' . $dis . '>';
+            foreach($l_sp_buffformulas as $key => $val){
+                $ret .= '<option value="' . $key . '"' . ($FieldData == $key ? ' selected="1"' : '') . '>' . $key . ': ' . $val . '</option>';
+            }
+            $ret .= '</select>';
+            return $ret;
+        }
+		/* Buff duration formula */
+		else if(preg_match('/formula/i', $FieldName)) {
+            $ret .= '<select class="form-control" title="' . $spells_new_fields[$FieldName][0] . '" value="' . $FieldData . '" spell-id="' . $SpellID . '" id="' . $FieldName . '" class="form-control" onchange="DoSpellFieldInputEdit(this.id)" ' . $dis . '>';
+            foreach($Base_Formulas as $key => $val){
+                $ret .= '<option value="' . $key . '"' . ($FieldData == $key ? ' selected="1"' : '') . '>' . $key . ': ' . $val . '</option>';
+            }
+            $ret .= '</select>';
+            return $ret;
+        }
 		/* Target Type */
 		else if($FieldName == "targettype"){ 
 			$ret .= '<select class="form-control" title="' . $spells_new_fields[$FieldName][0] . '" value="' . $FieldData . '" spell-id="' . $SpellID . '" id="' . $FieldName . '" class="form-control" onchange="DoSpellFieldInputEdit(this.id)" ' . $dis . '>';
