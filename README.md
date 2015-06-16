@@ -6,6 +6,10 @@ This platform is designed to help EQEmu Server developers develop content rapidl
 Tools Documentation: http://wiki.eqemulator.org/p?EQEmu_Operations_Center_for_Development#tools
 
 Welcome to the EQEmuEOC wiki!
+
+# Index
+* [EOC Code and Project Structure](EOC Code Structure)
+
 # Setting up a Dev Environment
 * I have provided a convenient download to a development environment that can get you going in mere minutes. It is completely pre-configured with the following:
 
