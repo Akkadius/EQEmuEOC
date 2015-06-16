@@ -8,7 +8,7 @@ Tools Documentation: http://wiki.eqemulator.org/p?EQEmu_Operations_Center_for_De
 Welcome to the EQEmuEOC wiki!
 
 # Index
-* [EOC Code and Project Structure](EOC Code Structure)
+* [EOC Code and Project Structure](https://github.com/Akkadius/EQEmuEOC/wiki/EOC-Code-and-Project-Structure)
 
 # Setting up a Dev Environment
 * I have provided a convenient download to a development environment that can get you going in mere minutes. It is completely pre-configured with the following:
