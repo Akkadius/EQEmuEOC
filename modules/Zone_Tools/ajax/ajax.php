@@ -143,11 +143,10 @@
 					$QueryAdd2 .= " OR gridid='". $row['pathgrid'] . "'";
 				}
 			}
-			mysql_query("DELETE FROM grid WHERE id='999999999999' ". $QueryAdd1 . ";", $db);
-			mysql_query("DELETE FROM grid_entries WHERE gridid='999999999999' ". $QueryAdd2 . ";", $db);
-			
-			$query_total_output .= "DELETE FROM grid WHERE id='999999999999' ". $QueryAdd1 . ";" . "\n"; 
-			$query_total_output .= "DELETE FROM grid_entries WHERE gridid='999999999999' ". $QueryAdd2 . ";" . "\n";  
+			# mysql_query("DELETE FROM grid WHERE id='999999999999' (". $QueryAdd1 . ") AND ;", $db);
+			# mysql_query("DELETE FROM grid_entries WHERE gridid='999999999999' (". $QueryAdd2 . ");", $db);
+			# $query_total_output .= "DELETE FROM grid WHERE id='999999999999' ". $QueryAdd1 . ";" . "\n";
+			# $query_total_output .= "DELETE FROM grid_entries WHERE gridid='999999999999' ". $QueryAdd2 . ";" . "\n";
 			
 			$Query = "SELECT DISTINCT spawnentry.npcID,spawn2.spawngroupID FROM spawnentry, npc_types, spawngroup, spawn2 WHERE (spawnentry.npcID=npc_types.id) AND (spawnentry.spawngroupID=spawngroup.id) AND (spawn2.spawngroupID = spawnentry.spawngroupID) AND (spawn2.zone='" . $ZoneSN . "') AND (spawn2.version='" . $_GET['VersionToDelete'] . "') ORDER BY npc_types.id";
 			$QueryResult = mysql_query($Query, $db);
