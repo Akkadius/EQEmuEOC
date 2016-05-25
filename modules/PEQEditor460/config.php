@@ -38,7 +38,7 @@ $expansion_limit = 20;
 $npc_list = 2;
 
 // Spawngroup list limit. Limits how many spawngroups are displayed as result of a Coord/NPC search. Specific NPC lists are not effected.
-$spawngroup_limit = 150; 
+$spawngroup_limit = 150;
 
 // Dont want to have to type the username and password every time you start the editor?
 // Set the two variables below to the values you want to be in the form when you start it up.v
@@ -62,7 +62,7 @@ $log_all = 0;
 
 // Log all MySQL queries that result in an error.
 $log_error = 0;
- 
+
 // Enable or disable user logins.
 $enable_user_login = 1;
 
@@ -88,15 +88,6 @@ if (isset($_SESSION['SESS_MEMBER_ID']) && (trim($_SESSION['SESS_MEMBER_ID']) != 
 
 require_once('../../includes/config.php');
 
-if($peq_local_auth){
-    $IsAuthenticated = TRUE;
-    $db = $dbname;
-    # $dbhost = "localhost";
-    # $db = "peq";
-    # $dbuser = "root";
-    # $dbpass = "eocdev";
-}
-
 /* Manual DB Login */
 if ($_SESSION['dblogin']) {
     $dbhost = $_SESSION['dbip'];
@@ -120,9 +111,16 @@ else if ($_COOKIE['dblogin'] == 1) {
     // Used to check if authenticated
     $IsAuthenticated = TRUE;
 }
+else {
+    $IsAuthenticated = TRUE;
+    $dbpass = $dbpasswd;
+    $db = $dbname;
+}
+
+
 
 $_SESSION['guest'] = 0;
-error_reporting(0);  
+error_reporting(0);
 
 /* EoC Added Code End ~ Akkadius */
 

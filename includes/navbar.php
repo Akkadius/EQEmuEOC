@@ -44,7 +44,8 @@
 									    <li class="divider" style="height: 1px; padding:0px !important"> </li>
 
                                         <li class="divider" style="height: 1px; padding:0px !important"> </li>
-                                        <li> <a href="min.php?Mod=PEQEditor&Rev=460"> <i class="fa fa-angle-right"></i> PEQ Editor Rev 460 <br> <img src="cust_assets/images/PEQ_Logo.png" style="height:50px;width:auto"> </a> </li>
+                                        <li> <a href="min.php?Mod=PEQEditor&Rev=501"> <i class="fa fa-angle-right"></i> <img src="cust_assets/images/PEQ_Logo.png" style="height:25px;width:auto"> PEQ Editor Rev 501  </a> </li>
+                                        <li> <a href="min.php?Mod=PEQEditor&Rev=460"> <i class="fa fa-angle-right"></i> <img src="cust_assets/images/PEQ_Logo.png" style="height:25px;width:auto"> PEQ Editor Rev 460 </a> </li>
                                     </ul>
                                     <ul class="col-md-4 mega-menu-submenu">
                                         <li> <h3>Viewers</h3> </li>
@@ -164,6 +165,7 @@
         <!-- END TOP NAVIGATION MENU -->
         </div>
         <!-- END HEADER INNER -->
+        </div>
         </div>
         <!-- END HEADER -->
         <div class="clearfix">
