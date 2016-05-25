@@ -75,7 +75,7 @@
                 <td>' . $row['account_name'] . '</td>
                 <td>' . $row['character_id'] . '</td>
                 <td>' . $row['name'] . '</td>
-                <td>' . $dbclasses_names[$row['class']] . '</td>
+                <td>' . $dbclasses[$row['class']] . ' (' . $row['class'] . ')</td>
                 <td>' . $dbiracenames[$row['race']] . '</td>
                 <td>
                     <a href="javascript:;" onclick="handle_source_character(' . $row['character_id'] . ')" class="btn btn-xs blue">

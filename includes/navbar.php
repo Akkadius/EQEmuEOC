@@ -35,7 +35,9 @@
                                         <li> <h3>Character</h3> </li>
 									    <li class="divider" style="height: 1px; padding:0px !important"> </li>
                                         <li> <a href="index.php?M=Character&character_copy">
-                                            <i class="fa fa-sign-in"></i> Character Copier </a>
+                                            <i class="fa fa-angle-right"></i>
+                                            <i class="fa fa-sign-in"></i>
+                                            Character Copier </a>
                                         </li>
 
 									    <li> <h3>PEQ Editor(s)</h3> </li>
