@@ -32,6 +32,7 @@
 <link rel="stylesheet" type="text/css" href="assets/global/plugins/select2/select2.css"/>
 <link rel="stylesheet" type="text/css" href="assets/global/plugins/jquery-notific8/jquery.notific8.min.css"/>
 <link rel="stylesheet" type="text/css" href="cust_assets/css/aguilar_animations.css"/>
+<link rel="stylesheet" type="text/css" href="cust_assets/css/icons.css"/>
 <!-- BEGIN THEME STYLES -->
 <link href="assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.css" rel="stylesheet"/> 
 <link href="assets/global/css/components.css" rel="stylesheet" type="text/css"/>

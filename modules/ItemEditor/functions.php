@@ -92,10 +92,14 @@
 			if($FieldKey == "topinfo"){ $FI[$FieldKey][$FieldName][1] = '<input type="text" name="' . $FieldName . '" placeholder="'. $FieldData . '" value="'. $FieldData . '" size="'. $CharCount .'" '. $InputTitle . '>'; continue; }
 			if($FieldName == "id"){ $FI[$FieldKey][$FieldName][1] = "<a href='javascript:;' class='btn green' onClick='FieldEditGet(\"". $FieldName . "\", 500, 600);'><i class='fa fa-edit'></i> EDIT</a><input type='text' name='" . $FieldName . "' placeholder='". $FieldData . "' value='". $FieldData . "' size='". $CharCount ."' ". $InputTitle . " id=".$FieldName.">"; continue; }
 			if($FieldName == "icon"){
-				if(file_exists("cust_assets/icons/item_" . $FieldData . ".png")){
+				/*if(file_exists("cust_assets/icons/item_" . $FieldData . ".png")){
 					$FI[$FieldKey][$FieldName][1] = "<a href='javascript:;' title='' class='btn btn-default' onClick='IconEdit(". $FieldData. ")'><img src='includes/img.php?type=iconimage&id=" . $FieldData ."'  name='MyIcon' title='Click here to Edit your Icon' valgin='top' align='right'></a>"; 
 					$FI[$FieldKey][$FieldName][1] .= '<input type="text" name="' . $FieldName . '" placeholder="'. $FieldData . '" value="'. $FieldData . '" size="'. $CharCount .'" '. $InputTitle . ' id=icon onchange="UpdateIcon('. $FieldData . ')" >';
-				} continue;
+				} continue;*/
+
+				$FI[$FieldKey][$FieldName][1] = "<a href='javascript:;' class='btn btn-default' onClick='IconEdit(". $FieldData. ")'><img class='icon-".$FieldData."' name='MyIcon' valgin='top' align='right' width='40px' height='40px'/></a>"; 
+				$FI[$FieldKey][$FieldName][1] .= '<input type="text" name="' . $FieldName . '" placeholder="'. $FieldData . '" value="'. $FieldData . '" size="'. $CharCount .'" '. $InputTitle . ' id=icon onchange="UpdateIcon('. $FieldData . ')" >';
+				continue;
 			}
 			if($FieldName == "idfile"){
 				$FI[$FieldKey][$FieldName][1] = "<a href='javascript:;' title='' class='btn btn-default ' onClick='IDFileEdit(". preg_replace('/IT/i', '', $FieldData) . ")'><img src='includes/img.php?type=weaponimage&id=" . preg_replace('/IT/i', '', $FieldData) ."' name='MyIDFile' title='Click here to Edit your Graphic' class=weapongraphic></a>"; 

@@ -52,13 +52,15 @@
 					window.open("min.php?Mod=IE&previcon=" + document.getElementById("icon").value, id, "width=1000,height=700,toolbar=0,location=no,status=0,menubar=0,resizable=0,scrollbars=1");
 				} 
 				function FinishIcon(id) {
-					opener.document.images.MyIcon.src="includes/img.php?type=iconimage&id=" + id
+					//opener.document.images.MyIcon.src="includes/img.php?type=iconimage&id=" + id
+					opener.document.images.MyIcon.setAttribute("class","icon-" + id);
 					opener.document.getElementById("icon").value = id;
 					opener.document.getElementById("icon").setAttribute("style","border-color: rgba(82, 168, 236, 0.8)");
 					ChildStatusUpdate("Updated Icon graphic: Set to <font color=yellow><b>" + id + " in editor window");
 				}
 				function UpdateIcon(id) { 
-					document.images.MyIcon.src="includes/img.php?type=iconimage&id=" + document.getElementById("icon").value
+					//document.images.MyIcon.src="includes/img.php?type=iconimage&id=" + document.getElementById("icon").value
+					document.images.MyIcon.class="icon-" + document.getElementById("icon").value;
 				} 
 				function IDFileEdit(id) {
 					window.open("min.php?Mod=IE&prevITfile=" + document.getElementById("idfile").value, id, "width=1000,height=700,toolbar=0,location=no,status=0,menubar=0,resizable=0,scrollbars=1");
