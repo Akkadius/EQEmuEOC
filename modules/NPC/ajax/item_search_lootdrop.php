@@ -234,7 +234,7 @@
                     $color_display = '<div style="background-color:	' . $colHex . ' !important;border: 1px solid #e5e5e5;width:20px;height:20px;display:inline-block"></div>';
 
                     $TableData .= "<tr valign='top' class='" . $RowClass . "' style='vertical-align:middle;text-align: center;'><td align='center'>";
-                    $TableData .= "<img src='cust_assets/icons/item_" . $row["icon"] . ".png' " . $SizeConstraints . "/>" . $color_display;
+                    $TableData .= "<img class='image-wrap icon-".$row["icon"]."' " . $SizeConstraints . "/>" . $color_display;
                     $TableData .= "</td><td>";
                     $TableData .= " <a href='?M=ItemEditor&Edit=" . $row["id"] . "' id='" . $row["id"] . "' target='" . $row["id"] . "' " . HoverTip("global.php?item_view=" . $row['id']) . " >" . $row["Name"] . "</a><br><small style='color:gray'>" . $row['lore'] . "</small>";
                     $TableData .= "</td>";

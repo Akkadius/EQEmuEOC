@@ -202,8 +202,8 @@
                 echo '
                     <div class="image" style="display:inline">
                         <a href="javascript:;" title="' . $i . '" onClick="FinishIcon(' . $i . ')">
-                            <span class="image-wrap">
-                                <img class="lazy" data-original="' . $img_url . '"  width="35" height="35" class="cut-out"/>
+                            <span class="image-wrap image-item-icon">
+                            	<span class="image-icon icon-'.$i.'"></span>
                             </span>
                         </a>
                     </div>';
