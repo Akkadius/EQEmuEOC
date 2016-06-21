@@ -35,7 +35,7 @@
                     echo '
                         <a href="javascript:;" title="' . $row['icon'] . '" onClick="FinishIcon(' . $row['icon'] . ')" style="border-style: none">
                             <span class="image-wrap">
-                                <img class="icon-'.$row['icon'].' cut-out"/>
+                                <img class="icon-'.$row['icon'].' image-icon cut-out"/>
                             </span>
                         </a>
                     ';
@@ -62,7 +62,7 @@
                     echo '
                         <a href="javascript:;" title="' . $row['icon'] . '" onClick="FinishIcon(' . $row['icon'] . ')" style="border-style: none">
                             <span class="image-wrap">
-                                <img class="icon-'.$row['icon'].' cut-out"/>
+                                <img class="icon-'.$row['icon'].' image-icon cut-out"/>
                             </span>
                         </a>
                     ';
