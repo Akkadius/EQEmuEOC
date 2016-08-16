@@ -19,7 +19,7 @@
 	}
 	/* Initial Zone Selector */ 
 	else{		
-		$ZS .= '<select onchange="ZoneToolZoneSelect(this.value)" class="form-control">';
+		$ZS = '<select onchange="ZoneToolZoneSelect(this.value)" class="form-control">';
 		$Query = "SELECT `long_name`, `zoneidnumber`, `short_name` FROM `zone` ORDER BY `zoneidnumber`";
 		$QueryResult = mysql_query($Query, $db);
 		while($row = mysql_fetch_array($QueryResult)){

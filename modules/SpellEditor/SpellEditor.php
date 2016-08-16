@@ -19,7 +19,7 @@
 		Edit Spell Data 
 	*/
 	
-	if($_GET['Edit']){
+	if(isset($_GET['Edit'])){
 	
 		# echo '<center>';
 	
@@ -135,7 +135,7 @@
 		// echo '<pre>'; echo var_dump($c); echo '</pre>';
 		
 		$FJS .= '<script type="text/javascript">
-				do_comp_sel = 0;
+				var do_comp_sel = 0;
 				$( "#comp_select" ).mouseover(function(e) {
 					if(do_comp_sel != 1){
 						DoComponentsSelect(\'' . $c['components'] . '\');
@@ -163,7 +163,7 @@
 				
 					<table class="table"> 
 					<tr><td>Search For</td>
-						<td><input type="text" class="form-control" name="search_string" size="40" value="' . $_GET['search_string'] . '"> 
+						<td><input type="text" class="form-control" name="search_string" size="40" value="' . isset($_GET['search_string']) . '">
 							<small><i>Searches name, description and casting messages</i></small>
 						</td>
 					</tr>

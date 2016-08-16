@@ -99,7 +99,7 @@
 	function GetZoneListSelect($zone_name){
 		$sql = "SELECT `long_name`, `zoneidnumber`, `short_name` FROM `zone` ORDER BY `zoneidnumber`";
 		$result = mysql_query($sql);
-		$ret .= '<select class="form-control" id="zoneselect" title="Select the Zone you wish to list NPCs For">';
+		$ret  = '<select class="form-control" id="zoneselect" title="Select the Zone you wish to list NPCs For">';
         $ret .= '<option value="0"> --- Select --- </option>';
 		while($row = mysql_fetch_array($result)){
 			if($zone_name == $row['short_name']){ $sel = "selected"; } else { $sel = ""; }
@@ -311,7 +311,7 @@
 	function GetNPCTypesSelector(){
 		$query = "show columns from npc_types";
 		$result = mysql_query($query);
-		$ret .= '<select id="npctypesfield" class="form-control">';
+		$ret = '<select id="npctypesfield" class="form-control">';
 		while($row = mysql_fetch_array($result)){ 
 			if($row[0] != "id"){
 				$ret .= '<option value="'. $row[0] . '">' . $row[0] . '</option>';

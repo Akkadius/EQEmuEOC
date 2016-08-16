@@ -1,6 +1,22 @@
 <?php
 
 	$offset = -50;
+    $Minified = 1;
+    $SessionTimeout = 999;
+    date_default_timezone_set("America/Los_Angeles");
+
+    $allaclonecfg = '../allaclone/includes/config.php';
+    $search = '$cfgversion';
+    // Read from allaclone cfg file
+    $lines = file($allaclonecfg);
+    foreach($lines as $line)
+    {
+        if(strpos($line, $search) !== false){
+            $input = $line;
+            preg_match('~\'(.*?)\'~', $input, $output);
+            $cfgversion = $output[1];
+        }
+    }
 	
 	/* MySQL DB Config (Unless otherwise overriden by other settings */
 	$dbhost = "localhost";
@@ -21,13 +37,14 @@
 	/* Connect to Database either loaded via cookie or EOC Test DB */
 	$db = mysql_connect($dbhost, $dbuser, $dbpasswd); 
 	if($db){ mysql_select_db($dbname, $db) or die("Impossible to select $dbname : ".mysql_error()); }
-	function connect_return(){ global $db, $dbname; if($db){ mysql_select_db($db, $dbname) or die("Impossible to select $eoc_dbname : ".mysql_error()); } }
+	function connect_return(){ global $db, $dbname, $eoc_dbname; if($db){ mysql_select_db($db, $dbname) or die("Impossible to select $eoc_dbname : ".mysql_error()); } }
 	
 	$mysql_result_limit = 1000; /* Rows returned from Query */  
 	if($dbhost == "localhost"){ $dbhost = "localhost (Test PEQ DB)"; }
 	
 	$App_Title = "EOC 2.0"; 
 	$FJS = "";
+    $Mod = "";
 	
 	/* 
 		Debugging

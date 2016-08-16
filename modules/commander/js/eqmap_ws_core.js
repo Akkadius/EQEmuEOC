@@ -1,8 +1,4 @@
 /* Websocket Core */
-
-var WS_IP = "64.90.82.156";
-var WS_PORT = 52685;
-var WS_TOKEN = 'c5b80ec8-4174-4c4c-d332-dbf3c3a551fc';
 var socket = new WebSocket('ws://' + WS_IP + ':' + WS_PORT, 'eqemu');
 
 /* Variables - Most of which you do not want to change */

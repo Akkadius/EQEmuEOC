@@ -33,7 +33,7 @@
 
     /* Item Edit */
     if(!isset($_SESSION['IEViewMode'])){ $_SESSION['IEViewMode'] = 1; }
-    if($_GET['Edit']){
+    if(isset($_GET['Edit'])){
         echo '<center>';
         echo ItemEditor($_GET['Edit'], $_SESSION['IEViewMode']);
         $FJS .= '<script type="text/javascript">
@@ -94,10 +94,10 @@
         $iminlevel     = (isset($_GET[     'iminlevel']) ? mysql_real_escape_string($_GET[     'iminlevel']) : '');
         $inodrop       = (isset($_GET[       'inodrop']) ? mysql_real_escape_string($_GET[       'inodrop']) : '');
         $iavailability = (isset($_GET[ 'iavailability']) ? mysql_real_escape_string($_GET[ 'iavailability']) : '');
-        $iavailevel    = (isset($_GET[    'iavailevel']) ? mysql_real_escape_string($_GET[    'iavailevel']) : '');
+        $iavaillevel   = (isset($_GET[    'iavailevel']) ? mysql_real_escape_string($_GET[    'iavailevel']) : '');
         $ideity        = (isset($_GET[        'ideity']) ? mysql_real_escape_string($_GET[        'ideity']) : '');
-        $itemfield        = (isset($_GET[        'itemfield']) ? mysql_real_escape_string($_GET[        'itemfield']) : '');
-        $itemfieldvalue        = (isset($_GET[        'itemfieldvalue']) ? mysql_real_escape_string($_GET[        'itemfieldvalue']) : '');
+        $itemfield     = (isset($_GET[     'itemfield']) ? mysql_real_escape_string($_GET[     'itemfield']) : '');
+        $itemfieldvalue= (isset($_GET['itemfieldvalue']) ? mysql_real_escape_string($_GET['itemfieldvalue']) : '');
 
         if($isearch != "") {
             $Query  = "SELECT

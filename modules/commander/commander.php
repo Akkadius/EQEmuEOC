@@ -124,7 +124,8 @@
 	// echo '<script src="modules/commander/js/jquery.min.js"></script>'; 
 	$FJS .= '<script src="modules/commander/js/jquery.ba-throttle-debounce.min.js"></script>';
 
-	$FJS .= '<script src="modules/commander/js/eqmap_ws_core.js"></script>';
+    $FJS .= '<script src="modules/commander/js/eqmap_ws_core_config.js"></script>';
+    $FJS .= '<script src="modules/commander/js/eqmap_ws_core.js"></script>';
 	$FJS .= '<script src="modules/commander/js/eqmap_ws_sidebar.js"></script>';
 	$FJS .= '<script src="modules/commander/js/eqmap_ws_server_to_client.js"></script>';
 	$FJS .= '<script src="modules/commander/js/eqmap_ws_client_to_server.js"></script>';

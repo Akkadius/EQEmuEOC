@@ -10,10 +10,10 @@
 	/* This is where the Content Scripts are included and parsed */
 
 	/* Index Variable */
-	if($_GET['M']){
+	if(isset($_GET['M'])){
         $Mod = $_GET['M'];
     }
-	else if($_GET['Module']){
+	else if(isset($_GET['Module'])){
         $Mod = $_GET['Module'];
     }
 
