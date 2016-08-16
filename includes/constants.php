@@ -2359,7 +2359,7 @@
 
     if ($version != $cfgversion) {
         $version = $cfgversion;
-        //  print "The config file you're using is probably out to date, please use the one coming with EqBrowser version $version";
+        print "Version mismatch between allaclone and EoC.";
     }
 
     // tables

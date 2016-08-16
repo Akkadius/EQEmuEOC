@@ -19,7 +19,7 @@
 
 	/* Modal: Mass Edit Window */
 	if(isset($_GET['MassEdit'])){
-		$Content .= '<table class="table" style="width:300px">
+		$Content = '<table class="table" style="width:300px">
 			<tr><td style="text-align:right;"></td><td>This very powerful tool will edit entire columns based on all of the NPC\'s shown in the parent window...
 				<br> 1st, select the field you want to mass edit, and then select your method of mass value changing, you <br>can either use \'Set all Fields to Value\'
 				or use the \'Min/Max\' function below.<br><br></td></tr>
@@ -35,9 +35,9 @@
 
 	/* Modal: Confirm NPC Delete */
 	if($_GET['npc_delete_confirm']){
-		$Content .= '
+		$Content = '
 			<center>
-				<button type="button" class="btn btn-default btn-sm red btn-xs" onclick="do_npc_confirm(' .$_GET['npc_delete_confirm'] . ')"><i class="fa fa-times"></i> Confirm Delete </button>
+				<button type="button" class="btn btn-default btn-sm red btn-xs" onclick="do_npc_confirm(' . $_GET['npc_delete_confirm'] . ');"><i class="fa fa-times"></i> Confirm Delete </button>
 			</center>';
 		echo Modal('NPC Confirm Delete', $Content, '');
 	}
@@ -71,7 +71,7 @@
             $last_insert = $row['next_id'];
         }
 
-        $Content .= '
+        $Content = '
 			<center>
 			    <table class="table-bordered table-striped table-condensed flip-content" style="width:500px">
 			        <tr>

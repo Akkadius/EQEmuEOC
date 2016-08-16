@@ -16,3 +16,4 @@ modules/ServerManager/
 
 l/dbstr_us/
 /includes/config.php
+modules/commander/js/eqmap_ws_core.js

@@ -17,7 +17,7 @@
 	}
 	
 	function ItemEditor($ItemID, $ViewMode){
-		global $_COOKIE, $_SESSION, $page_title, $ItemSection, $ItemEditorSections, $resists, $root_url, $Return, $ShowTitle, $icons_dir, $SpecIncludes, $ItemEditorSectionsDesc;
+		global $_COOKIE, $_SESSION, $page_title, $ItemSection, $ItemEditorSections, $resists, $root_url, $Return, $ShowTitle, $icons_dir, $SpecIncludes, $ItemEditorSectionsDesc, $Debug, $ITD;
 		require_once('./modules/ItemEditor/ajax/js.php');
 		require_once('modules/ItemEditor/constants_ie.php'); 
 		$page_title = "Item Edit";
@@ -172,7 +172,8 @@
 		}
 		
 		$t = 1; $TSection = array();
-		
+        $DSection = '';
+
 		ksort($FI); // Sort the iteration of sections alphabetically... 
 		foreach($FI as $value){
 			if($Debug){ echo 'dbg2<br>'; }
@@ -257,7 +258,7 @@
 	function SelectIClass($name, $selected)
 	{
 		global $dbiclasses;
-		$ret .= "<SELECT name=\"$name\" class='form-control '>";
+		$ret  = "<SELECT name=\"$name\" class='form-control '>";
 		$ret .= "<option value='0'> --- Select --- </option>\n";
 		for ($i = 1; $i <= 32768; $i*= 2) {
 			$ret .= "<option value='" . $i . "'";
@@ -275,7 +276,7 @@
 	function SelectRace($name, $selected)
 	{
 		global $dbraces;
-		$ret .= "<SELECT name=\"$name\" class='form-control '>";
+		$ret  = "<SELECT name=\"$name\" class='form-control '>";
 		$ret .= "<option value='0'> --- Select --- </option>\n";
 		for ($i = 1; $i < 32768; $i*= 2) {
 			$ret .= "<option value='" . $i . "'";
@@ -292,7 +293,7 @@
 	function SelectSlot($name, $selected)
 	{
 		global $dbslots;
-		$ret .= "<SELECT name=\"$name\" class='form-control '>";
+		$ret  = "<SELECT name=\"$name\" class='form-control '>";
 		$ret .= "<option value='0'> --- Select --- </option>\n";
 		reset($dbslots);
 		do {
@@ -313,7 +314,7 @@
 	function SelectSpellEffect($name, $selected)
 	{
 		global $dbspelleffects;
-		$ret .= "<SELECT name=\"$name\" class='form-control '>";
+		$ret  = "<SELECT name=\"$name\" class='form-control '>";
 		$ret .= "<option value=-1>-</option>\n";
 		reset($dbspelleffects);
 		do {
@@ -333,7 +334,7 @@
 
 	function SelectAugSlot($name, $selected)
 	{
-		$ret .= "<SELECT name=\"$name\" class='form-control '>";
+		$ret  = "<SELECT name=\"$name\" class='form-control '>";
 		$ret .= "<option value='0'> --- Select --- </option>\n";
 		for ($i = 1; $i <= 25; $i++) {
 			$ret .= "<option value='" . $i . "'";
@@ -350,7 +351,7 @@
 
 	function SelectLevel($name, $maxlevel, $selevel)
 	{
-		$ret .= "<SELECT name=\"$name\" class='form-control '>";
+		$ret  = "<SELECT name=\"$name\" class='form-control '>";
 		$ret .= "<option value='0'> --- Select --- </option>\n";
 		for ($i = 1; $i <= $maxlevel; $i++) {
 			$ret .= "<option value='" . $i . "'";
@@ -367,7 +368,7 @@
 
 	function SelectTradeSkills($name, $selected)
 	{
-		$ret .= "<SELECT name=\"$name\" class='form-control '>";
+		$ret  = "<SELECT name=\"$name\" class='form-control '>";
 		$ret .= WriteIt("0", "-", $selected);
 		$ret .= WriteIt("59", "Alchemy", $selected);
 		$ret .= WriteIt("60", "Baking", $selected);
@@ -387,7 +388,7 @@
 
 	function WriteIt($value, $name, $sel)
 	{
-		$ret .="  <option value='" . $value . "'";
+		$ret ="  <option value='" . $value . "'";
 		if ($value == $sel) {
 			$ret .=" selected='1'";
 		}
@@ -398,7 +399,7 @@
 
 	function SelectStats($name, $stat)
 	{
-		$ret .= "<select name=\"$name\" class='form-control '>\n";
+		$ret  = "<select name=\"$name\" class='form-control '>\n";
 		$ret .=  "<option value=''> -- Select -- </option>\n";
 		$ret .= WriteIt("hp", "Hit Points", $stat);
 		$ret .= WriteIt("mana", "Mana", $stat);
@@ -424,7 +425,8 @@
 
 	function SelectHeroicStats($name, $heroic)
 	{
-		$ret .= "<select name=\"$name\" class='form-control '>\n";
+        $stat = '';
+		$ret  = "<select name=\"$name\" class='form-control '>\n";
 		$ret .= "  <option value=''> -- Select -- </option>\n";
 		$ret .= WriteIt("heroic_agi", "Heroic Agility", $stat);
 		$ret .= WriteIt("heroic_cha", "Heroic Charisma", $stat);
@@ -445,7 +447,7 @@
 
 	function SelectResists($name, $resist)
 	{
-		$ret .= "<select name=\"$name\" class='form-control '>\n";
+		$ret  = "<select name=\"$name\" class='form-control '>\n";
 		$ret .= "  <option value=''> -- Select -- </option>\n";
 		$ret .= WriteIt("mr", "Resist Magic", $resist);
 		$ret .= WriteIt("fr", "Resist Fire", $resist);
@@ -459,7 +461,7 @@
 
 	function SelectModifiers($name, $mod)
 	{
-		$ret .= "<select name=\"$name\" class='form-control '>\n";
+		$ret  = "<select name=\"$name\" class='form-control '>\n";
 		$ret .= "  <option value=''> -- Select -- </option>\n";
 		$ret .= WriteIt("avoidance", "Avoidance", $mod);
 		$ret .= WriteIt("accuracy", "Accuracy", $mod);
@@ -484,27 +486,27 @@
 	function SelectIType($name, $selected)
 	{
 		global $dbitypes;
-		$return .= "<SELECT name='" . $name . "' class='form-control '>";
-		$return .= "<option value='-1'> --- Select --- </option>\n";
+        $ret  = "<SELECT name='" . $name . "' class='form-control '>";
+        $ret .= "<option value='-1'> --- Select --- </option>\n";
 		reset($dbitypes);
 		do {
 			$key = key($dbitypes);
-			$return .= "<option value='" . $key . "'";
+            $ret .= "<option value='" . $key . "'";
 			if ($key == $selected) {
-				$return .= " selected='1'";
+                $ret .= " selected='1'";
 			}
 
-			$return .= ">" . current($dbitypes) . "</option>\n";
+            $ret .= ">" . current($dbitypes) . "</option>\n";
 		}
 		while (next($dbitypes));
-		$return .= "</SELECT>";
-		return $return;
+        $ret .= "</SELECT>";
+		return $ret;
 	}
 
 	function SelectDeity($name, $selected)
 	{
 		global $dbideities;
-		$ret .= "<SELECT name=\"$name\" class='form-control '>";
+		$ret  = "<SELECT name=\"$name\" class='form-control '>";
 		$ret .= "<option value='0'> --- Select --- </option>\n"; 
 		for ($i = 2; $i <= 65536; $i*= 2) {
 			$ret .= "<option value='" . $i . "'";

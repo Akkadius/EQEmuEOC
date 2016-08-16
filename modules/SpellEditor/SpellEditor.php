@@ -135,7 +135,7 @@
 		// echo '<pre>'; echo var_dump($c); echo '</pre>';
 		
 		$FJS .= '<script type="text/javascript">
-				do_comp_sel = 0;
+				var do_comp_sel = 0;
 				$( "#comp_select" ).mouseover(function(e) {
 					if(do_comp_sel != 1){
 						DoComponentsSelect(\'' . $c['components'] . '\');
