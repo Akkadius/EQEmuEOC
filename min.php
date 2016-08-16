@@ -1,7 +1,4 @@
 <?php
-
-	$Minified = 1;
-
     /* Dispatching Page for minimal requests */
 
 	require_once('includes/config.php');
