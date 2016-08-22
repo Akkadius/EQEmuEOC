@@ -1,10 +1,10 @@
 <?php
 	require_once('modules/commander/functions.php');
-	if($_GET['GetZoneMap']){
+	if(isset($_GET['GetZoneMap'])){
 		echo Draw2DMap($_GET['GetZoneMap']);
 	}
 
-    if($_GET['sidebar_menu']){
+    if(isset($_GET['sidebar_menu'])){
         if($_GET['sidebar_menu'] == "entity_search"){
             echo '
                 <ul class="list-items borderless">

@@ -1,21 +1,25 @@
 <?php
 
 	$offset = -50;
-    $Minified = 1;
+    $Minified = 0;
     $SessionTimeout = 999;
     date_default_timezone_set("America/Los_Angeles");
 
     $allaclonecfg = '../allaclone/includes/config.php';
     $search = '$cfgversion';
     // Read from allaclone cfg file
-    $lines = file($allaclonecfg);
-    foreach($lines as $line)
-    {
-        if(strpos($line, $search) !== false){
-            $input = $line;
-            preg_match('~\'(.*?)\'~', $input, $output);
-            $cfgversion = $output[1];
+    if (file_exists($allaclonecfg)) {
+        $lines = file($allaclonecfg);
+        foreach ($lines as $line) {
+            if (strpos($line, $search) !== false) {
+                $input = $line;
+                preg_match('~\'(.*?)\'~', $input, $output);
+                $cfgversion = $output[1];
+            }
         }
+    }
+    else{
+        $cfgversion = 0;
     }
 	
 	/* MySQL DB Config (Unless otherwise overriden by other settings */

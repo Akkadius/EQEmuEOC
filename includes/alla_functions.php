@@ -1392,8 +1392,7 @@ function BuildSpellInfo($spell, $show_name_icon) {
 
 	global $dbclasses, $dbspelltargets, $dbspellresists, $dbskills, $icons_url, $tbitems, $icons_dir;
 	
-	$html_string .= "";
-	$html_string .= "<table border=0 style='padding:5px;width:500px'>";
+	$html_string = "<table border=0 style='padding:5px;width:500px'>";
 		   
 	if ($show_name_icon)
 	{

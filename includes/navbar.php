@@ -65,7 +65,11 @@
                         <span id="status_display"></span> <span class="selected"> </span>
                     </a>
                 </li>
-
+                <li class="classic-menu-dropdown">
+                    <a class="dropdown-toggle">
+                        <span class="dropdown-toggle"> Connected to server:&nbsp;'. $_SERVER['SERVER_NAME'] .'</span> <span class="selected"> </span>
+                    </a>
+                </li>
             </ul>
         </div>
         <!-- END HORIZANTAL MENU -->

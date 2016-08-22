@@ -7,6 +7,7 @@
 	
 	function Draw2DMap($zone, $offline = 0){		
 		/* Parse out lines - First Run */
+		$offset = 0;
 		$max_x = 0; $max_y = 0;
 		$min_x = 0; $min_y = 0;
 		$handle = fopen("modules/commander/Maps/" . $zone . "_1.txt", "r");
@@ -36,36 +37,40 @@
 		$top_offset += 65;
 		$left_offset += 63;
 
+		$ret = '';
+
 		/* Zoom Icons */
-		// $ret .= '<div id="map_controls" style="position:fixed;left:20px;top:100px">
-		// 	<button class="btn btn-default Zoom_In"><i class="fa fa-plus"></i></button><br>
-		// 	<button class="btn btn-default Zoom_Out"><i class="fa fa-minus"></i></button>
-		// </div>'; 
+		/*$ret .= '
+			<div id="map_controls" style="position:fixed;left:20px;top:100px">
+				<button class="btn btn-default Zoom_In"><i class="fa fa-plus"></i></button><br>
+				<button class="btn btn-default Zoom_Out"><i class="fa fa-minus"></i></button>
+			</div>';*/
 		
 		$ret .= '<div id="map_canvas">';
-			$ret .= '<img src="modules/commander/map.php?zone=' . $zone . '">';
-			$sql = "SELECT 
-				npc_types.`name`,
-				npc_types.lastname,
-				npc_types.race,
-				spawn2.y,
-				spawn2.x,
-				spawn2.z,
-				spawn2.heading
+		$ret .= '<img src="modules/commander/map.php?zone=' . $zone . '">';
+		$sql = "SELECT
+				  npc_types.`name`,
+				  npc_types.lastname,
+				  npc_types.race,
+				  spawn2.y,
+				  spawn2.x,
+				  spawn2.z,
+				  spawn2.heading
 				FROM
-				(npc_types ,
-				spawn2)
+				  (npc_types ,
+				  spawn2)
 				INNER JOIN spawnentry ON npc_types.id = spawnentry.npcID AND spawnentry.spawngroupID = spawn2.spawngroupID
 				where spawn2.zone = '" . mysql_real_escape_string($zone) . "';";
-			if($offline == 1){ $result = mysql_query($sql); $data = array(); }
-			while($row = mysql_fetch_array($result)){
-				$ret .= '
-					<span style="position:absolute;left:' . ($left_offset - $row['x']) . 'px;top:' . ($top_offset - $row['y']) . 'px" >
-						<i class="fa fa-chevron-circle-up" style="color: #333;-webkit-transform:rotate(' . CalcEQHeadingToBrowser($row['heading']) . 'deg);"></i>
-						<a href="javascript:;" class="btn btn-default btn-xs entity_name">' . $row['name'] . '</a>
-					</span>
-				';
-			}
+		$result = mysql_query($sql);
+		if($offline == 1){ $data = array(); }
+		while($row = mysql_fetch_array($result)){
+			$ret .= '
+				<span style="position:absolute;left:' . ($left_offset - $row['x']) . 'px;top:' . ($top_offset - $row['y']) . 'px" >
+					<i class="fa fa-chevron-circle-up" style="color: #333;-webkit-transform:rotate(' . CalcEQHeadingToBrowser($row['heading']) . 'deg);"></i>
+					<a href="javascript:;" class="btn btn-default btn-xs entity_name">' . $row['name'] . '</a>
+				</span>
+			';
+		}
 		
 		/* Parse out map files again */
 		for($i = 1; $i <= 2; $i++){  

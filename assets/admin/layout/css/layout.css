@@ -259,9 +259,8 @@ Page Header
   line-height: 20px;
   white-space: normal;
   font-size: 13px;
-  padding: 10px;
   background-color: #ffffff;
-  padding: 7px 10 5px 10px;
+  padding: 7px 10px 5px 10px;
   border-bottom: 1px solid #f4f4f4 !important;
   text-shadow: none;
   color: #666;
@@ -1079,8 +1078,8 @@ Page sidebar
   background-color: transparent;
   background-repeat: no-repeat;
   background-position: 100% 3px;
-  height1: 20px;
-  line-height1: 20px;
+  height: 20px;
+  line-height: 20px;
 }
 .page-sidebar .sidebar-search .input-group .input-group-btn .btn > i,
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .sidebar-search .input-group .input-group-btn .btn > i {

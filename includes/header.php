@@ -3,6 +3,7 @@
  * Created by Akkadius: 8-8-2014
  * Header file - Contains assets for CSS and some template structure
  */
+header('P3P: CP="CAO PSA OUR"'); //retarded IE fix for servers with session breaking characters in name.
 ?>
 
 
@@ -46,7 +47,7 @@
 </head>
 
 <?php
-	if($_SESSION['UIStyle'] == 2){
+	if(isset($_SESSION['UIStyle']) == 2){
 		echo "<style> 
 			.page-content, 
 			.form-control, 

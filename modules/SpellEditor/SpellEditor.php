@@ -95,7 +95,7 @@
 			Loop through the database fields in the table one more time so that any that haven't been printed from the map can be printed... 
 		*/
 		echo SectionHeader('Remaining Fields');
-		echo '<table class="table table-striped table-bordered table-hover dataTable no-footer" style="width:0%">';
+		echo '<table class="table table-striped table-bordered table-hover dataTable no-footer" style="width:0">';
 		for ($i = 0; $i < $columns; $i++){
 			$FieldName = mysql_field_name($result, $i);
 			$FieldData = mysql_result($result, 0, $i);
@@ -170,7 +170,7 @@
 					<tr><td>Class</td>
 						<td>
 							<select name="type" class="form-control">
-								<option value="0"' . ($c['type'] == 0 ? ' selected="1"' : '') . '>--- Select ---</option>';
+								<option value="0" ' . ($c['type'] == 0 ? ' selected="1"' : '') . '>--- Select ---</option>';
 								foreach ($edit_options['classes'] as $key => $val){
 									if($c['type'] == $key){ $sel = " selected"; } else { $sel = ""; }
 									echo '<option value="' . $key . '" ' . $sel . '>' . $val . '</option>';
@@ -342,6 +342,7 @@
 		if (!$c['level']) { $c['level'] = 0; $ClassOper = ">"; }
 		$sql = 'SELECT * FROM spells_new WHERE ';
 		$sv = '';
+		$qadd = '';
 		if (isset($c['type']) && $c['type'] > 0) { 
 			$sql .= ' ' . 'spells_new' .'.classes' . $c['type'] . " " . $ClassOper .  " " . $c['level'] . '  AND ' . 'spells_new' .'.classes' . $c['type'] . ' <= '. '250';
 			$p_f = 1; /* Set Filter on Bit */
@@ -385,7 +386,7 @@
 		
 		/* Components */
 		if($c['components'] > 0){  
-			$c_ids = "";
+			$c_ids = '';
 			for($i = 2; $i <= 4; $i++){
 				$c_ids .= 'OR `components' . $i . '` = ' . $c['components'] . ' '; 
 			} 
@@ -451,7 +452,7 @@
 		*/
 		if($c['type'] == 0 
 			&& $c['level'] == 0 
-			&& $c['search_string'] == "" 
+			&& $c['search_string'] == ''
 			&& $c['effect_type'] == -1  
 			&& $c['spell_category'] == 0
 			&& $c['field_filter_1'] == ''
@@ -507,7 +508,7 @@
 			/* This will only come through when the Level Changes */
 			if($levelcheck != $row[$Class]) {
 				$levelcheck = $row[$Class];
-				if($c['level'] > 0){ $l_display = '<tr><th style="border-top: 0px solid #ddd;" colspan="12"><h2>Level: ' . $row['classes'. $c['type']] . '</h2></th></tr>'; } else{ $l_display = ''; }
+				if($c['level'] > 0){ $l_display = '<tr><th style="border-top: 0 solid #ddd;" colspan="12"><h2>Level: ' . $row['classes'. $c['type']] . '</h2></th></tr>'; } else{ $l_display = ''; }
 				echo $l_display;
 				echo  '<tr>
 							<th style="width:40px">ID</th> 
@@ -526,6 +527,7 @@
 			}
 			
 			/* Determine Styles */
+			$spell_type_ico = '';
 			if($dbspellresists_color[$row['resisttype']][2] != ''){ $dbr_btn_ico = $dbspellresists_color[$row['resisttype']][2]; } else { $dbr_btn_ico = ''; }
 			if($row['IsDiscipline'] > 0 || ($row['EndurCost'] > 0 || $row['EndurUpkeep'] > 0)){ $spell_type_ico = '<button type="button" class="btn btn-default"><img src="cust_assets/icons/item_778.png" title="504" width="30" height="30" title="Discipline"></button>'; }
 			// else{ $spell_type_ico = '<img src="cust_assets/icons/item_504.png" title="504" width="30" height="30" title="Spell">'; } 

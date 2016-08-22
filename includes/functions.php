@@ -56,6 +56,23 @@
         print var_dump($data);
         print '</pre>';
     }
+    function debug($data){
+        print "<pre>";
+        print "Admin Debug Panel:\r\n";
+        print print_r($data);
+        print "</pre>";
+    }
+    function debugconsole($data){
+        if(is_array($data)){
+            echo "<script>console.log( 'Debug Objects: " . implode(',', $data) . "' );</script>";
+        }
+        else{
+            echo "<script>console.log( 'Debug Objects: " . $data . "' );</script>";
+        }
+    }
+    function debugalert($data){
+        echo '<script type="text/javascript">alert($data);</script>';
+    }
 
     function DuplicateMySQLRecord ($table, $id_field, $id_copied_from, $copied_to_id = 0) {
         /* load the original record into an array */

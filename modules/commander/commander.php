@@ -106,7 +106,7 @@
 	}
 	
 	#::: Dark Style UI
-	if($_SESSION['UIStyle'] == 2){
+	if(isset($_SESSION['UIStyle']) == 2){
 	
 	}
 	else{
