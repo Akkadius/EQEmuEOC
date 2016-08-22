@@ -8,10 +8,8 @@
 
 function GetZoneInfoFromListZone(json){
     r = json.result;
-    if (r['player_count'] > 0) {
-        total_players += parseInt(r['player_count']);
-        $('#total_players').html(total_players);
-    }
+    total_players += parseInt(r['player_count']);
+    $('#total_players').html(total_players);
     if (r['long_name'] == "") {
         r['long_name'] = "Sleeping";
     }
