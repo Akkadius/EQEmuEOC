@@ -35,7 +35,7 @@ function OnNPCDepop(json){
     if (depop_repop_queue != 1) {
         depop_repop_queue = 1;
         // $.notific8('Zone depopped!', { heading: "Commander", theme: "ruby", life: 3000 });
-        Repop_Timer = setTimeout(function () {
+        var Repop_Timer = setTimeout(function () {
             RepopZone()
         }, 500);
     }
@@ -85,13 +85,13 @@ function OnPositionUpdate(json){
         // $('html, body').scrollTop(($('#ent_' + json.params[2]).offset().top - 500));
         // $('html, body').scrollLeft(($('#ent_' + json.params[2]).offset().left - 500));
     }
-    btn_class = '';
-    ent_class = 0;
-    ent_race = 0;
-    status_icon = '';
-    href_style = '';
-    aggro_radius = -1;
-    aggro_bubble = '';
+    var btn_class = '';
+    var ent_class = 0;
+    var ent_race = 0;
+    var status_icon = '';
+    var href_style = '';
+    var aggro_radius = -1;
+    var aggro_bubble = '';
 
     /*
          Called from Zone.GetInitialEntityPositions
@@ -198,8 +198,8 @@ function OnPositionUpdate(json){
         }
 
         /* Get Class and Race Icon */
-        class_icon = "";
-        race_icon = "";
+        var class_icon = "";
+        var race_icon = "";
 
         if (c_images[ent_class]) {
             class_icon = '<img src="cust_assets/icons/item_' + c_images[ent_class] + '.png" class="character_icon" style="width:20px !important;height:auto">';
@@ -214,7 +214,7 @@ function OnPositionUpdate(json){
 
         /* Draw Entity Canvas on Map */
         $("#map_canvas").append(
-            '<span id="ent_' + json.entity + '" class="fadeIn ent_container" style="position:absolute;left:' + (left_offset - json.x) + 'px;top:' + (top_offset - json.y) + 'px;" data-x="' + json.x + '" data-y="' + json.y + '" ">' +
+            '<span id="ent_' + json.entity + '" class="fadeIn ent_container" style="position:absolute;left:' + (left_offset - json.x) + 'px;top:' + (top_offset - json.y) + 'px;" data-x="' + json.x + '" data-y="' + json.y + '">' +
             '<i id="ent_header_' + json.entity + '" class="fa fa-chevron-circle-up" style="color: #333;-webkit-transform:rotate(' + CalcEQHeadingToBrowser(json.h) + 'deg);-moz-transform:rotate(' + CalcEQHeadingToBrowser(json.h) + 'deg);display:inline-block">' + aggro_bubble + '</i> '  +
             '<a href="javascript:;" onclick="SidebarShowEnt(' + json.entity + ')" class="btn btn-default ' + btn_class + ' btn-xs entity_name" style="' + href_style + '"><span id="status_icon">' + status_icon + '</span>' + class_icon + ' ' + race_icon + ' ' + json.name + '</a></span>');
 

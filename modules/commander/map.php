@@ -1,6 +1,8 @@
 <?php
 
-	require_once('functions.php');  
+	require_once('../../includes/config.php');
+	require_once('../../includes/functions.php');
+	require_once('functions.php');
 	
 	/* Open File */
 	
@@ -17,10 +19,7 @@
 	*/
 	
 	/* bool imageline ( resource $image , int $x1 , int $y1 , int $x2 , int $y2 , int $color ) */
-	
-	require_once('../../includes/config.php'); 
-	require_once('../../includes/functions.php');
-	
+
 	/* Parse out lines - First Run */
 	$max_x = 0; $max_y = 0;
 	$min_x = 0; $min_y = 0;

@@ -94,12 +94,12 @@
 		$ret .= '<span class="entity_name" style="position:absolute;left:' . ($left_offset + 0)  . 'px;top:' . ($top_offset + 0) . 'px"><i class="fa fa-map-marker pulse" style="color:#FF0000 !important; font-size:20px"></i>(0, 0) x, y</span>';
 		
 		$ret .= '<div>';
-		
+
 		$ret .= "<script type='text/javascript'>
-			var difference_x = " . $difference_x . ";
-			var difference_y = " . $difference_y . ";
-			var left_offset = " . $left_offset . "; 
-			var top_offset = " . $top_offset . ";
+			var difference_x = '" . $difference_x . "';
+			var difference_y = '" . $difference_y . "';
+			var left_offset = '" . $left_offset . "';
+			var top_offset = '" . $top_offset . "';
 		</script>";
 		return $ret;
 	}

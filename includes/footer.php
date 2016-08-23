@@ -82,14 +82,15 @@
 		<script src="cust_assets/js/eoc_global.js" type="text/javascript"></script>
 		
 		<script src="cust_assets/Tooltip/js/ajax-tooltip.js" type="text/javascript"></script>
-		<link href="cust_assets/Tooltip/css/ajax-tooltip.css" rel="stylesheet" type="text/css"/>
+		<link href="cust_assets/Tooltip/css/ajax-tooltip.css" rel="stylesheet" type="text/css"/>';
+
+		/* Footer Javascript included from a script... */
+		echo $FJS;
+
+		echo '
 		<!-- END JAVASCRIPTS -->
 		</body>
 		<!-- END BODY -->
-		</html>
-		';
-		/* Footer Javascript included from a script... */
-		echo $FJS;
-		
+		</html>';
 		
 ?>

@@ -5,8 +5,6 @@
  */
 header('P3P: CP="CAO PSA OUR"'); //retarded IE fix for servers with session breaking characters in name.
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <!--<![endif]-->

@@ -18,7 +18,7 @@ var ent_follow_update_rate = 10; /* The Rate in which the camera will follow an 
 var follow_iter = 0; /* Follow Iteration, keep at 0 */
 var in_context_menu = 0; /* Keeps track of mouse cursor inside context menu, keep at 0 */
 
-var entity_list_cache = new Array; /* Stores the entity list into a cache variable */
+var entity_list_cache = []; /* Stores the entity list into a cache variable */
 var entity_list_index = 0;
 var highlight_timer = '';
 
@@ -255,8 +255,8 @@ function mouse_move_parse(event) {
         // console.log('top offset ' + top_offset   );
         // console.log('EQ X - ' + (left_offset - event.pageX + 5) + '');
         // console.log('EQ Y - ' + (top_offset - event.pageY + 55) + '');
-        EQ_X = (left_offset - event.pageX + 5);
-        EQ_Y = (top_offset - event.pageY + 55);
+        var EQ_X = (left_offset - event.pageX + 5);
+        var EQ_Y = (top_offset - event.pageY + 55);
         socket.send(JSON.stringify({
             id: 'move_entity',
             method: 'Zone.MoveEntity',
@@ -341,31 +341,31 @@ $('body, html').mousedown(function (event) {
 
 document.oncontextmenu = function () {
     return false;
-}
+};
 
 function SearchEntity(search){
-    entity_search_list = "";
+    var entity_search_list = "";
 
     for (var i = 0; i < entity_list_cache.length; i++) {
-        ent_id = entity_list_cache[i][0];
-        ent_name = entity_list_cache[i][1];
-        ent_name = ent_name.substring(0, 20);
-        ent_type = entity_list_cache[i][2];
-        ent_class = entity_list_cache[i][3];
-        ent_race = entity_list_cache[i][4];
+        var ent_id = entity_list_cache[i][0];
+        var ent_name = entity_list_cache[i][1];
+        //var ent_name = ent_name.substring(0, 20);
+        var ent_type = entity_list_cache[i][2];
+        var ent_class = entity_list_cache[i][3];
+        var ent_race = entity_list_cache[i][4];
 
         if(search != ""){
-            regex_search_match = new RegExp(search, 'i');
+            var regex_search_match = new RegExp(search, 'i');
             if(ent_name.match(regex_search_match)){ }
             else{ continue; }
             //console.log('Search TEST ' + ent_name.indexOf(search) + ' CRIT ' + ent_name);
         }
         /* Get Class and Race Icon */
-        btn_class = 'red';
-        class_icon = '';
-        race_icon = '';
-        href_style = '';
-        status_icon = '';
+        var btn_class = 'red';
+        var class_icon = '';
+        var race_icon = '';
+        var href_style = '';
+        var status_icon = '';
 
         if (ent_type == 'Door' || ent_type == 'Object') {
             ent_race = -1;

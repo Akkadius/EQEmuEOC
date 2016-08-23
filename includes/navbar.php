@@ -170,7 +170,6 @@
         </div>
         <!-- END HEADER INNER -->
         </div>
-        </div>
         <!-- END HEADER -->
         <div class="clearfix">
         </div>

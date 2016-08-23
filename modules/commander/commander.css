@@ -41,7 +41,7 @@
 .text_shadow{ text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000; }
 .entity_name{ font-size:10px }
 .race_image{ 
-	webkit-border-radius: 100px !important;
+	-webkit-border-radius: 100px !important;
 	-moz-border-radius: 100px !important;
 	border-radius: 100px !important;
 	height:25px;
