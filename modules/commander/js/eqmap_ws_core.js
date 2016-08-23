@@ -43,7 +43,7 @@ c_images = {
     13: "4470",
     14: "4488",
     15: "4489",
-    16: "4465",
+    16: "4465"
 };
 r_images = {
     1: "4472",
@@ -61,7 +61,7 @@ r_images = {
     9: "4467",
     12: "4485",
     7: "4468",
-    3: "4478",
+    3: "4478"
 };
 
 
@@ -87,7 +87,7 @@ npc_c_images = {
     59: "skull.png",
     63: "control-power.png",
     64: "control-power.png",
-    66: "money-bag-dollar.png",
+    66: "money-bag-dollar.png"
 };
 
 /* On WS Open */
@@ -104,7 +104,7 @@ socket.onopen = function () {
     //     socket.send(JSON.stringify({id: 'quest_get_script', method: 'World.GetFileContents', params: ['' + ace_file_to_load + '']}));
     // }
     // socket.send(JSON.stringify({id: 'quest_get_script', method: 'World.GetFileContents', params: ['quests/global/global_player.pl']}));
-}
+};
 
 /* Log Errors */
 socket.onerror = function (error) {
@@ -125,9 +125,9 @@ socket.onmessage = function (e) {
     }
     if (IS_JSON == true) {
 
-        /* Update Bytes Recieved */
+        /* Update Bytes Received */
         total_bytes_recieved += roughSizeOfObject(json);
-        $('#status_display').html('MB recieved ' + round((total_bytes_recieved / 1024 / 1024), 5));
+        $('#status_display').html('MB received ' + round((total_bytes_recieved / 1024 / 1024), 5));
 
         /* Tests */
         if (json.id == 'quest_get_script') {
@@ -171,9 +171,11 @@ function FollowEntity(ent_id) {
 }
 
 function GoToEntity(ent_id){
+    follow_entity_id = null;
+    var entity = '#ent_' +  ent_id;
     $('html, body').animate({
-        scrollTop: $('#ent_' +  ent_id).offset().top - ($(window).height() / 2),
-        scrollLeft: $('#ent_' + ent_id).offset().left - ($(window).width() / 2)
+        scrollTop: $(entity).offset().top - ($(window).height() / 2),
+        scrollLeft: $(entity).offset().left - ($(window).width() / 2)
     }, 2500);
 }
 
@@ -242,8 +244,8 @@ function ScaleMapCanvas(zoom) {
 
 /* Controls */
 function mouse_move_parse(event) {
-    var msg = "Handler for .mousemove() called at ";
-    msg += event.pageX + ", " + event.pageY;
+    //var msg = "Handler for .mousemove() called at ";
+    //msg += event.pageX + ", " + event.pageY;
     // console.log(msg);
     if (selected_entity_id > 0) {
         // follow_entity_id = selected_entity_id;
@@ -257,17 +259,16 @@ function mouse_move_parse(event) {
         // console.log('EQ Y - ' + (top_offset - event.pageY + 55) + '');
         var EQ_X = (left_offset - event.pageX + 5);
         var EQ_Y = (top_offset - event.pageY + 55);
+        var selectedentity = '#ent_' + selected_entity_id;
         socket.send(JSON.stringify({
             id: 'move_entity',
             method: 'Zone.MoveEntity',
             params: [g_zone_id, g_instance_id, "" + selected_entity_id + "", "" + EQ_X + "", "" + EQ_Y + "", "" + 0 + "", "" + 0 + ""]
         }));
-        $('#ent_' + selected_entity_id).css('left', (left_offset - EQ_X) + 'px');
-        $('#ent_' + selected_entity_id).css('top', (top_offset - EQ_Y) + 'px');
-        $('#ent_' + selected_entity_id).data('data-x', EQ_X);
-        $('#ent_' + selected_entity_id).data('data-y', EQ_Y);
-
-
+        $(selectedentity).css('left', (left_offset - EQ_X) + 'px');
+        $(selectedentity).css('top', (top_offset - EQ_Y) + 'px');
+        $(selectedentity).data('data-x', EQ_X);
+        $(selectedentity).data('data-y', EQ_Y);
     }
 }
 
@@ -275,8 +276,9 @@ function HighlightEntity(ent_id) {
     socket.send(JSON.stringify({id: "set_entity_attribute", method: "Zone.SetEntityAttribute", params: [g_zone_id, g_instance_id, "" + ent_id + "", "appearance_effect", "" + 135 + ""]}));
     socket.send(JSON.stringify({id: "set_entity_attribute", method: "Zone.SetEntityAttribute", params: [g_zone_id, g_instance_id, "" + ent_id + "", "appearance_effect", "" + 140 + ""]}));
 
-    $("#ent_" + ent_id).removeClass("fadeIn");
-    $("#ent_" + ent_id).fadeIn(250).fadeOut(250).fadeIn(250).fadeOut(250).fadeIn(250);
+    var entity = "#ent_" + ent_id;
+    $(entity).removeClass("fadeIn");
+    $(entity).fadeIn(250).fadeOut(250).fadeIn(250).fadeOut(250).fadeIn(250);
 }
 
 function SendAppearanceEffect(ent_id, app_effect) {

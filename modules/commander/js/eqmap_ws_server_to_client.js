@@ -46,34 +46,37 @@ function OnNPCDepop(json){
 }
 
 function OnEntityEvent(json) {
+    var entity = null;
     switch (json.params[0]) {
         case "0": /* Depop Entity */
-            ent = json.params[1];
-            MadeCorpse = json.params[2];
+            var ent = json.params[1];
+            entity = '#ent_' + ent;
+            var MadeCorpse = json.params[2];
             // console.log('Processing death event');
             if (MadeCorpse == 1) {
-                $('#ent_' + ent + ' a').css('background-color', '#333').css('color', '#fff');
-                $('#ent_' + ent + ' a').append('\'s corpse');
-                $('#ent_' + ent + ' a span').html('<img src="cust_assets/js/context/icons/headstone-rip.png" style="height:18px;width:auto">');
+                $(entity + ' a').css('background-color', '#333').css('color', '#fff');
+                $(entity + ' a').append('\'s corpse');
+                $(entity + ' a span').html('<img src="cust_assets/js/context/icons/headstone-rip.png" style="height:18px;width:auto">');
             }
             else {
-                $('#ent_' + ent + ' a').css('background-color', '#333').css('color', '#fff');
-                $('#ent_' + ent + ' a span').html('<img src="cust_assets/js/context/icons/headstone-rip.png" style="height:18px;width:auto">');
-                $('#ent_' + ent).fadeOut(4000, function () {
+                $(entity + ' a').css('background-color', '#333').css('color', '#fff');
+                $(entity + ' a span').html('<img src="cust_assets/js/context/icons/headstone-rip.png" style="height:18px;width:auto">');
+                $(entity).fadeOut(4000, function () {
                     $(this).remove();
                 });
-                $('#ent_' + ent).unbind("mouseleave");
-                $('#ent_' + ent).unbind("mouseenter");
+                $(entity).unbind("mouseleave");
+                $(entity).unbind("mouseenter");
             }
             break;
         /* Depop Corpse */
         case "1":
             ent = json.params[1];
-            $('#ent_' + ent).fadeOut(4000, function () {
+            entity = '#ent_' + ent;
+            $(entity).fadeOut(4000, function () {
                 $(this).remove();
             });
-            $('#ent_' + ent).unbind("mouseleave");
-            $('#ent_' + ent).unbind("mouseenter");
+            $(entity).unbind("mouseleave");
+            $(entity).unbind("mouseenter");
             break;
         default:
     }
@@ -151,10 +154,11 @@ function OnPositionUpdate(json){
 
     /* Follow Camera */
     if (follow_entity_id > 0) {
+        var entity2follow = '#ent_' + follow_entity_id;
         if (follow_iter > ent_follow_update_rate) {
             $('html, body').animate({
-                scrollTop: $('#ent_' + follow_entity_id).offset().top - ($(window).height() / 2),
-                scrollLeft: $('#ent_' + follow_entity_id).offset().left - ($(window).width() / 2)
+                scrollTop: $(entity2follow).offset().top - ($(window).height() / 2),
+                scrollLeft: $(entity2follow).offset().left - ($(window).width() / 2)
             }, 300);
             follow_iter = 0;
         }
@@ -162,11 +166,12 @@ function OnPositionUpdate(json){
     }
 
     /* If Entity exists, update their heading and position */
-    if ($('#ent_' + json.entity).length > 0) {
-        $('#ent_' + json.entity).css('left', (left_offset - json.x));
-        $('#ent_' + json.entity).css('top', (top_offset - json.y));
-        $('#ent_' + json.entity).data('data-x', json.x);
-        $('#ent_' + json.entity).data('data-y', json.y);
+    var entity = '#ent_' + json.entity;
+    if ($(entity).length > 0) {
+        $(entity).css('left', (left_offset - json.x));
+        $(entity).css('top', (top_offset - json.y));
+        $(entity).data('data-x', json.x);
+        $(entity).data('data-y', json.y);
         $('#ent_header_' + json.entity).css({
             '-webkit-transform': 'rotate(' + CalcEQHeadingToBrowser(json.h) + 'deg)',
             '-moz-transform': 'rotate(' + CalcEQHeadingToBrowser(json.h) + 'deg)',
@@ -220,18 +225,18 @@ function OnPositionUpdate(json){
 
         /* Hook events to new entity */
         if (json.type == 'Client') {
-            $('#ent_' + json.entity).bind("mouseenter", function () {
+            $(entity).bind("mouseenter", function () {
                 in_ent = 2;
                 highlighted_entity_id = json.entity;
             });
         }
         else {
-            $('#ent_' + json.entity).bind("mouseenter", function () {
+            $(entity).bind("mouseenter", function () {
                 in_ent = 3;
                 highlighted_entity_id = json.entity;
             });
         }
-        $('#ent_' + json.entity).bind("mouseleave", function () {
+        $(entity).bind("mouseleave", function () {
             in_ent = 0;
             highlighted_entity_id = 0;
         });
