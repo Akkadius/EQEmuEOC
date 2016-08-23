@@ -45,7 +45,7 @@ header('P3P: CP="CAO PSA OUR"'); //retarded IE fix for servers with session brea
 </head>
 
 <?php
-	if(isset($_SESSION['UIStyle']) == 2){
+	if($_SESSION['UIStyle'] == 2){
 		echo "<style> 
 			.page-content, 
 			.form-control, 
