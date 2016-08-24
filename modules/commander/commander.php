@@ -18,7 +18,7 @@
 		<link rel="stylesheet" href="cust_assets/js/context/jquery.contextmenu.css">
 		<script type="text/javascript" src="cust_assets/js/colpick/js/colpick.js"></script>
 		<link href="cust_assets/js/colpick/css/colpick.css" rel="stylesheet" type="text/css"/>';
-	
+
 	if(isset($_GET['zone'])){
 		echo Draw2DMap($_GET['zone'], 1);  
 	}
@@ -90,9 +90,9 @@
 	else{
 		/* Main */
 		echo '
-			<center>
+			<div style="text-align: center;">
 				<h1 class="page-title slideDown anim_entrance"> <i class="fa fa-cloud" style="font-size:20px"></i> Zone Servers </h1><hr>
-				<table id="zone_servers_list" class="table table-hover table-striped table-bordered slideUp" style="width:600px">
+				<table id="zone_servers_list" class="table table-hover table-striped table-bordered slideUp" style="width:600px;margin-left: auto; margin-right: auto;">
 					<tr>
 						<td style="text-align:center">
 							<span id="zone_server_count"></span>
@@ -105,16 +105,16 @@
 						<td>Instance ID</td>
 					</tr>
 				</table>
-			</center>';
+			</div>';
 	}
-	
+	/*  The following doesn't seem to be doing anything, html code checkers complain about style being here anyway. */
 	#::: Dark Style UI
 	if(isset($_SESSION['UIStyle']) == 2){
 	
 	}
 	else{
-		echo '
-		<style>
+		/*echo '
+		<style type="text/css">
 			.btn-default {
 				color: #333333; 
 				border-color: #cccccc;
@@ -122,6 +122,6 @@
 			body {
 				background-color: #fff !important;
 			}
-		</style>';
+		</style>';*/
 	}
 ?>

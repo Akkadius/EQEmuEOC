@@ -18,7 +18,7 @@ function SidebarShowEnt(l_ent_id){
 }
 
 function HandleSideBarShowEntCallBack(json){
-    query_string = "doquery=1";
+    var query_string = "doquery=1";
     for (var key in json.result) {
         if (json.result.hasOwnProperty(key)) {
             query_string = query_string + "&" + key + "=" + encodeURIComponent(json.result[key]);
@@ -36,7 +36,7 @@ function HandleSideBarShowEntCallBack(json){
 }
 
 function SideBarMenu(menu){
-    query_string = "ajax.php?M=CM&sidebar_menu=" + menu;
+    var query_string = "ajax.php?M=CM&sidebar_menu=" + menu;
     $.ajax({url: query_string, context: document.body}).done(function (e) {
         eval($(e).find("script").text());
         $('#quick_sidebar_content').html(e);

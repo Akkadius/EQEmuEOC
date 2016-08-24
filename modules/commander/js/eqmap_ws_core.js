@@ -22,6 +22,9 @@ var entity_list_cache = []; /* Stores the entity list into a cache variable */
 var entity_list_index = 0;
 var highlight_timer = '';
 
+var g_zone_id;
+var g_instance_id;
+
 /* Entity Events
  0 = Death
  1 = Spawn Mob Corpse

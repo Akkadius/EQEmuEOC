@@ -42,6 +42,7 @@ header('P3P: CP="CAO PSA OUR"'); //retarded IE fix for servers with session brea
 <!-- END THEME STYLES -->
 <link href="cust_assets/css/font-awesome-animation.css" type="text/css" rel="stylesheet">
 <link rel="shortcut icon" href="favicon.ico"/>
+<script src="assets/global/plugins/memory-stats.js/memory-stats.js" type="text/javascript"></script>
 </head>
 
 <?php
@@ -97,7 +98,20 @@ header('P3P: CP="CAO PSA OUR"'); //retarded IE fix for servers with session brea
 <!-- DOC: Apply "page-sidebar-reversed" class to put the sidebar on the right side -->
 <!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
 
-<body class="page-full-width page-header-fixed page-quick-sidebar-over-content page-sidebar-hide page-sidebar-fixed page-footer-fixed page-sidebar-menu-closed"> 
+<body class="page-full-width page-header-fixed page-quick-sidebar-over-content page-sidebar-hide page-sidebar-fixed page-footer-fixed page-sidebar-menu-closed">
+
+<!-- This only works in Chrome and by launching it with this command arg: --enable-precise-memory-info -->
+<script type="text/javascript">
+    var stats = new MemoryStats();
+    stats.domElement.style.position	= 'fixed';
+    stats.domElement.style.left		= '1px';
+    stats.domElement.style.bottom	= '34px';
+    document.body.appendChild( stats.domElement );
+    requestAnimationFrame(function rAFloop(){
+        stats.update();
+        requestAnimationFrame(rAFloop);
+    });
+</script>
 <!-- BEGIN HEADER -->	
 <div class="page-header navbar navbar-fixed-top">
 	<!-- BEGIN HEADER INNER -->

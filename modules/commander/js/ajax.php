@@ -93,7 +93,7 @@
                             socket.send(JSON.stringify({id: "set_entity_attribute",
                             method: "Zone.SetEntityAttribute",
                             params: [g_zone_id, g_instance_id, "" + ' . $_GET["ent_id"] . ' + "", "heading", "" + v + ""]}));
-                        },
+                        }
                     });
                     $( "#slider_size" ).slider({
                           range: "max",  min: 1,  max: 255, value: ' . $_POST["size"] . ',

@@ -51,7 +51,7 @@
 			});
 			function getAllProperties(obj) {
 			  var properties = "";
-			  for (property in obj) {
+			  for (var property in obj) {
 				properties += "\n" + property;
 			  }
 			 console.log("properties " + properties);

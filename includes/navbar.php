@@ -1,6 +1,6 @@
 <?php 
 
-	function img_icon($url){ return '<img src="' . $url . '" style="height:20px;width:auto">'; }
+	function img_icon($url){ return '<img src="' . $url . '" style="height:20px;width:auto" alt="">'; }
 
 	echo '
         <div class="hor-menu hor-menu-light hidden-sm hidden-xs">
@@ -44,8 +44,8 @@
 									    <li class="divider" style="height: 1px; padding:0px !important"> </li>
 
                                         <li class="divider" style="height: 1px; padding:0px !important"> </li>
-                                        <li> <a href="min.php?Mod=PEQEditor&Rev=501"> <i class="fa fa-angle-right"></i> <img src="cust_assets/images/PEQ_Logo.png" style="height:25px;width:auto"> PEQ Editor Rev 501  </a> </li>
-                                        <li> <a href="min.php?Mod=PEQEditor&Rev=460"> <i class="fa fa-angle-right"></i> <img src="cust_assets/images/PEQ_Logo.png" style="height:25px;width:auto"> PEQ Editor Rev 460 </a> </li>
+                                        <li> <a href="min.php?Mod=PEQEditor&Rev=501"> <i class="fa fa-angle-right"></i> <img src="cust_assets/images/PEQ_Logo.png" alt="" style="height:25px;width:auto"> PEQ Editor Rev 501  </a> </li>
+                                        <li> <a href="min.php?Mod=PEQEditor&Rev=460"> <i class="fa fa-angle-right"></i> <img src="cust_assets/images/PEQ_Logo.png" alt="" style="height:25px;width:auto"> PEQ Editor Rev 460 </a> </li>
                                     </ul>
                                     <ul class="col-md-4 mega-menu-submenu">
                                         <li> <h3>Viewers</h3> </li>
@@ -163,23 +163,23 @@
 			}
 			
 	echo '
-        <!-- END QUICK SIDEBAR TOGGLER -->
-        </ul>
-        </div>
-        <!-- END TOP NAVIGATION MENU -->
-        </div>
-        <!-- END HEADER INNER -->
-        </div>
-        <!-- END HEADER -->
-        <div class="clearfix">
-        </div>
-        <!-- BEGIN CONTAINER -->
-        <div class="page-container">
-        <!-- BEGIN SIDEBAR -->
-        <div class="page-sidebar-wrapper">
-        <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
-        <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-        <div class="page-sidebar navbar-collapse collapse">
+		<!-- END QUICK SIDEBAR TOGGLER -->
+		</ul>
+		</div>
+		<!-- END TOP NAVIGATION MENU -->
+		</div>
+		<!-- END HEADER INNER -->
+		</div>
+		<!-- END HEADER -->
+		<div class="clearfix">
+		</div>
+		<!-- BEGIN CONTAINER -->
+		<div class="page-container">
+		<!-- BEGIN SIDEBAR -->
+		<div class="page-sidebar-wrapper">
+		<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+		<!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+		<div class="page-sidebar navbar-collapse collapse">
 	';
 
 ?>
