@@ -1,8 +1,13 @@
 <?php
 	require_once('modules/commander/functions.php');
-	if(isset($_GET['GetZoneMap'])){
-		echo Draw2DMap($_GET['GetZoneMap']);
-	}
+
+    if(isset($_GET['Config'])){
+        $cmdConfig = [$WS_IP, $WS_PORT, $WS_TOKEN];
+        echo json_encode($cmdConfig);
+    }
+    if(isset($_GET['GetZoneMap'])){
+        echo Draw2DMap($_GET['GetZoneMap']);
+    }
 
     if(isset($_GET['sidebar_menu'])){
         if($_GET['sidebar_menu'] == "entity_search"){

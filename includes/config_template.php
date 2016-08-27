@@ -22,11 +22,15 @@
         $cfgversion = 0;
     }
 	
-	/* MySQL DB Config (Unless otherwise overriden by other settings */
+	/* MySQL DB Config (Unless otherwise overridden by other settings) */
 	$dbhost = "localhost";
 	$dbname = "";
 	$dbuser = "";
 	$dbpasswd = "";
+	/* Commander Config (Unless otherwise overridden by other settings) */
+	$WS_IP = '127.0.0.1';
+	$WS_PORT = '9081';
+	$WS_TOKEN = 'somerandomstringofjunk';
 	
 	/* EoC Local Database Storage */
 	$eoc_dbhost = $dbhost;

@@ -1,11 +1,8 @@
-/* Websocket Core */
-var socket = new WebSocket('ws://' + WS_IP + ':' + WS_PORT, 'eqemu');
-
 /* Variables - Most of which you do not want to change */
 
 var zone_server_count = 0; /* Zone Server Count */
 var total_players = 0; /* Total Player Count */
-var total_bytes_recieved = 0; /* Total Bytes Recieved via JSON */
+var total_bytes_recieved = 0; /* Total Bytes Received via JSON */
 var depop_repop_queue = 0; /* Depop Status Bool */
 var zoom = 250; /* 250% */
 var canvas_events_hooked = 0; /* Bool to set Canvas Events Status */
@@ -93,72 +90,85 @@ npc_c_images = {
     66: "money-bag-dollar.png"
 };
 
-/* On WS Open */
-socket.onopen = function () {
-    console.log('Connection opened to ws://' + WS_IP + ':' + WS_PORT);
-    var obj = {};
-    obj.id = 'token_auth_id';
-    obj.method = 'WebInterface.Authorize';
-    obj.params = [WS_TOKEN];
-    socket.send(JSON.stringify(obj));
-    SideBarMenu("zone_action");
-    BuildSideBarMenuOptions();
-    // if(ace_file_to_load){
-    //     socket.send(JSON.stringify({id: 'quest_get_script', method: 'World.GetFileContents', params: ['' + ace_file_to_load + '']}));
-    // }
-    // socket.send(JSON.stringify({id: 'quest_get_script', method: 'World.GetFileContents', params: ['quests/global/global_player.pl']}));
-};
+/* Websocket Core */
 
-/* Log Errors */
-socket.onerror = function (error) {
-    console.log('WebSocket Error ' + error);
-};
+var socket;
+function DoConnect(){
+    var query_string = "ajax.php?M=CM&Config";
+    $.ajax({url: query_string, context: document.body}).done(function (e) {
+        var obj = JSON.parse(e);
+        var WS_IP = obj[0];
+        var WS_PORT = parseInt(obj[1], 10);
+        var WS_TOKEN = obj[2];
 
-/*
-    Messages from Server
-*/
-socket.onmessage = function (e) {
-    // console.log('Server: ' + e.data);
-    var IS_JSON = true;
-    try {
-        var json = $.parseJSON(e.data);
-    }
-    catch (err) {
-        IS_JSON = false;
-    }
-    if (IS_JSON == true) {
+        /* Set our server connection */
+        socket = new WebSocket('ws://' + WS_IP + ':' + WS_PORT, 'eqemu');
 
-        /* Update Bytes Received */
-        total_bytes_recieved += roughSizeOfObject(json);
-        $('#status_display').html('MB received ' + round((total_bytes_recieved / 1024 / 1024), 5));
+        /* On WS Open */
+        socket.onopen = function () {
+            console.log('Connection opened to ws://' + WS_IP + ':' + WS_PORT);
+            var obj = {};
+            obj.id = 'token_auth_id';
+            obj.method = 'WebInterface.Authorize';
+            obj.params = [WS_TOKEN];
+            socket.send(JSON.stringify(obj));
+            SideBarMenu("zone_action");
+            BuildSideBarMenuOptions();
+            // if(ace_file_to_load){
+            //     socket.send(JSON.stringify({id: 'quest_get_script', method: 'World.GetFileContents', params: ['' + ace_file_to_load + '']}));
+            // }
+            // socket.send(JSON.stringify({id: 'quest_get_script', method: 'World.GetFileContents', params: ['quests/global/global_player.pl']}));
+        };
 
-        /* Tests */
-        if (json.id == 'quest_get_script') {
-            // console.log(json);
+        /* Log Errors */
+        socket.onerror = function (error) {
+            console.log('WebSocket Error ' + error);
+        };
 
-            // json.result.quest_text = json.result.quest_text.replace("\\n", "<br />");
+        /* Messages from Server */
+        socket.onmessage = function (e) {
+            // console.log('Server: ' + e.data);
+            var IS_JSON = true;
+            try {
+                var json = $.parseJSON(e.data);
+            }
+            catch (err) {
+                IS_JSON = false;
+            }
+            if (IS_JSON == true) {
 
-           // $('#editor').text(json.result.quest_text);
-            editor.getSession().setValue(json.result.quest_text);
-        }
+                /* Update Bytes Received */
+                total_bytes_recieved += roughSizeOfObject(json);
+                $('#status_display').html('MB received ' + round((total_bytes_recieved / 1024 / 1024), 5));
 
-        /* Event Handlers: Server -> Web Client */
-        if (json.method == 'On.NPC.Position' || json.method == 'On.Client.Position' || json.id == 'get_initial_entity_positions') {
-            OnPositionUpdate(json);
-        }
+                /* Tests */
+                if (json.id == 'quest_get_script') {
+                    // console.log(json);
+                    // json.result.quest_text = json.result.quest_text.replace("\\n", "<br />");
+                    // $('#editor').text(json.result.quest_text);
+                    editor.getSession().setValue(json.result.quest_text);
+                }
 
-        if (json.method == 'On.Entity.Events') { OnEntityEvent(json); }
-        else if (json.method == 'On.Combat.States') { OnClientCombatState(json); }
-        else if (json.method == 'On.NPC.Depop') { OnNPCDepop(json);    }
-        else if (json.id == 'zone_get_entity_attributes'){ HandleSideBarShowEntCallBack(json); }
-        else if (json.id == 'list_zones_id') { HandleListZones(json); }
-        else if (json.id == 'token_auth_id') { socket.send(JSON.stringify({id: 'list_zones_id', method: 'World.ListZones', params: []}));  }
-        else if (json.id == 'get_zone_info_id') { GetZoneInfoFromListZone(json); }
-    }
-};
+                /* Event Handlers: Server -> Web Client */
+                if (json.method == 'On.NPC.Position' || json.method == 'On.Client.Position' || json.id == 'get_initial_entity_positions') {
+                    OnPositionUpdate(json);
+                }
+
+                if (json.method == 'On.Entity.Events') { OnEntityEvent(json); }
+                else if (json.method == 'On.Combat.States') { OnClientCombatState(json); }
+                else if (json.method == 'On.NPC.Depop') { OnNPCDepop(json);    }
+                else if (json.id == 'zone_get_entity_attributes'){ HandleSideBarShowEntCallBack(json); }
+                else if (json.id == 'list_zones_id') { HandleListZones(json); }
+                else if (json.id == 'token_auth_id') { socket.send(JSON.stringify({id: 'list_zones_id', method: 'World.ListZones', params: []}));  }
+                else if (json.id == 'get_zone_info_id') { GetZoneInfoFromListZone(json); }
+            }
+        };
+    });
+}
 
 /* END: Websocket Core */
 
+DoConnect();
 
 function CalcEQHeadingToBrowser(heading) {
     heading = (256 - heading) * 1.40625;

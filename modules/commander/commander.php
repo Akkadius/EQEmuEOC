@@ -7,7 +7,6 @@
 	// echo '<script src="assets/global/plugins/jquery.min.js"></script>';
 	$FJS .= '
 		<script src="assets/global/plugins/jquery.ba-throttle-debounce.min.js"></script>
-		<script src="modules/commander/js/eqmap_ws_core_config.js"></script>
 		<script src="modules/commander/js/eqmap_ws_core.js"></script>
 		<script src="modules/commander/js/eqmap_ws_sidebar.js"></script>
 		<script src="modules/commander/js/eqmap_ws_server_to_client.js"></script>

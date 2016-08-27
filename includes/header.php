@@ -101,17 +101,25 @@ header('P3P: CP="CAO PSA OUR"'); //retarded IE fix for servers with session brea
 <body class="page-full-width page-header-fixed page-quick-sidebar-over-content page-sidebar-hide page-sidebar-fixed page-footer-fixed page-sidebar-menu-closed">
 
 <!-- This only works in Chrome and by launching it with this command arg: --enable-precise-memory-info -->
-<script type="text/javascript">
-    var stats = new MemoryStats();
-    stats.domElement.style.position	= 'fixed';
-    stats.domElement.style.left		= '1px';
-    stats.domElement.style.bottom	= '34px';
-    document.body.appendChild( stats.domElement );
-    requestAnimationFrame(function rAFloop(){
-        stats.update();
-        requestAnimationFrame(rAFloop);
-    });
-</script>
+
+<?php
+if(preg_match('/(Chrome|CriOS)\//i',$_SERVER['HTTP_USER_AGENT'])
+&& !preg_match('/(Aviator|ChromePlus|coc_|Dragon|Edge|Flock|Iron|Kinza|Maxthon|MxNitro|Nichrome|OPR|Perk|Rockmelt|Seznam|Sleipnir|Spark|UBrowser|Vivaldi|WebExplorer|YaBrowser)/i',$_SERVER['HTTP_USER_AGENT'])){
+?>
+	<script type="text/javascript">
+		var stats = new MemoryStats();
+		stats.domElement.style.position	= 'fixed';
+		stats.domElement.style.left		= '1px';
+		stats.domElement.style.bottom	= '34px';
+		document.body.appendChild( stats.domElement );
+		requestAnimationFrame(function rAFloop(){
+			stats.update();
+			requestAnimationFrame(rAFloop);
+		});
+	</script>
+<?php
+}
+?>
 <!-- BEGIN HEADER -->	
 <div class="page-header navbar navbar-fixed-top">
 	<!-- BEGIN HEADER INNER -->
