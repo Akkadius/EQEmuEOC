@@ -73,6 +73,18 @@
     function debugalert($data){
         echo '<script type="text/javascript">alert($data);</script>';
     }
+    function fetchRows($result) {
+        $res = array();
+        if ($result) {
+            while ($record = mysql_fetch_assoc($result)) { $res[] = $record; }
+        }
+        return $res;
+    }
+    function num_rows($rows) {
+        $n = 0;
+        foreach($rows as $row) { $n++; }
+        return $n;
+    }
 
     function DuplicateMySQLRecord ($table, $id_field, $id_copied_from, $copied_to_id = 0) {
         /* load the original record into an array */
@@ -121,6 +133,32 @@
         while($row = mysql_fetch_array($result)){
             return $row['next_id'];
         }
+        return '';
+    }
+
+    function GetAuthEoC($name, $pass){
+        $query = 'SELECT
+                    account.`password`
+                  FROM
+                    account
+                  WHERE
+                    account.`name` = "'.$name.'"';
+        $result = mysql_query($query);
+        $password = fetchRows($result)[0]['password'];
+        if($password == $pass && $password !== "") { return true; }
+        return false;
+    }
+
+    function GetAuthLevelEoC($name){
+        $query = 'SELECT
+                    account.`status`
+                  FROM
+                    account
+                  WHERE
+                    account.`name` = "'.$name.'"';
+        $result = mysql_query($query);
+        $status = fetchRows($result)[0]['status'];
+        return $status;
     }
 
 ?>

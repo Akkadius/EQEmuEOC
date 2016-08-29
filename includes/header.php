@@ -46,6 +46,10 @@ header('P3P: CP="CAO PSA OUR"'); //retarded IE fix for servers with session brea
 </head>
 
 <?php
+    //if(!GetAuthEoC('somename', 'somepass')) {
+    //    echo '<span>Unauthorized Connection.</span>';
+    //    die();
+    //}
 	if($_SESSION['UIStyle'] == 2){
 		echo "<style> 
 			.page-content, 
@@ -64,7 +68,7 @@ header('P3P: CP="CAO PSA OUR"'); //retarded IE fix for servers with session brea
 			.mega-menu-dropdown,
 			.table td{ 
 				background-color: #333333 !important;
-				// color: gray !important;
+				/* color: gray !important;*/
 				color: rgb(232, 228, 228) !important;
 			}
 			.btn-default{ padding:3px !important; }
@@ -72,12 +76,12 @@ header('P3P: CP="CAO PSA OUR"'); //retarded IE fix for servers with session brea
 				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 6px 18px rgba(0, 0, 0, 0.2) !important;
 			}
 			.form-horizontal.form-bordered.form-row-stripped .form-control {
-				background-color: #333333 !important; 
-				// color: gray !important;
+				background-color: #333333 !important;
+				/* color: gray !important;*/
 				color: rgb(232, 228, 228) !important;
 			}
 			h1,  h2,  h3,  h4,  h5,  h6, i{
-				// color: gray !important;
+				/* color: gray !important;*/
 				color: rgb(232, 228, 228) !important;
 			}
 			.page-quick-sidebar-wrapper{
