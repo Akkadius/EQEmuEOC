@@ -17,4 +17,15 @@
 	if($_GET['M'] == "race_viewer"){ include('modules/RaceViewer/ajax/ajax.php'); }
 	if($_GET['M'] == "Character"){ include('modules/Character/ajax/ajax.php'); }
 
+if(isset($_GET['login'])){
+	SetEOCLogin($_GET);
+	exit();
+}
+if(isset($_GET['logout'])){
+	$_SESSION['login'] = 0;
+	$_SESSION['user'] = '';
+	$_SESSION['pass'] = '';
+	exit();
+}
+
 ?>

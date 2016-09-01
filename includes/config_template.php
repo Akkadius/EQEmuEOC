@@ -3,6 +3,9 @@
 	$offset = -50;
     $Minified = 0;
     $SessionTimeout = 999;
+	/* Set to false for development, true for production */
+	$secureEOC = false;
+	$AccessStatus = 250;
     date_default_timezone_set("America/Los_Angeles");
 
     $allaclonecfg = '../allaclone/includes/config.php';

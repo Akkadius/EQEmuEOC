@@ -136,13 +136,16 @@
         return '';
     }
 
+	/* For now not setting this to a hash as telnet uses this field as well */
     function GetAuthEoC($name, $pass){
         $query = 'SELECT
                     account.`password`
                   FROM
                     account
                   WHERE
-                    account.`name` = "'.$name.'"';
+                    account.`name` = "'.$name.'"
+                  AND
+                    account.`password` = "'.$pass.'"';
         $result = mysql_query($query);
         $password = fetchRows($result)[0]['password'];
         if($password == $pass && $password !== "") { return true; }
@@ -161,4 +164,21 @@
         return $status;
     }
 
+	/* Used for core EoC access, plus can use to show/hide functions and features for GMs */
+	function IsAuthEoC($status){
+		if(GetAuthEoC($_SESSION['user'], $_SESSION['pass']) && GetAuthLevelEoC($_SESSION['user']) >= $status) {
+			return true;
+		}
+		return false;
+	}
+
+	function SetEOCLogin($data) {
+		$name = $data['user'];
+		$pass = $data['pass'];
+		if(GetAuthEoC($name, $pass)) {
+			$_SESSION['login'] = 1;
+			$_SESSION['user'] = $name;
+			$_SESSION['pass'] = $pass;
+		}
+	}
 ?>

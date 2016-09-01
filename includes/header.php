@@ -46,10 +46,6 @@ header('P3P: CP="CAO PSA OUR"'); //retarded IE fix for servers with session brea
 </head>
 
 <?php
-    //if(!GetAuthEoC('somename', 'somepass')) {
-    //    echo '<span>Unauthorized Connection.</span>';
-    //    die();
-    //}
 	if($_SESSION['UIStyle'] == 2){
 		echo "<style> 
 			.page-content, 
@@ -104,7 +100,7 @@ header('P3P: CP="CAO PSA OUR"'); //retarded IE fix for servers with session brea
 
 <body class="page-full-width page-header-fixed page-quick-sidebar-over-content page-sidebar-hide page-sidebar-fixed page-footer-fixed page-sidebar-menu-closed">
 
-<!-- This only works in Chrome and by launching it with this command arg: --enable-precise-memory-info -->
+<!-- This only works in Chrome and by launching it with the command arg: enable-precise-memory-info -->
 
 <?php
 if(preg_match('/(Chrome|CriOS)\//i',$_SERVER['HTTP_USER_AGENT'])
@@ -143,5 +139,76 @@ if(preg_match('/(Chrome|CriOS)\//i',$_SERVER['HTTP_USER_AGENT'])
 		<!-- BEGIN HORIZANTAL MENU -->
 		<!-- DOC: Remove "hor-menu-light" class to have a horizontal menu with theme background instead of white background -->
 		<!-- DOC: This is desktop version of the horizontal menu. The mobile version is defined(duplicated) in the responsive menu below along with sidebar menu. So the horizontal menu has 2 seperate versions -->
-		
+		<!-- BEGIN LOGIN -->
+		<?php
+		if($secureEOC) {
+			if(/*!IsAuthEoC($AccessStatus) || */$_SESSION['login'] != 1) {
+				echo '</div></div><div style="margin-top:60px;float:left;width:100%;text-align:center;">';
+				if($_SESSION['login'] != 1) {
+					echo '<div style="margin-left:auto;margin-right:auto;">Please Log in..</div><br>';
+					echo '<form method="post" style="margin-left:auto;margin-right:auto;">
+							<table width="250" style="margin-left:auto;margin-right:auto;">
+								<tr>
+									<td align="left">
+										<strong>Login:</strong>
+									</td>
+									<td align="right">
+										<input type="text" name="user" id="user" value="" style="background:white!important;color:black!important;" onkeyup="if(event.keyCode == 13){ DoEOCLogin(); }">
+									</td>
+								</tr>
+								<tr>
+									<td align="left">
+									<strong>Password:</strong>
+									</td>
+									<td align="right">
+										<input type="password" name="pass" id="pass" value="" style="background:white!important;color:black!important;" onkeyup="if(event.keyCode == 13){ DoEOCLogin(); }">
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2" align="center">
+										<br><input type="button" value="Login" style="width:60px;" onclick="DoEOCLogin();">
+									</td>
+								</tr>
+							</table>
+						</form>
+
+						<script src="assets/global/plugins/jquery-1.11.0.min.js" type="text/javascript"></script>
+						<script type="text/javascript">
+							function DoEOCLogin() {
+								var user = document.getElementById(\'user\');
+								var pass = document.getElementById(\'pass\');
+								$.ajax({
+									url: "ajax.php?login&user=" + encodeURIComponent(user.value) + "&pass=" + encodeURIComponent(pass.value),
+										context: document.body
+									}).done(function(e) {
+										window.location = \'index.php\';
+								});
+							}
+						</script>';
+				}
+				else {
+					echo '<div style="margin-left:auto;margin-right:auto;">Unauthorized Connection.</div>';
+					$_SESSION['login'] = 0;
+					$_SESSION['user'] = '';
+					$_SESSION['pass'] = '';
+				}
+				die();
+			}
+			if(!IsAuthEoC($AccessStatus)){
+				echo '</div></div><div style="margin-top:60px;float:left;width:100%;text-align:center;">';
+				echo '<div style="margin-left:auto;margin-right:auto;">Unauthorized Connection.</div>';
+				$_SESSION['login'] = 0;
+				$_SESSION['user'] = '';
+				$_SESSION['pass'] = '';
+				die();
+			}
+		}
+		else {
+			/* Lets clear any residual session data for swapping between secure states */
+			$_SESSION['login'] = 0;
+			$_SESSION['user'] = '';
+			$_SESSION['pass'] = '';
+		}
+		?>
+		<!-- END LOGIN -->
 

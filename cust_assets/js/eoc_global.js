@@ -128,3 +128,12 @@ function GetFormQueryString(ID){
     });
     return query_string;
 }
+
+function LogOutEOC(){
+    $.ajax({
+        url: "ajax.php?logout",
+        context: document.body
+    }).done(function(e) {
+        window.location = 'index.php';
+    });
+}

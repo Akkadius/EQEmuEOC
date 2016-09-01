@@ -11,11 +11,11 @@
 
 	/* Index Variable */
 	if(isset($_GET['M'])){
-        $Mod = $_GET['M'];
-    }
+		$Mod = $_GET['M'];
+	}
 	else if(isset($_GET['Module'])){
-        $Mod = $_GET['Module'];
-    }
+		$Mod = $_GET['Module'];
+	}
 
 	if($Mod == "Commander"){ include('modules/commander/commander.php'); } 
 	if($Mod == "ItemEditor"){ include('modules/ItemEditor/ItemEditor.php'); }

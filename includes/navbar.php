@@ -99,11 +99,15 @@
 				</a>
 
 				<ul class="dropdown-menu">
-					<li class="divider" style="height: 1px; padding:0px !important"> </li>	
+					<li class="divider" style="height: 1px; padding:0px !important"> </li>
 					<li> <a href="javascript:;" style="cursor: default !important;">UI Skin Styles</a> </li>
 					<li>  <a href="javascript:;" onclick="ToggleUIStyle(1)"> <i class="fa fa-css3"></i> Light (Default) </a> </li>
-					<li>  <a href="javascript:;" onclick="ToggleUIStyle(2)"> <i class="fa fa-css3"></i> Dark </a> </li>
-				</ul>
+					<li>  <a href="javascript:;" onclick="ToggleUIStyle(2)"> <i class="fa fa-css3"></i> Dark </a> </li>';
+	if($secureEOC) {
+		echo '		<li class="divider" style="height: 1px; padding:0px !important"> </li>
+					<li>  <a href="javascript:;" onclick="LogOutEOC()">LogOut</a> </li>';
+	}
+	echo '		</ul>
 			</li>';
 
 
