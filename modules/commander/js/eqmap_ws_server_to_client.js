@@ -125,11 +125,21 @@ function OnPositionUpdate(json){
             ent_class = json.result.class_id;
             ent_race = json.result.race_id;
             if(json.type == 'NPC'){
-                // console.log(json.result.aggro_range);
                 aggro_radius = json.result.aggro_range;
                 // aggro_radius = 12;
                 // top:' + (aggro_radius * 1.2) + '%;left:-' + (aggro_radius * .10) + '%;
-                aggro_bubble = '<i class="fa fa-circle-thin" style="position:absolute;top:0%;left:-' + (aggro_radius * 7) + '%;font-size:' + round(aggro_radius * 2.4, 0) + 'px;color:red !important;opacity:.3"></i>';
+
+                var circle_offset_top = 0;
+                var circle_offset_left = (aggro_radius * .95);
+                aggro_bubble = '<i class="fa fa-circle-thin" style="position:absolute;top:-' + circle_offset_top + 'px;left:-' + circle_offset_left + 'px;font-size:' + round(aggro_radius * 2.4, 0) + 'px;color:red !important;opacity:.3"></i>';
+                //aggro_bubble = '<i class="fa fa-circle-thin" style="position:absolute;top:0%;left:-' + (aggro_radius * 7) + '%;font-size:' + round(aggro_radius * 2.4, 0) + 'px;color:red !important;opacity:.3"></i>';
+
+                //console.log(circle_offset);
+                //left = (aggro_radius * .0033);
+                //top = (aggro_radius * .8333);
+                /* experimental aggro radius rendering for a thinner circle edge. Having scale and view box issues */
+                //aggro_bubble  = '<svg style="position:absolute;pointer-events:none;top:-' + circle_offset_top + 'px;left:-' + circle_offset_left + 'px;" width="' + (aggro_radius * 2.0) + 'px" height="' + (aggro_radius * 2.0) + 'px" viewBox="-8 -8 16 16">';
+                //aggro_bubble += '<circle cx="0.3" cy="-7.5" r="' + (aggro_radius / 13) + '" fill="none" stroke="#f00" stroke-width="0.08"/></svg>';
             }
         }
         if(json.type == 'Door'){  btn_class = 'green'; }
