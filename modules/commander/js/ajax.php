@@ -70,7 +70,7 @@
                             <tr><td style="width:75px">Weapon1:</td><td><div id="wep1_val" style="display:inline">' . $_POST["weapon_1"] . '</div> <div id="slider_wep1"></div></td></tr>
                             <tr><td style="width:75px">Weapon2:</td><td><div id="wep2_val" style="display:inline">' . $_POST["weapon_2"] . '</div> <div id="slider_wep2"></div></td></tr>
                             <tr><td style="width:75px">Send Appearance Effect:</td><td>' . $send_app_effect_sel . '</td></tr>
-                            <tr><td style="width:75px">Heading:</td><td><div id="heading_dial"></div></td></tr>
+                            <tr><td style="width:75px">Heading:<br><div id="heading_val" style="color:white;"></div></td><td><div id="heading_dial"></div></td></tr>
                         </table>
                     </li>
                 </ul>
@@ -84,7 +84,7 @@
                     ComponentsjQueryUISliders.init();
                     $("#heading_dial").knob({
                         "dynamicDraw": true,
-                        "thickness": 0.3,
+                        "thickness": 0.2,
                         "cursor": true,
                         "tickColorizeValues": true,
                         "skin": "tron",
@@ -92,12 +92,13 @@
                         "min": 0,
                         "fgColor": "#000000",
                         "max": 256,
-                        "width": 50,
+                        "width": 75,
                         "value": ' . ($_GET["heading"] ?: 0) . ',
                         "change" : function (v){
+                        	document.getElementById("heading_val").innerHTML = v;
                             socket.send(JSON.stringify({id: "set_entity_attribute",
                             method: "Zone.SetEntityAttribute",
-                            params: [g_zone_id, g_instance_id, "" + ' . $_GET["ent_id"] . ' + "", "heading", "" + v + ""]}));
+                            params: [g_zone_id, g_instance_id, "" + ' . $_GET["ent_id"] . ' + "", "heading", "-" + v + ""]}));
                         }
                     });
                     $( "#slider_size" ).slider({
