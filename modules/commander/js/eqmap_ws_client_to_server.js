@@ -82,14 +82,25 @@ function ProcessZoneView(ZoneSN, zone_id, instance_id) {
     });
 }
 
+/* Helper function for dynamic args */
+function def(providedValue, defaultValue) {return providedValue !== undefined ? providedValue : defaultValue;}
+
 /* Generic Function Passer, will relay calls to */
-function ZoneAction(Action) {
+function ZoneAction() {
+    var Action = def(ZoneAction.arguments[0], '');
+    var arg1 = def(ZoneAction.arguments[1], '');
+    var arg2 = def(ZoneAction.arguments[2], '');
+    var arg3 = def(ZoneAction.arguments[3], '');
+    var arg4 = def(ZoneAction.arguments[4], '');
+    var arg5 = def(ZoneAction.arguments[5], '');
+    var arg6 = def(ZoneAction.arguments[6], '');
+
     socket.send(JSON.stringify({
         id: 'zone_action',
         method: 'Zone.Action',
-        params: [g_zone_id, g_instance_id, "" + Action + ""]
+        params: [g_zone_id, g_instance_id, "" + Action + "", "" + arg1 + "", "" + arg2 + "", "" + arg3 + "", "" + arg4 + "", "" + arg5 + "", "" + arg6 + ""]
     }));
-    if (Action == "Repop") {
+    if (Action == "Repop" || Action == "RepopForce") {
         $.notific8('Issuing Zone Repop...', {
             heading: "Commander",
             theme: "ruby",
@@ -100,6 +111,15 @@ function ZoneAction(Action) {
     if (Action == "ReloadQuests") {
         $.notific8('Reloading Quests...', {heading: "Commander", theme: "ruby", life: 3000, horizontalEdge: "bottom"});
     }
+}
+
+/* Temporary testing function to troubleshoot any issues with dynamic args */
+function ZoneCommand(Action, arg1, arg2) {
+    socket.send(JSON.stringify({
+        id: 'zone_action',
+        method: 'Zone.Action',
+        params: [g_zone_id, g_instance_id, "" + Action + "", "" + arg1 + "", "" + arg2 + ""]
+    }));
 }
 
 /* Save Sky Zone Headers */

@@ -72,6 +72,14 @@
                             <tr><td style="width:75px">Send Appearance Effect:</td><td>' . $send_app_effect_sel . '</td></tr>
                             <tr><td style="width:75px">Heading:<br><div id="heading_val" style="color:white;"></div></td><td><div id="heading_dial"></div></td></tr>
                         </table>
+                    </li><hr>
+                	<li>
+                    	<h4>Say Something</h4>
+                    	<input type="text" id="npcmessage" name="npcmessage" placeholder="Enter message to send" style="width:100%;">
+                	</li>
+                    <li>
+                    	<button id="color" class="btn btn-default yellow  btn-xs" onclick="ZoneAction(\'EntitySay\', ' . $_GET['ent_id'] . ', $(\'#npcmessage\').val())">Entity Say</button>
+                    	<button id="color" class="btn btn-default red  btn-xs" onclick="ZoneAction(\'EntityShout\', ' . $_GET['ent_id'] . ', $(\'#npcmessage\').val())">Entity Shout</button>
                     </li>
                 </ul>
             ';
@@ -149,9 +157,10 @@
                 <h3 style="padding-left:10px;color:white"><i class="fa fa-angle-double-right" style="font-size:20px"></i> Zone Actions</h3>
                 <li>
                     <a href="javascript:;" onclick="ZoneAction(\'Repop\')" class="btn btn-default blue btn-xs"> Repop Zone </a>
+                    <a href="javascript:;" onclick="ZoneAction(\'RepopForce\')" class="btn btn-default blue btn-xs"> Repop Zone Force </a>
                     <a href="javascript:;" onclick="ZoneAction(\'ReloadQuests\')" class="btn btn-default purple btn-xs"> Reload Quests </a>
                 </li>
-
+				<hr/>
                 <h3 style="padding-left:10px;color:white"><i class="fa fa-angle-double-right" style="font-size:20px"></i> Sky & Fog</h3>
                 <li>
                     <h4>Fog Clip Max</h4>
@@ -171,9 +180,18 @@
                 <li style="text-align:center">
                     <button id="color" class="btn btn-default green  btn-xs" onclick="SaveZoneHeaders()">Save Zone Headers</button>
                 </li>
+                <hr/>
                 <li>
                     <h4>Entity Size (Map)</h4>
                     <div id="slider_text_size"></div>
+                </li>
+                <li>
+                    <h4>Say Something</h4>
+                    <input type="text" id="message" name="message" placeholder="Enter message to send" style="width:100%;">
+                </li>
+                <li>
+                    <button id="color" class="btn btn-default yellow  btn-xs" onclick="ZoneAction(\'Broadcast\', $(\'#message\').val())">Broadcast</button>
+                    <button id="color" class="btn btn-default red  btn-xs" onclick="ZoneAction(\'Shout\', $(\'#message\').val())">Shout</button>
                 </li>
             </ul>
             ';
