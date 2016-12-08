@@ -181,4 +181,48 @@
 			$_SESSION['pass'] = $pass;
 		}
 	}
+
+    function form_start($form_data = "", $ignore_form = 0)
+    {
+        global $global_ignore_form;
+        $return_string .= '<div class="form">';
+        $return_string .= '<div class="form-horizontal form-bordered">';
+        $return_string .= '<div class="form-body">';
+        if ($ignore_form == 0) {
+            $return_string .= '<form ' . $form_data . '>';
+        } else {
+            $return_string .= '<div ' . $form_data . '>';
+        }
+        $global_ignore_form = $ignore_form;
+        return $return_string;
+    }
+
+    function form_input($label, $input, $label_length = 1)
+    {
+        global $form_label_length;
+        if ($form_label_length > 0) {
+            $label_length = $form_label_length;
+        }
+        $return_string .= '
+                    <div class="form-group">
+                        <label class="control-label col-md-' . $label_length . '">' . $label . '</label>
+                        <div class="col-md-9">' . $input . '</div>
+                    </div>
+                ';
+        return $return_string;
+    }
+
+    function form_end()
+    {
+        global $global_ignore_form;
+        if ($global_ignore_form == 0) {
+            $return_string .= '</form>';
+        } else {
+            $return_string .= '</div>';
+        }
+        $return_string .= '</div>';
+        $return_string .= '</div>';
+        $return_string .= '</div>';
+        return $return_string;
+    }
 ?>

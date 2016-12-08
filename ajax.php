@@ -16,6 +16,7 @@
 	if($_GET['M'] == "ZT"){ include('modules/Zone_Tools/ajax/ajax.php'); }   
 	if($_GET['M'] == "race_viewer"){ include('modules/RaceViewer/ajax/ajax.php'); }
 	if($_GET['M'] == "Character"){ include('modules/Character/ajax/ajax.php'); }
+	if($_GET['M'] == "quests"){ include('modules/quests/ajax/ajax.php'); }
 
 if(isset($_GET['login'])){
 	SetEOCLogin($_GET);

@@ -19,7 +19,8 @@
 
 	if($Mod == "Commander"){ include('modules/commander/commander.php'); } 
 	if($Mod == "ItemEditor"){ include('modules/ItemEditor/ItemEditor.php'); }
-	if($Mod == "TaskEditor"){ include('modules/TaskEditor/TaskEditor.php'); } 
+	if($Mod == "Quests"){ include('modules/quests/index.php'); }
+	if($Mod == "TaskEditor"){ include('modules/TaskEditor/TaskEditor.php'); }
 	if($Mod == "Character"){ include('modules/Character/Character.php'); }
 	if($Mod == "NPC"){ include('modules/NPC/NPC.php'); }
 	if($Mod == "NPC2"){ include('modules/NPC/NPC2.php'); }
