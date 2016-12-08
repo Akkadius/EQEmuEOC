@@ -6,7 +6,7 @@
 	
 	/* When Connected to a second database... */
 	if($_GET['ImportMode'] == 1){
-		echo '<center><br><hr>';
+		echo '<center><br><h2 class="page-title">Select Zone to Import From (2nd DB)</h2><hr>';
 		echo '<select onchange="ZoneToolZoneSelect2nd(this.value)">';
 		$Query = "SELECT `long_name`, `zoneidnumber`, `short_name` FROM `zone` ORDER BY `zoneidnumber`";
 		$QueryResult = mysql_query($Query, $db2); 
