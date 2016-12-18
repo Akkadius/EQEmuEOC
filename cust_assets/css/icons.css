@@ -1,3 +1,4 @@
+.item_icon_number { background:white;left:25%;bottom:5px;position:absolute;color:black;font-size: 12px; }
 
 .icon-500 { background: url('../icons/dragitem1.png') -0px -0px; }
 .icon-501 { background: url('../icons/dragitem1.png') -0px -40px; }

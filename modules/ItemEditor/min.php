@@ -196,14 +196,17 @@
         echo '<hr>';
         echo '<div id="IconResult">';
 
-        for ($i = 0; $i < 6700; $i++) {
+        for ($i = 0; $i < 6872; $i++) {
             $img_url = "cust_assets/icons/item_" . $i . ".png";
             if (file_exists($img_url)) {
                 echo '
                     <div class="image" style="display:inline">
                         <a href="javascript:;" title="' . $i . '" onClick="FinishIcon(' . $i . ')">
                             <span class="image-wrap image-item-icon">
-                            	<span class="image-icon icon-'.$i.'"></span>
+                            	<span class="image-icon icon-'.$i.'">
+                            		<span class="item_icon_number">'.$i.'</span>
+                            	</span>
+                            	<br><br>
                             </span>
                         </a>
                     </div>';
