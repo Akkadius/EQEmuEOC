@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 	function img_icon($url){ return '<img src="' . $url . '" style="height:20px;width:auto" alt="">'; }
 
@@ -54,6 +54,7 @@
                                         <li class="divider" style="height: 1px; padding:0px !important"> </li>
                                         <li> <a href="min.php?Mod=PEQEditor&Rev=501"> <i class="fa fa-angle-right"></i> <img src="cust_assets/images/PEQ_Logo.png" alt="" style="height:25px;width:auto"> PEQ Editor Rev 501  </a> </li>
                                         <li> <a href="min.php?Mod=PEQEditor&Rev=460"> <i class="fa fa-angle-right"></i> <img src="cust_assets/images/PEQ_Logo.png" alt="" style="height:25px;width:auto"> PEQ Editor Rev 460 </a> </li>
+                                        <li> <a href="min.php?Mod=PEQEditor&Rev=latest"> <i class="fa fa-angle-right"></i> <img src="cust_assets/images/PEQ_Logo.png" alt="" style="height:25px;width:auto"> PEQ Editor</a> </li>
                                     </ul>
                                     <ul class="col-md-4 mega-menu-submenu">
                                         <li> <h3>Viewers</h3> </li>
@@ -95,7 +96,7 @@
         <div class="top-menu">
             <ul class="nav navbar-nav pull-right">
                 <!-- BEGIN NOTIFICATION DROPDOWN -->';
-			
+
 			/* Toggle Options */
 			echo '
 
@@ -165,7 +166,7 @@
             }
 
 			/* Menu Options */
-			if($Minified != 1 && $_GET['M'] == "Commander"){ 
+			if($Minified != 1 && $_GET['M'] == "Commander"){
 				echo '<li class="dropdown dropdown-quick-sidebar-toggler">
 						<a href="javascript:;" class="dropdown-toggle">
 						    <i class="icon-logout"></i>
@@ -173,7 +174,7 @@
 					</li>
 				';
 			}
-			
+
 	echo '
 		<!-- END QUICK SIDEBAR TOGGLER -->
 		</ul>
