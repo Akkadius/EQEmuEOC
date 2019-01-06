@@ -1,0 +1,125 @@
+###########################################################
+###################### General Setup ######################
+###########################################################
+
+### Paths #################################################
+
+# Point to the path of your applications code on your host
+APP_CODE_PATH_HOST=./
+
+# Point to where the `APP_CODE_PATH_HOST` should be in the container. You may add flags to the path `:cached`, `:delegated`. When using Docker Sync add `:nocopy`
+APP_CODE_PATH_CONTAINER=/var/www:delegated
+
+# Choose storage path on your machine. For all storage systems
+DATA_PATH_HOST=~/.eqemu-docker/data
+
+### Drivers ################################################
+
+# All volumes driver
+VOLUMES_DRIVER=local
+
+# All Networks driver
+NETWORKS_DRIVER=bridge
+
+### Docker compose files ##################################
+
+# Select which docker-compose files to include. If using docker-sync append `:docker-compose.sync.yml` at the end
+COMPOSE_FILE=docker-compose.yml
+
+# Change the separator from : to ; on Windows
+COMPOSE_PATH_SEPARATOR=:
+
+# Define the prefix of container names. This is useful if you have multiple projects that use eqemu-web to have seperate containers per project.
+COMPOSE_PROJECT_NAME=eqemu-web
+
+### PHP Version ###########################################
+
+# Select a PHP version of the Workspace and PHP-FPM containers (Does not apply to HHVM). Accepted values: 7.2 - 7.1 - 7.0 - 5.6
+PHP_VERSION=5.5
+
+### Docker Host IP ########################################
+
+# Enter your Docker Host IP (will be appended to /etc/hosts). Default is `10.0.75.1`
+DOCKER_HOST_IP=10.0.75.1
+
+### Remote Interpreter ####################################
+
+# Choose a Remote Interpreter entry matching name. Default is `eqemu-web`
+PHP_IDE_CONFIG=serverName=eqemu-web
+
+### Windows Path ##########################################
+
+# A fix for Windows users, to ensure the application path works
+COMPOSE_CONVERT_WINDOWS_PATHS=1
+
+### Environment ###########################################
+
+# If you need to change the sources (i.e. to China), set CHANGE_SOURCE to true
+CHANGE_SOURCE=false
+
+###########################################################
+################ Containers Customization #################
+###########################################################
+
+### WORKSPACE #############################################
+
+WORKSPACE_COMPOSER_GLOBAL_INSTALL=true
+WORKSPACE_COMPOSER_REPO_PACKAGIST=
+WORKSPACE_INSTALL_NODE=true
+WORKSPACE_NODE_VERSION=node
+WORKSPACE_NPM_REGISTRY=
+WORKSPACE_INSTALL_YARN=true
+WORKSPACE_YARN_VERSION=latest
+WORKSPACE_INSTALL_NPM_GULP=true
+WORKSPACE_INSTALL_NPM_BOWER=false
+WORKSPACE_INSTALL_NPM_VUE_CLI=true
+WORKSPACE_INSTALL_PHPREDIS=true
+WORKSPACE_INSTALL_WORKSPACE_SSH=false
+WORKSPACE_INSTALL_SUBVERSION=false
+WORKSPACE_INSTALL_XDEBUG=false
+WORKSPACE_INSTALL_PHPDBG=false
+WORKSPACE_INSTALL_SSH2=false
+WORKSPACE_INSTALL_LDAP=false
+WORKSPACE_INSTALL_GMP=false
+WORKSPACE_INSTALL_SOAP=false
+WORKSPACE_INSTALL_IMAP=false
+WORKSPACE_INSTALL_MONGO=false
+WORKSPACE_INSTALL_AMQP=false
+WORKSPACE_INSTALL_MSSQL=false
+WORKSPACE_INSTALL_DRUSH=false
+WORKSPACE_DRUSH_VERSION=8.1.17
+WORKSPACE_INSTALL_DRUPAL_CONSOLE=false
+WORKSPACE_INSTALL_AEROSPIKE=false
+WORKSPACE_INSTALL_V8JS=false
+WORKSPACE_INSTALL_LARAVEL_ENVOY=false
+WORKSPACE_INSTALL_LARAVEL_INSTALLER=false
+WORKSPACE_INSTALL_DEPLOYER=false
+WORKSPACE_INSTALL_PRESTISSIMO=false
+WORKSPACE_INSTALL_LINUXBREW=false
+WORKSPACE_INSTALL_MC=false
+WORKSPACE_INSTALL_SYMFONY=false
+WORKSPACE_INSTALL_PYTHON=false
+WORKSPACE_INSTALL_IMAGE_OPTIMIZERS=false
+WORKSPACE_INSTALL_IMAGEMAGICK=false
+WORKSPACE_INSTALL_TERRAFORM=false
+WORKSPACE_INSTALL_DUSK_DEPS=false
+WORKSPACE_INSTALL_PG_CLIENT=false
+WORKSPACE_INSTALL_PHALCON=false
+WORKSPACE_INSTALL_SWOOLE=false
+WORKSPACE_INSTALL_LIBPNG=false
+WORKSPACE_INSTALL_IONCUBE=false
+WORKSPACE_INSTALL_MYSQL_CLIENT=false
+WORKSPACE_PUID=1000
+WORKSPACE_PGID=1000
+WORKSPACE_CHROME_DRIVER_VERSION=2.42
+WORKSPACE_TIMEZONE=UTC
+WORKSPACE_SSH_PORT=2222
+
+### MARIADB ###############################################
+
+MARIADB_DATABASE=peq
+MARIADB_USER=root
+MARIADB_PASSWORD=root
+MARIADB_PORT=3306
+MARIADB_ROOT_PASSWORD=root
+MARIADB_ENTRYPOINT_INITDB=./mariadb/docker-entrypoint-initdb.d
