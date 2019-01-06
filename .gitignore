@@ -1,6 +1,9 @@
 # Thumb DB Files
 
 *.db
+.DS_Store
+.env
+logs/nginx/
 
 # PHP Storm Project
 
