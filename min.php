@@ -41,11 +41,7 @@ if ($_GET['Mod'] == "PEQEditor") {
                 height: 100% !important;
             }
 		 </style>';
-    if ($_GET['Rev'] == "460") {
-        echo '<iframe src="modules/PEQEditor460/index.php" width="100%" style="position:absolute;max-height:100%; height:100% !important; width:100%;" scrolling="auto" id="peqframe"></iframe><br><br><br><br>';
-    } else if ($_GET['Rev'] == "501") {
-        echo '<iframe src="modules/PEQEditor501/index.php" width="100%" style="position:absolute;max-height:100%; height:100% !important; width:100%;" scrolling="auto" id="peqframe"></iframe><br><br><br><br>';
-    } else if ($_GET['Rev'] == "latest") {
+    if ($_GET['Rev'] == "latest") {
         echo '<iframe src="modules/peqphpeditor/index.php" width="100%" style="position:absolute;max-height:100%; height:100% !important; width:100%;" scrolling="auto" id="peqframe"></iframe><br><br><br><br>';
     } else {
         echo '<iframe src="modules/PEQEditor/index.php" width="100%" style="max-height:100%; height:100%; width:100%;" scrolling="auto" id="peqframe"></iframe>';
