@@ -49,7 +49,7 @@ if ($_GET['Mod'] == "PEQEditor") {
     $FJS .= '<script type="text/javascript">
 			setInterval(DOPEQURLUPDATE, 1000);
 			function DOPEQURLUPDATE(){ 
-				document.getElementById("status_display").innerHTML = "<a href=\'" + document.getElementById("peqframe").src + "\'>Direct Access URL " + document.getElementById("peqframe").src + "</a>";
+				document.getElementById("status_display").innerHTML = "<a href=\'" + document.getElementById("peqframe").src + "\'>Direct Access URL </a>";
 			}
 		</script>';
 }
