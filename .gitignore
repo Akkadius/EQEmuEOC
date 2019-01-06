@@ -11,9 +11,6 @@ logs/nginx/
 
 *config.php
 modules/DBAuth/
-modules/PEQEditor421/
-modules/QueryServ/
-modules/ServerManager/
 
 # Local Assets
 
