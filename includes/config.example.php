@@ -27,10 +27,10 @@ if (file_exists($allaclonecfg)) {
 /**
  * MySQL
  */
-$dbhost   = "localhost";
-$dbname   = "";
-$dbuser   = "";
-$dbpasswd = "";
+$dbhost   = "mariadb";
+$dbname   = "peq";
+$dbuser   = "root";
+$dbpasswd = "root";
 
 /**
  * Commander config
