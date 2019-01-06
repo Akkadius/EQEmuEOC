@@ -17,7 +17,7 @@
 		$Mod = $_GET['Module'];
 	}
 
-	if($Mod == "Commander"){ include('modules/commander/commander.php'); } 
+	if($Mod == "Commander"){ include('modules/commander/commander.php'); }
 	if($Mod == "ItemEditor"){ include('modules/ItemEditor/ItemEditor.php'); }
 	if($Mod == "Quests"){ include('modules/quests/index.php'); }
 	if($Mod == "TaskEditor"){ include('modules/TaskEditor/TaskEditor.php'); }
@@ -26,9 +26,9 @@
 	if($Mod == "NPC2"){ include('modules/NPC/NPC2.php'); }
 	if($Mod == "ServerManager"){ include('modules/ServerManager/ServerManager.php'); }
 	if($Mod == "QueryServ"){ include('modules/QueryServ/QueryServ.php'); }
-	if($Mod == "SpellEditor"){ include('modules/SpellEditor/SpellEditor.php'); } 
-	if($Mod == "ZT"){ include('modules/Zone_Tools/zonetools.php'); } 
-	if($Mod == "dbstr"){ include('modules/dbstr/dbstr.php'); }  
+	if($Mod == "SpellEditor"){ include('modules/SpellEditor/SpellEditor.php'); }
+	if($Mod == "ZT"){ include('modules/Zone_Tools/zonetools.php'); }
+	if($Mod == "dbstr"){ include('modules/dbstr/dbstr.php'); }
 	else if($Mod == ""){
 		echo '
 		<center>
@@ -42,12 +42,12 @@
 		<h2 class="page-title">Welcome to EQEmu Operations Center</h2><hr>
 		</center>
 		<h4 class="page-title">Information Regarding EOC and Tools</h4><hr>
-		'; 
+		';
 		echo '<iframe src="http://wiki.eqemulator.org/p?EQEmu_Operations_Center_for_Development&frm=Main#tools" width="100%" style="position:absolute;max-height:100%; height:100% !important; width:98%;left:20px" scrolling="auto"></iframe>';
 	}
 
 	require_once('includes/content_end.php');
-	require_once('includes/quick_sidebar.php');  
+	require_once('includes/quick_sidebar.php');
 	require_once('includes/footer.php');
 
 ?>
