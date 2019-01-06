@@ -113,7 +113,7 @@
 		$activity["activityid"] = $ActivityID;
 		$activity["step"] = 0;
 		$activity["activitytype"] = 0;
-		$activity["text1"] = "";
+		$activity["description_override"] = "";
 		$activity["text2"] = "";
 		$activity["text3"] = "";
 		$activity["goalid"] = 0;
@@ -123,11 +123,11 @@
 		$activity["zoneid"] = 0;
 		$activity["optional"] = 0;
 
-		$Query = "INSERT INTO task_activities (taskid, activityid, step, activitytype, text1, text2, text3, goalid, goalmethod, goalcount, delivertonpc, zoneid, optional) 
+		$Query = "INSERT INTO task_activities (taskid, activityid, step, activitytype, description_override, goalid, goalmethod, goalcount, delivertonpc, zones, optional) 
 			VALUES('" . $activity["taskid"] . "','" . $activity["activityid"] . "','" . $activity["step"] . "','" . $activity["activitytype"] . "',
-			'" . $activity["text1"] . "','" . $activity["text2"] . "','" . $activity["text3"] . "','" . $activity["goalid"] . "'
+			'" . $activity["description_override"] . "','" . $activity["goalid"] . "'
 			,'" . $activity["goalmethod"] . "','" . $activity["goalcount"] . "','" . $activity["delivertonpc"] . "','" . $activity["zoneid"] . "','" . $activity["optional"] . "')";
-		$QueryResult = mysql_query($Query) or message_die('taskbuild.php','MYSQL_QUERY',$Query,mysql_error());
+		$QueryResult = mysql_query($Query) or message_die('taskbuild.php', 'MYSQL_QUERY', $Query, mysql_error());
 	}
 
 	// Populates Task Data

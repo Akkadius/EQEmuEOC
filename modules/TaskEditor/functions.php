@@ -86,57 +86,57 @@
 		return $TaskContent;
 	}
 
-	function GetActivityStepDesc($ActivityType, $GoalCount, $Text1, $Text2, $StepDescription)
+	function GetActivityStepDesc($ActivityType, $GoalCount, $description_override, $Text2, $StepDescription)
 	{
 		if (!$StepDescription) {
 			switch ($ActivityType) {
 				case 1:
 					// Deliver
-					$StepDescription = "Deliver " . $GoalCount . " " . $Text2 . " to " . $Text1;
+					$StepDescription = "Deliver " . $GoalCount . " " . $Text2 . " to " . $description_override;
 					break;
 				case 2:
 					// Kill
-					$StepDescription = "Kill " . $GoalCount . " " . $Text1;
+					$StepDescription = "Kill " . $GoalCount . " " . $description_override;
 					break;
 				case 3:
 					// Loot
-					$StepDescription = "Loot " . $GoalCount . " " . $Text2 . " from " . $Text1;
+					$StepDescription = "Loot " . $GoalCount . " " . $Text2 . " from " . $description_override;
 					break;
 				case 4:
 					// SpeakWith
-					$StepDescription = "Speak with " . $Text1;
+					$StepDescription = "Speak with " . $description_override;
 					break;
 				case 5:
 					// Explore
-					$StepDescription = "Explore " . $Text1;
+					$StepDescription = "Explore " . $description_override;
 					break;
 				case 6:
 					// TradeSkill
-					$StepDescription = "Create " . $GoalCount . " " . $Text1;
+					$StepDescription = "Create " . $GoalCount . " " . $description_override;
 					break;
 				case 7:
 					// Fish
-					$StepDescription = "Fish " . $GoalCount . " " . $Text1;
+					$StepDescription = "Fish " . $GoalCount . " " . $description_override;
 					break;
 				case 8:
 					// Forage
-					$StepDescription = "Forage " . $GoalCount . " " . $Text1;
+					$StepDescription = "Forage " . $GoalCount . " " . $description_override;
 					break;
 				case 9:
 					// ActivityUse1
-					$StepDescription = "Use " . $GoalCount . " " . $Text1;
+					$StepDescription = "Use " . $GoalCount . " " . $description_override;
 					break;
 				case 10:
 					// ActivityUse2
-					$StepDescription = "Use " . $GoalCount . " " . $Text1;
+					$StepDescription = "Use " . $GoalCount . " " . $description_override;
 					break;
 				case 11:
 					// ActivityTouch
-					$StepDescription = "Touch " . $Text1;
+					$StepDescription = "Touch " . $description_override;
 					break;
 				case 100:
 					// ActivityGiveCash
-					$StepDescription = "Give " . $GoalCount . " " . $Text1 . " to " . $Text2;
+					$StepDescription = "Give " . $GoalCount . " " . $description_override . " to " . $Text2;
 					break;
 				case 255:
 					// Custom Task Activity Type
@@ -169,7 +169,7 @@
 			$ActivityID      = $row["activityid"];
 			$Step            = $row["step"];
 			$ActivityType    = $row["activitytype"];
-			$Text1           = $row["text1"];
+			$description_override           = $row["description_override"];
 			$Text2           = $row["text2"];
 			$StepDescription = $row["text3"];
 			$GoalID          = $row["goalid"];
@@ -201,13 +201,13 @@
 						$ItemID   = $SingleGoal;
 						$ItemName = $Text2;
 						$NPCID    = $DeliverToNPC;
-						$NPCName  = $Text1;
+						$NPCName  = $description_override;
 						$GoalType = "ItemID";
 						break;
 					case 2:
 						// Kill
 						$NPCID    = $SingleGoal;
-						$NPCName  = $Text1;
+						$NPCName  = $description_override;
 						$GoalType = "NPCID";
 						break;
 					case 3:
@@ -219,7 +219,7 @@
 					case 4:
 						// SpeakWith
 						$NPCID    = $SingleGoal;
-						$NPCName  = $Text1;
+						$NPCName  = $description_override;
 						$GoalType = "NPCID";
 						break;
 					case 5:
@@ -228,19 +228,19 @@
 					case 6:
 						// TradeSkill
 						$ItemID   = $SingleGoal;
-						$ItemName = $Text1;
+						$ItemName = $description_override;
 						$GoalType = "ItemID";
 						break;
 					case 7:
 						// Fish
 						$ItemID   = $SingleGoal;
-						$ItemName = $Text1;
+						$ItemName = $description_override;
 						$GoalType = "ItemID";
 						break;
 					case 8:
 						// Forage
 						$ItemID   = $SingleGoal;
-						$ItemName = $Text1;
+						$ItemName = $description_override;
 						$GoalType = "ItemID";
 						break;
 					case 9:
@@ -282,9 +282,7 @@
 			$TaskContent .= '</tr></table></td></tr>';
 
 			// Text Field Descriptions
-			$TaskContent .= GetTaskFormString($taskid, $activityid, "taskactivitytext1", "Text 1", $Text1, 64, "right", 1);
-			$TaskContent .= GetTaskFormString($taskid, $activityid, "taskactivitytext2", "Text 2", $Text2, 64, "right", 1);
-			$TaskContent .= GetTaskFormString($taskid, $activityid, "taskactivitytext3", "Text 3", $StepDescription, 64, "right", 1);
+			$TaskContent .= GetTaskFormString($taskid, $activityid, "taskactivitydescription_override", "Description", $description_override, 64, "right", 1);
 
 			// Activity Type
 			$TaskContent .= '<tr><td align="right" nowrap="nowrap"><b>Activity Type</b></td><td>';
@@ -294,7 +292,11 @@
 
 			$TaskContent .= '</td></tr>';
 
-			$StepDescription = GetActivityStepDesc($ActivityType, $GoalCount, $Text1, $Text2, $StepDescription);
+			$StepDescription = (
+				$description_override ?
+				$description_override :
+				GetActivityStepDesc($ActivityType, $GoalCount, $description_override, $Text2, $StepDescription)
+			);
 
 			// Description
 			$TaskContent .= '<tr><td align="right" nowrap="nowrap"><b>Description: </b></td><td>' . $StepDescription . '</td></tr>';
@@ -471,12 +473,14 @@
 		while ($row = mysql_fetch_array($QueryResult)) {
 			$ActivityID      = $row["activityid"];
 			$ActivityType    = $row["activitytype"];
-			$Text1           = $row["text1"];
+			$description_override           = $row["description_override"];
 			$Text2           = $row["text2"];
 			$StepDescription = $row["text3"];
 			$GoalCount       = $row["goalcount"];
 
-			$StepDescription = GetActivityStepDesc($ActivityType, $GoalCount, $Text1, $Text2, $StepDescription);
+
+			$StepDescription
+				= ($description_override ? $description_override : GetActivityStepDesc($ActivityType, $GoalCount, $description_override, $Text2, $StepDescription));
 
 			if ($CurTaskID == $taskid) {
 				$TaskContent .= '<option value="' . $ActivityID . '" selected="selected">' . $ActivityID . ' - ' . $StepDescription . '</option>';
@@ -552,8 +556,8 @@
 				$task["startzone"]    = 0;
 				$task["rewardmethod"] = 0;
 				$task["title"]        = "Default Description";
-				$Query                = "INSERT INTO `tasks` (id, minlevel, maxlevel, duration, repeatable, startzone, rewardmethod, title, description) 
-					VALUES('" . $task["id"] . "','" . $task["minlevel"] . "','" . $task["maxlevel"] . "','" . $task["duration"] . "','" . $task["repeatable"] . "','" . $task["startzone"] . "','" . $task["rewardmethod"] . "','" . $task["title"] . "','" . $task["title"] . "')";
+				$Query                = "INSERT INTO `tasks` (id, minlevel, maxlevel, duration, repeatable, rewardmethod, title, description) 
+					VALUES('" . $task["id"] . "','" . $task["minlevel"] . "','" . $task["maxlevel"] . "','" . $task["duration"] . "','" . $task["repeatable"] . "','" . $task["rewardmethod"] . "','" . $task["title"] . "','" . $task["title"] . "')";
 				$QueryResult = mysql_query($Query) or message_die('taskbuild.php', 'MYSQL_QUERY', $Query, mysql_error());
 				if ($QueryResult) {
 					$Query = "SELECT * FROM `tasks` WHERE id='" . $id . "'";
@@ -611,12 +615,10 @@
 		$ZoneID = $task["startzone"];
 
 		// Start Zone
-		$TaskContent .= '<tr><td align="right" nowrap="nowrap"><b>Starts In</b></td><td>';
-
-		// Zone List Select Box
-		$TaskContent .= GetZoneSelect($ZoneID, "taskstartzone", $taskid, $activityid);
-
-		$TaskContent .= '</td></tr>';
+		// $TaskContent .= '<tr><td align="right" nowrap="nowrap"><b>Starts In</b></td><td>';
+		// // Zone List Select Box
+		// $TaskContent .= GetZoneSelect($ZoneID, "taskstartzone", $taskid, $activityid);
+		// $TaskContent .= '</td></tr>';
 
 		// Reward Method
 		$TaskContent .= '<tr><td align="right" nowrap="nowrap"><b>Reward Method</b></td><td>
