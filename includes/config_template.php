@@ -6,7 +6,7 @@ $SessionTimeout = 999;
 $secureEOC      = false;
 $AccessStatus   = 250;
 
-date_default_timezone_set("America/Los_Angeles");
+date_default_timezone_set('UTC');
 
 $allaclonecfg = '../allaclone/includes/config.php';
 $search       = '$cfgversion';

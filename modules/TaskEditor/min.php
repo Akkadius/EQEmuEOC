@@ -1,10 +1,10 @@
 <?php
 
 	$FJS .= '<script type="text/javascript" src="modules/TaskEditor/js/js.js"></script>';
-	
+
 	require_once('modules/TaskEditor/functions.php');
 	require_once('includes/alla_functions.php');
-	
+
 	$id				= (isset($_GET['id']) ? $_GET['id'] : '');
 	$xmlid			= (isset($_GET['xmlid']) ? $_GET['xmlid'] : '');
 	$goalid			= (isset($_GET['goalid']) ? $_GET['goalid'] : '');
@@ -13,7 +13,7 @@
 	$addgoal		= (isset($_GET['addgoal']) ? $_GET['addgoal'] : 0);
 	$newentry		= (isset($_GET['newentry']) ? $_GET['newentry'] : '');
 	$GoalList		= (isset($_GET['GoalList']) ? $_GET['GoalList'] : '');
-	$Value			= (isset($_GET['Value']) ? $_GET['Value'] : ''); 
+	$Value			= (isset($_GET['Value']) ? $_GET['Value'] : '');
 	$count			= (isset($_GET['count']) ? $_GET['count'] : '');
 	$activityid		= (isset($_GET['activityid']) ? $_GET['activityid'] : '');
 	$fieldid		= (isset($_GET['fieldid']) ? $_GET['fieldid'] : '');
@@ -24,7 +24,7 @@
 	$Duplicate = 0;
 
 	$TaskContent = "";
-	
+
 	// Builds the list portion of the Goals web page for goal lists
 	if($GoalList === "taskrewardid" || $GoalList === "taskactivitygoalid")
 	{
@@ -33,7 +33,7 @@
 		$TaskContent .= '<div>';
 		$TaskContent .= '<form class="mainForm" action="tasks.php">';
 		$TaskContent .= '<table align="left" style="margin-left:25px;">';
-		
+
 		$TaskContent .= '<tr><td align="right"><b>Reward/Goal ID : </b></td><td><input size="64" name="taskrewardid" type="text" value="' . $rewardid . '"/></td></tr>';
 		$Query = "";
 		if ($GoalList == "taskrewardid")
@@ -42,20 +42,20 @@
 		}
 		if ($GoalList == "taskactivitygoalid")
 		{
-			$Query = "SELECT goallists.listid, tasks.id, tasks.title, activities.taskid, activities.goalid, activities.goalmethod FROM goallists 
-						INNER JOIN activities ON goallists.listid = activities.goalid 
-						INNER JOIN tasks ON tasks.id = activities.taskid 
-						WHERE activities.goalmethod = 1 
+			$Query = "SELECT goallists.listid, tasks.id, tasks.title, task_activities.taskid, task_activities.goalid, task_activities.goalmethod FROM goallists 
+						INNER JOIN task_activities ON goallists.listid = task_activities.goalid 
+						INNER JOIN tasks ON tasks.id = task_activities.taskid 
+						WHERE task_activities.goalmethod = 1 
 						GROUP BY goallists.listid";
 		}
 		$QueryResult = mysql_query($Query) or message_die('tasks.php','MYSQL_QUERY',$Query,mysql_error());
-		
+
 		//$Query2 = "SELECT listid FROM goallists GROUP BY listid";
 		//$QueryResult2 = mysql_query($Query2) or message_die('tasks.php','MYSQL_QUERY',$Query2,mysql_error());
-		
+
 		if(mysql_num_rows($QueryResult) != 0)
 		{
-			
+
 			$TaskContent = '
 					<!-- Task List -->
 					<fieldset>
@@ -71,10 +71,10 @@
 			if ($GoalList == "taskactivitygoalid") {
 				$TaskContent .= '<select multiple="multiple" class="form-control" onclick="getGoalContent(this.value, \'taskactivitygoalid\')" title="Click to Select a Goal List">';
 			}
-			
+
 			while ($row=mysql_fetch_array($QueryResult))
 			{
-				
+
 				$CurGoalID = $row["listid"];
 				$CurTaskID = $row["id"];
 				$CurTaskTitle = $row["title"];
@@ -87,11 +87,11 @@
 					$TaskContent .= '<option value="' . $CurGoalID . '">' . $CurGoalID . ' - ' . $CurTaskTitle . ' (Task: ' . $CurTaskID . ')</option>';
 				}
 			}
-			
+
 							$TaskContent .= '</select>
 							
 						</div>';
-						
+
 			$TaskContent .= '
 						<!-- Task Details -->
 						<div id="goalDiv" class="floatRight">';
@@ -102,15 +102,15 @@
 							</div>
 						</div>
 					</fieldset>
-			';	
+			';
 		}
-			
+
 		$TaskContent .= '</table>';
 		$TaskContent .= '<input type="button" value="Close Window" class="btn btn-default" onclick="window.close()"/>';
 		$TaskContent .= '</form>';
 		$TaskContent .= '</div><div class="fix"></div>';
 
-					
+
 		$ExtraJavaScript .= '
 			<script> 
 
@@ -182,7 +182,7 @@
 			</script>';
 			$TaskContent .= '<script type="text/javascript" src="../jquery/eqemutooltip.js"></script>';
 	}
-	
+
 	echo $TaskContent;
 
 ?>

@@ -2,7 +2,7 @@
 
 	require_once('modules/TaskEditor/functions.php');
 	require_once('includes/alla_functions.php');
-	
+
 	$id				= (isset($_GET['id']) ? $_GET['id'] : '');
 	$xmlid			= (isset($_GET['xmlid']) ? $_GET['xmlid'] : '');
 	$goalid			= (isset($_GET['goalid']) ? $_GET['goalid'] : '');
@@ -11,7 +11,7 @@
 	$addgoal		= (isset($_GET['addgoal']) ? $_GET['addgoal'] : 0);
 	$newentry		= (isset($_GET['newentry']) ? $_GET['newentry'] : '');
 	$GoalList		= (isset($_GET['GoalList']) ? $_GET['GoalList'] : '');
-	$Value			= (isset($_GET['Value']) ? $_GET['Value'] : ''); 
+	$Value			= (isset($_GET['Value']) ? $_GET['Value'] : '');
 	$count			= (isset($_GET['count']) ? $_GET['count'] : '');
 	$activityid		= (isset($_GET['activityid']) ? $_GET['activityid'] : '');
 	$fieldid		= (isset($_GET['fieldid']) ? $_GET['fieldid'] : '');
@@ -25,11 +25,11 @@
 
 	// Used to populate the Task List on the left side of the editor
 	if($type === "tasklist")
-	{ 
+	{
 		$TaskContent .= GetTaskList($id);
 	}
 
-	// Handles Deletes for Tasks, Activities, and Proximities
+	// Handles Deletes for Tasks, task_activities, and Proximities
 	if($id != "" && is_numeric($id) && $activityid != "" && is_numeric($activityid) && ($type === "delete" || $type === "confirmdelete" || $type === "canceldelete"))
 	{
 		if ($type === "confirmdelete")
@@ -37,7 +37,7 @@
 			if ($divname === "proximityDeleteDiv")
 			{
 				$exploreid = 0;
-				$Query = 'SELECT goalid FROM activities WHERE taskid = ' . $id . ' AND activityid = ' . $activityid;
+				$Query = 'SELECT goalid FROM task_activities WHERE taskid = ' . $id . ' AND activityid = ' . $activityid;
 				$QueryResult = mysql_query($Query) or message_die('taskbuild.php','MYSQL_QUERY',$Query,mysql_error());
 				if(mysql_num_rows($QueryResult) != 0)
 				{
@@ -49,14 +49,14 @@
 			}
 			elseif ($activityid >= 0)
 			{
-				$Query = 'DELETE FROM activities WHERE taskid = ' . $id . ' AND activityid = ' . $activityid;
+				$Query = 'DELETE FROM task_activities WHERE taskid = ' . $id . ' AND activityid = ' . $activityid;
 				$QueryResult = mysql_query($Query) or message_die('taskbuild.php','MYSQL_QUERY',$Query,mysql_error());
 			}
 			elseif ($id >= 0)
 			{
 				$Query = 'DELETE FROM tasks WHERE id = ' . $id;
 				$QueryResult = mysql_query($Query) or message_die('taskbuild.php','MYSQL_QUERY',$Query,mysql_error());
-				$Query2 = 'DELETE FROM activities WHERE taskid = ' . $id;
+				$Query2 = 'DELETE FROM task_activities WHERE taskid = ' . $id;
 				$QueryResult = mysql_query($Query2) or message_die('taskbuild.php','MYSQL_QUERY',$Query,mysql_error());
 			}
 		}
@@ -96,19 +96,19 @@
 		}
 	}
 
-	// Adds new Activities
+	// Adds new task_activities
 	if($id != "" && is_numeric($id) && $type === "" && is_numeric($addactivity) && $addactivity == 1)
 	{
 		$ActivityID = 0;
-		
-		$Query = "SELECT activityid FROM activities WHERE taskid = " . $id . " ORDER BY activityid DESC LIMIT 1";
+
+		$Query = "SELECT activityid FROM task_activities WHERE taskid = " . $id . " ORDER BY activityid DESC LIMIT 1";
 		$QueryResult = mysql_query($Query) or message_die('taskbuild.php','MYSQL_QUERY',$Query,mysql_error());
 		if(mysql_num_rows($QueryResult) != 0)
 		{
 			$row=mysql_fetch_array($QueryResult);
 			$ActivityID = $row["activityid"] + 1;
 		}
-			
+
 		$activity["taskid"] = $id;
 		$activity["activityid"] = $ActivityID;
 		$activity["step"] = 0;
@@ -122,8 +122,8 @@
 		$activity["delivertonpc"] = 0;
 		$activity["zoneid"] = 0;
 		$activity["optional"] = 0;
-		
-		$Query = "INSERT INTO activities (taskid, activityid, step, activitytype, text1, text2, text3, goalid, goalmethod, goalcount, delivertonpc, zoneid, optional) 
+
+		$Query = "INSERT INTO task_activities (taskid, activityid, step, activitytype, text1, text2, text3, goalid, goalmethod, goalcount, delivertonpc, zoneid, optional) 
 			VALUES('" . $activity["taskid"] . "','" . $activity["activityid"] . "','" . $activity["step"] . "','" . $activity["activitytype"] . "',
 			'" . $activity["text1"] . "','" . $activity["text2"] . "','" . $activity["text3"] . "','" . $activity["goalid"] . "'
 			,'" . $activity["goalmethod"] . "','" . $activity["goalcount"] . "','" . $activity["delivertonpc"] . "','" . $activity["zoneid"] . "','" . $activity["optional"] . "')";
@@ -142,7 +142,7 @@
 		$TaskContent .= GetActivityForm($id, $activityid);
 	}
 
-	// Creates New Goal List and Populates Task/Activities Goal Fields
+	// Creates New Goal List and Populates Task/task_activities Goal Fields
 	if($id != "" && is_numeric($id) && $activityid != "" && is_numeric($activityid) && $type === "addgoallist" )
 	{
 		if ($goalid == 0)
@@ -161,10 +161,10 @@
 			}
 			$Query = 'INSERT INTO goallists ( listid, entry ) VALUES ( ' . $goalid . ',  0 )';
 			$QueryResult = mysql_query($Query) or message_die('taskbuild.php','MYSQL_QUERY',$Query,mysql_error());
-			
+
 			if ($activityid >= 0)
 			{
-				$Query = "UPDATE activities SET goalid = '" . $goalid . "' WHERE taskid = '" . $id . "' AND activityid = '" . $activityid . "'";
+				$Query = "UPDATE task_activities SET goalid = '" . $goalid . "' WHERE taskid = '" . $id . "' AND activityid = '" . $activityid . "'";
 			}
 			else
 			{
@@ -178,12 +178,12 @@
 	// Handles automatic DB updates for onchange events in Task and Activity fields
 	if($id != "" && is_numeric($id) && $type === "dbupdate" && $fieldid != "")
 	{
-	
+
 		// Parse the field name from the field id
 		$IsTask = 0;
 		$IsActivity = 0;
 		$TaskIDExist = 0;
-		
+
 		if (strpos ( $fieldid , "task" ) === 0)
 		{
 			$IsTask = 1;
@@ -207,10 +207,10 @@
 				$Value = 1;
 			}
 		}
-		
+
 		if ($fieldid === "optional")
 		{
-			$IsOptional = GetFieldByQuery("optional","SELECT optional FROM activities WHERE taskid = " . $id . " AND activityid = " . $activityid);
+			$IsOptional = GetFieldByQuery("optional","SELECT optional FROM task_activities WHERE taskid = " . $id . " AND activityid = " . $activityid);
 			if ($IsOptional)
 			{
 				$Value = 0;
@@ -220,7 +220,7 @@
 				$Value = 1;
 			}
 		}
-			
+
 		if ($IsTask && $IsActivity == 0)
 		{
 			if ($fieldid === "id")
@@ -230,13 +230,13 @@
 				if(mysql_num_rows($QueryResult) != 0)
 				{
 					$TaskIDExist = 1;
-					
+
 				}
 			}
 			// Verify the field exists
 			$result = mysql_query("SHOW COLUMNS FROM `tasks` LIKE '" . $fieldid . "'");
 			$fieldexists = (mysql_num_rows($result))?TRUE:FALSE;
-			
+
 			if (!$TaskIDExist)
 			{
 				if ($fieldexists)
@@ -247,10 +247,10 @@
 					{
 						$Query = "UPDATE tasks SET `" . $fieldid . "` = '" . $Value . "' WHERE id = " . $id;
 						$QueryResult = mysql_query($Query) or message_die('taskbuild.php','MYSQL_QUERY',$Query,mysql_error());
-						// If Task ID is change, we need to also change the taskid field for associated activities
+						// If Task ID is change, we need to also change the taskid field for associated task_activities
 						if ($fieldid === "id")
 						{
-							$Query = "UPDATE activities SET `taskid` = '" . $Value . "' WHERE taskid = " . $id;
+							$Query = "UPDATE task_activities SET `taskid` = '" . $Value . "' WHERE taskid = " . $id;
 							$QueryResult = mysql_query($Query) or message_die('taskbuild.php','MYSQL_QUERY',$Query,mysql_error());
 						}
 						$ResponseMessage = '<font><b>Task Field - ' . $fieldid . ' - UPDATED!</b></font>';
@@ -272,10 +272,10 @@
 		}
 		elseif ($IsTask && $IsActivity && is_numeric($activityid) && $activityid >= 0)
 		{
-			
+
 			if ($fieldid === "activityid")
 			{
-				$Query = "SELECT activityid FROM activities WHERE activityid = " . $Value . " AND taskid =" . $id;
+				$Query = "SELECT activityid FROM task_activities WHERE activityid = " . $Value . " AND taskid =" . $id;
 				$QueryResult = mysql_query($Query) or message_die('taskbuild.php','MYSQL_QUERY',$Query,mysql_error());
 				if(mysql_num_rows($QueryResult) != 0)
 				{
@@ -283,20 +283,20 @@
 				}
 			}
 			// Verify the field exists
-			$result = mysql_query("SHOW COLUMNS FROM `activities` LIKE '" . $fieldid . "'");
+			$result = mysql_query("SHOW COLUMNS FROM `task_activities` LIKE '" . $fieldid . "'");
 			$fieldexists = (mysql_num_rows($result))?TRUE:FALSE;
-			
+
 			if (!$ActivityIDExist)
 			{
-				
+
 				if ($fieldexists)
 				{
-					$Query = "SELECT activityid FROM activities WHERE activityid = " . $activityid . " AND taskid = " . $id;
+					$Query = "SELECT activityid FROM task_activities WHERE activityid = " . $activityid . " AND taskid = " . $id;
 					$QueryResult = mysql_query($Query);
 					if(mysql_num_rows($QueryResult) != 0)
 					{
-						
-						$Query = "UPDATE activities SET `" . $fieldid . "` = '" . $Value . "' WHERE activityid = " . $activityid . " AND taskid = " . $id;
+
+						$Query = "UPDATE task_activities SET `" . $fieldid . "` = '" . $Value . "' WHERE activityid = " . $activityid . " AND taskid = " . $id;
 						$QueryResult = mysql_query($Query);
 						$ResponseMessage = '<font ><b>Activity Field - ' . $fieldid . ' - UPDATED!</b></font>';
 					}
@@ -318,7 +318,7 @@
 		else if($_GET['proximitydb']){
 			$fieldid = str_replace('proximity', '', $fieldid);
 			$Query = "UPDATE proximities SET `" . $fieldid . "` = '" . $Value . "' WHERE `exploreid` = " . $_GET['exploreid'] . "";
-			echo $Query; 
+			echo $Query;
 			$QueryResult = mysql_query($Query);
 			$ResponseMessage = '<font ><b>Activity Field - ' . $fieldid . ' - UPDATED!</b></font>';
 		}
@@ -326,7 +326,7 @@
 		{
 			$ResponseMessage = '<font color="red"><b>Update Error!</b></font> ' . mysql_error();
 		}
-		
+
 		$TaskContent = $ResponseMessage;
 	}
 
@@ -397,10 +397,10 @@
 			$QueryResult = mysql_query($Query) or message_die('taskbuild.php','MYSQL_QUERY',$Query,mysql_error());
 			$GoalMessage = '<font ><b>New Entry!</b></font>';
 		}
-		
+
 		$Query = 'SELECT listid, entry FROM goallists WHERE listid = ' . $goalid . ' ORDER BY entry';
 		$QueryResult = mysql_query($Query) or message_die('taskbuild.php','MYSQL_QUERY',$Query,mysql_error());
-		
+
 		$GoalTypeValue = "taskactivitygoalid";
 		if ($type == "rewardid")
 		{
@@ -415,7 +415,7 @@
 			$ItemName = GetFieldByQuery("Name","SELECT Name FROM items WHERE id=" . $CurGoalEntry . "");
 			$TaskContent .= '<tr><td align="right"><b>Goal List ' . $CurGoalID . ' : </b></td><td>
 			<input size="11" id="goalentry' . $CurGoalEntry . '" name="goalentry' . $CurGoalEntry . '" type="text" value="'.$CurGoalEntry.'" onchange="changeGoal(' . $CurGoalID . ', \'updategoal\', ' . $CurGoalEntry . ', this.value)"/>';
-			
+
 			$TaskContent .= '<a href="javascript:;" class="btn red btn-xs" onclick="changeGoal(' . $CurGoalID . ', \'deletegoal\', ' . $CurGoalEntry . ')"><i class="fa fa-trash-o"></i> Delete</a>';
 			$TaskContent .= ' ';
 
@@ -452,7 +452,7 @@
 		{
 			$TaskContent .= '<tr><td align="right"><b>Goal List ' . $CurGoalID . ' : </b></td><td>
 			<input size="11" id="newgoalentry" name="newgoalentry" type="text" value="0" onchange="changeGoal(' . $CurGoalID . ', \'insertgoal\', 0, this.value)"/>';
-			
+
 			if ($message != "0" && is_numeric($newentry) && $newentry == $CurGoalEntry)
 			{
 				$TaskContent .= ' - ' . $GoalMessage;
@@ -473,7 +473,7 @@
 		$TaskContent .= '<div>';
 		$TaskContent .= '<form class="mainForm" action="tasks.php">';
 		$TaskContent .= '<table align="left" style="margin-left:25px;">';
-		
+
 		$TaskContent .= '<tr><td align="right"><b>Reward/Goal ID : </b></td><td><input size="64" name="taskrewardid" type="text" value="' . $rewardid . '"/></td></tr>';
 		$Query = "";
 		if ($GoalList == "taskrewardid")
@@ -482,17 +482,17 @@
 		}
 		if ($GoalList == "taskactivitygoalid")
 		{
-			$Query = "SELECT goallists.listid, tasks.id, tasks.title, activities.taskid, activities.goalid, activities.goalmethod FROM goallists 
-						INNER JOIN activities ON goallists.listid = activities.goalid 
-						INNER JOIN tasks ON tasks.id = activities.taskid 
-						WHERE activities.goalmethod = 1 
+			$Query = "SELECT goallists.listid, tasks.id, tasks.title, task_activities.taskid, task_activities.goalid, task_activities.goalmethod FROM goallists 
+						INNER JOIN task_activities ON goallists.listid = task_activities.goalid 
+						INNER JOIN tasks ON tasks.id = task_activities.taskid 
+						WHERE task_activities.goalmethod = 1 
 						GROUP BY goallists.listid";
 		}
 		$QueryResult = mysql_query($Query) or message_die('tasks.php','MYSQL_QUERY',$Query,mysql_error());
-		
+
 		//$Query2 = "SELECT listid FROM goallists GROUP BY listid";
 		//$QueryResult2 = mysql_query($Query2) or message_die('tasks.php','MYSQL_QUERY',$Query2,mysql_error());
-		
+
 		if(mysql_num_rows($QueryResult) != 0)
 		{
 			$TaskContent = '
@@ -512,7 +512,7 @@
 			{
 				$TaskContent .= '<select multiple="multiple" class="form-control" onclick="getGoalContent(this.value, \'taskactivitygoalid\')" title="Click to Select a Goal List">';
 			}
-			
+
 			while ($row=mysql_fetch_array($QueryResult))
 			{
 				$CurGoalID = $row["listid"];
@@ -527,11 +527,11 @@
 					$TaskContent .= '<option value="' . $CurGoalID . '">' . $CurGoalID . ' - ' . $CurTaskTitle . ' (Task: ' . $CurTaskID . ')</option>';
 				}
 			}
-			
+
 							$TaskContent .= '</select>
 							
 						</div>';
-						
+
 			$TaskContent .= '
 						<!-- Task Details -->
 						<div id="goalDiv" class="floatRight">';
@@ -542,15 +542,15 @@
 							</div>
 						</div>
 					</fieldset>
-			';	
+			';
 		}
-			
+
 		$TaskContent .= '</table>';
 		$TaskContent .= '<input type="button" value="Close Window" class="btn btn-default" onclick="window.close()"/>';
 		$TaskContent .= '</form>';
 		$TaskContent .= '</div><div class="fix"></div>';
 
-					
+
 		$ExtraJavaScript .= '
 			<script> 
 
