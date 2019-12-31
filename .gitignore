@@ -13,6 +13,7 @@ logs/nginx/
 modules/DBAuth/
 
 # Local Assets
+modules/peqphpeditor/spells_us.txt
 
 l/dbstr_us/
 /includes/config.php
