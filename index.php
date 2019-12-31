@@ -65,7 +65,8 @@ if ($Mod == "dbstr") {
 		</center>
 		<h4 class="page-title">Information Regarding EOC and Tools</h4><hr>
 		';
-    echo '<iframe src="http://wiki.eqemulator.org/p?EQEmu_Operations_Center_for_Development&frm=Main#tools" width="100%" style="position:absolute;max-height:100%; height:100% !important; width:98%;left:20px" scrolling="auto"></iframe>';
+    
+    require_once('includes/instructions.php');
 }
 
 require_once('includes/content_end.php');
