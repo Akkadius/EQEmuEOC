@@ -17,7 +17,13 @@ Assuming you have docker and relatively know what it is, we now have a Docker se
 
 Clone this project and run the following command
 
-`docker-compose up` 
+```
+cp env-example .env
+```
+
+```
+docker-compose up
+``` 
 
 This will build your images and get your environment ready to go
 
@@ -25,7 +31,9 @@ Once you have setup your config below and sourced in a development database you 
 
 # Config
 
-`cp includes/config.example.php includes/config.php`
+```
+cp includes/config.example.php includes/config.php
+```
 
 # Seeding a Database
 
@@ -33,12 +41,12 @@ Once this is done you'll need to seed a database if you're not going to point to
 
 First - jump into the workspace container via
 
-`docker-compose exec workspace bash`
+```
+docker-compose exec workspace bash
+```
 
 Then run the following command
 
-`php cli/db-seed.php`
-
-Alternatively you can just run a single line from your host without bashing into the container
-
-`docker-compose exec workspace bash -cl 'php cli/db-seed.php'`
+``` 
+make seed-peq-db
+```
