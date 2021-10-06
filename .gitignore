@@ -18,3 +18,5 @@ modules/peqphpeditor/spells_us.txt
 l/dbstr_us/
 /includes/config.php
 modules/commander/js/eqmap_ws_core_config.js
+
+data/
