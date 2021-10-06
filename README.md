@@ -21,6 +21,14 @@ Clone this project and run the following command
 cp env-example .env
 ```
 
+Initialize your Database instance first before bringing everything up, wait for it to initialize and exit. If you end up waiting more than a few minutes its likely already initialized and running so just Ctrl + C out of it
+
+``` 
+docker-compose up mariadb
+```
+
+Once MariaDB is initialized. Bring up the env with the following comand
+
 ```
 docker-compose up
 ``` 
