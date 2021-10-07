@@ -33,7 +33,7 @@ services:
       volumes:
         - ./:/var/www/html:delegated
       ports:
-        - "127.0.0.1:80:80"
+        - "0.0.0.0:80:80"
       environment:
         - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
         - PHP_OPCACHE_REVALIDATE_FREQUENCY=0
