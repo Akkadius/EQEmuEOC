@@ -103,6 +103,7 @@
           password because you are only allowing from the EOC server
         </li>
         <li>USE YOUR OWN PASSWORD AND MAKE NOTE OF THE ONE BELOW, DO NOT LOSE IT!</li>
+        <li>Subtitute "peq" for your database name if it is different</li>
       </ul>
     </li>
   </ul>
@@ -110,8 +111,8 @@
     <?php
     echo "<pre>
 CREATE USER 'eoc_database_user'@'" . $SERVER_PUBLIC_IP . "' IDENTIFIED BY '" . generatePassword() . "';
-GRANT GRANT OPTION ON *.* TO 'eoc_database_user'@'" . $SERVER_PUBLIC_IP . "';
-GRANT ALL ON *.* TO 'eoc_database_user'@'" . $SERVER_PUBLIC_IP . "';
+GRANT GRANT OPTION ON peq.* TO 'eoc_database_user'@'" . $SERVER_PUBLIC_IP . "';
+GRANT ALL ON peq.* TO 'eoc_database_user'@'" . $SERVER_PUBLIC_IP . "';
 </pre>";
 
     ?>
