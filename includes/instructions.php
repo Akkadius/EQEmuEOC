@@ -99,9 +99,6 @@
   <ul>
     <li>To create your database user you will need to run the query below to create your database user:
       <ul>
-        <li>This will allow connections only from EOC via the specified user below, you shouldn't need to change the
-          password because you are only allowing from the EOC server
-        </li>
         <li>USE YOUR OWN PASSWORD AND MAKE NOTE OF THE ONE BELOW, DO NOT LOSE IT!</li>
         <li>Subtitute "peq" for your database name if it is different</li>
       </ul>
