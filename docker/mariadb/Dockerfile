@@ -1,4 +1,4 @@
-FROM mariadb:latest
+FROM mariadb:10.5.4
 
 LABEL maintainer="Mahmoud Zalt <mahmoud@zalt.me>"
 

@@ -10,50 +10,52 @@ volumes:
 
 services:
 
-######################################################
-# Workspace
-######################################################
+  ######################################################
+  # Workspace
+  ######################################################
 
-    workspace:
-      build:
-        context: docker/php-cli-5-6
-      volumes:
-        - ./:/var/www/html:delegated
-      tty: true
-      networks:
-        - backend
+  workspace:
+    build:
+      context: docker/php-cli-5-6
+    volumes:
+      - ./:/var/www/html:delegated
+    tty: true
+    networks:
+      - backend
 
-######################################################
-# Apache / PHP 5.5
-######################################################
+  ######################################################
+  # Apache / PHP 5.5
+  ######################################################
 
-    php-apache:
-      build:
-        context: docker/apache-5-6
-      volumes:
-        - ./:/var/www/html:delegated
-      ports:
-        - "0.0.0.0:80:80"
-      environment:
-        - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
-        - PHP_OPCACHE_REVALIDATE_FREQUENCY=0
-      networks:
-        - backend
+  php-apache:
+    build:
+      context: docker/apache-5-6
+    volumes:
+      - ./:/var/www/html:delegated
+    ports:
+      - "${IP_ADDRESS}:80:80"
+    environment:
+      - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
+      - PHP_OPCACHE_REVALIDATE_FREQUENCY=0
+    networks:
+      - backend
 
-######################################################
-# MariaDB
-######################################################
+  ######################################################
+  # MariaDB
+  ######################################################
 
-    mariadb:
-      build: docker/mariadb
-      volumes:
-        - ./data/mariadb:/var/lib/mysql
-      ports:
-        - "${MARIADB_PORT}:3306"
-      environment:
-        - MYSQL_DATABASE=${MARIADB_DATABASE}
-        - MYSQL_USER=${MARIADB_USER}
-        - MYSQL_PASSWORD=${MARIADB_PASSWORD}
-        - MYSQL_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
-      networks:
-        - backend
+  mariadb:
+    build: docker/mariadb
+    volumes:
+      - ./data/mariadb:/var/lib/mysql
+    ports:
+      - "${IP_ADDRESS}:${MARIADB_PORT}:3306"
+    environment:
+      - MYSQL_DATABASE=${MARIADB_DATABASE}
+      - MYSQL_USER=${MARIADB_USER}
+      - MYSQL_PASSWORD=${MARIADB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+      - MYSQL_ALLOW_EMPTY_PASSWORD=NO
+      - TZ=${TZ:-US/Central}
+    networks:
+      - backend

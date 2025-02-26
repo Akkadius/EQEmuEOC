@@ -4,6 +4,10 @@
 
 FROM php:5.6.40-apache
 
+RUN sed -i -e 's/deb.debian.org/archive.debian.org/g' \
+           -e 's|security.debian.org|archive.debian.org/|g' \
+           -e '/stretch-updates/d' /etc/apt/sources.list
+
 RUN apt-get update && apt-get install -y \
 	vim \
 	wget \

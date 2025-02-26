@@ -57,10 +57,21 @@ HELP_FUN = \
 help: ##@other Show this help.
 	@perl -e '$(HELP_FUN)' $(MAKEFILE_LIST)
 
-seed-peq-db: ##@seed Seeds PEQ Database (run from workspace)
-	sudo apt-get update && sudo apt-get install -y curl unzip mysql-client
-	curl http://db.projecteq.net/api/v1/dump/latest -o /tmp/db.zip
-	unzip -o /tmp/db.zip -d /tmp/db/
-	mysql -h mariadb -uroot -proot peq -e 'DROP DATABASE peq; CREATE DATABASE peq;'
-	cd /tmp/db/peq-dump/ && mysql -h mariadb -uroot -proot peq < ./create_all_tables.sql
-	rm -rf /tmp/db/
+seed-peq-database: ##@seed
+	docker-compose up -d workspace
+	docker-compose exec workspace bash -c "sudo apt-get update && sudo apt-get install -y curl unzip mysql-client"
+	docker-compose exec workspace bash -c "curl http://db.projecteq.net/api/v1/dump/latest -o /tmp/db.zip"
+	docker-compose exec workspace bash -c "unzip -o /tmp/db.zip -d /tmp/db/"
+	docker-compose exec workspace bash -c "mysql -h mariadb -u${MARIADB_USER} -p${MARIADB_PASSWORD} ${MARIADB_DATABASE} -e 'DROP DATABASE ${MARIADB_DATABASE}; CREATE DATABASE ${MARIADB_DATABASE};'"
+	docker-compose exec workspace bash -c "cd /tmp/db/peq-dump/ && mysql -h mariadb -u${MARIADB_USER} -p${MARIADB_PASSWORD} ${MARIADB_DATABASE} < ./create_all_tables.sql"
+	docker-compose exec workspace bash -c "rm -rf /tmp/db/"
+
+#----------------------
+# Workflow
+#----------------------
+
+bash: ##@workflow Bash into workspace
+	docker-compose exec workspace bash
+
+mc: ##@workflow Jump into the MySQL container console
+	docker-compose exec mariadb bash -c "mysql -uroot -p${MARIADB_ROOT_PASSWORD} -h localhost ${MARIADB_DATABASE}"
